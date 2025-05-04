@@ -1,0 +1,42 @@
+{
+  "expo": {
+    "name": "SantiTime",
+    "slug": "santitime",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./src/shared/assets/images/logo-bg.png",
+    "scheme": "myapp",
+    "userInterfaceStyle": "automatic",
+    "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.a.kolodynsky.santitime"
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": ""
+    },
+    "plugins": [
+      "expo-router",
+      "expo-sqlite"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "3dc4b6a0-d08f-4783-b6b1-12c89249b607"
+      }
+    }
+  }
+}
