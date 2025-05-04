@@ -7,7 +7,7 @@ import {icons} from "@/src/shared/constants/icons";
 interface PageRouteButtonsProps {
     handleAdd: () => Promise<void> | void;
     handleBack: () => void;
-    handleRemove?: () => void;
+    handleRemove?: (() => void) | null;
     selected?: boolean | null;
 }
 

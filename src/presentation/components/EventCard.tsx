@@ -48,13 +48,13 @@ const EventCard = (props: (IEvent | Gap) & {first: number, handlePress: () => vo
                                 <CategoryCard category={props.category} />
                             </View>
 
-                            {props.tasks && props.tasks.length > 0 &&
-                                <View className="mb-2 bg-dark-100 self-start px-4 py-2 rounded-[36px] flex-row items-center">
-                                    <Text className="font-inter_medium text-light-100 text-sm">
-                                        {props.tasks.length} Task{props.tasks.length > 1 && 's'}
-                                    </Text>
-                                </View>
-                            }
+                            {/*{props.tasks && props.tasks.length > 0 &&*/}
+                            {/*    <View className="mb-2 bg-dark-100 self-start px-4 py-2 rounded-[36px] flex-row items-center">*/}
+                            {/*        <Text className="font-inter_medium text-light-100 text-sm">*/}
+                            {/*            {props.tasks.length} Task{props.tasks.length > 1 && 's'}*/}
+                            {/*        </Text>*/}
+                            {/*    </View>*/}
+                            {/*}*/}
                         </View>
 
                         {props.name &&

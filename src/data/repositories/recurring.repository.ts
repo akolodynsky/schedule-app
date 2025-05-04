@@ -19,15 +19,19 @@ export class RecurringRepositoryImpl implements RecurringRepository {
         return dto && mapRecurringDtoToRecurring(dto);
     };
 
-    async insert(recurring: RecurringOptions) {
-        await this.datasource.insertRecurringOptions(mapRecurringToRecurringDto(recurring));
+    async insertOrEdit(recurring: RecurringOptions) {
+        await this.datasource.insertOrEditRecurringOptions(mapRecurringToRecurringDto(recurring));
     };
-
-    async edit(recurring: RecurringOptions) {
-        await this.datasource.editRecurringOptions(mapRecurringToRecurringDto(recurring));
-    }
 
     async delete(id: string) {
         await this.datasource.deleteRecurringOptions(id);
+    }
+
+    async getExceptDays(id: string) {
+        return await this.datasource.getExceptDays(id);
+    }
+
+    async insertExceptDate(id: string, exceptDate: string) {
+        await this.datasource.insertDateToExceptDays(id, exceptDate);
     }
 }

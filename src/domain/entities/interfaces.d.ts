@@ -7,6 +7,7 @@ interface IEvent {
     start: string,
     end: string,
     recurringId: string | null,
+    isRecurring: boolean,
 }
 
 interface ICategory  {
@@ -19,10 +20,11 @@ interface IRecurringOptions {
     id: string,
     frequency: "daily" | "weekly" | "monthly",
     interval: number,
-    daysOfWeek: number[] | null,
-    dayOfMonth: number | null,
+    weekDays: number[],
+    monthDay: number | null,
     startRepeat: string,
     endRepeat: string | null,
+    exceptDays: string | null,
 }
 
 interface ITask {

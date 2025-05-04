@@ -10,6 +10,7 @@ export const mapRecurringDtoToRecurring = (dto: RecurringDto) => {
         monthDay: dto.month_day,
         startRepeat: dto.start_repeat,
         endRepeat: dto.end_repeat,
+        exceptDays: dto.except_days
     })
 };
 
@@ -18,9 +19,10 @@ export const mapRecurringToRecurringDto = (recurring: RecurringOptions): Recurri
         id: recurring.id,
         frequency: recurring.frequency,
         interval: recurring.interval,
-        week_days: JSON.stringify(recurring.weekDays),
+        week_days: recurring.weekDays.length > 0 ? JSON.stringify(recurring.weekDays) : null,
         month_day: recurring.monthDay,
         start_repeat: recurring.startRepeat,
         end_repeat: recurring.endRepeat,
+        except_days: recurring.exceptDays
     }
 };

@@ -1,16 +1,16 @@
 import React from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 
-import CategoryCard from "@/src/presentation/components/CategoryCard";
+import CategoryCard from "../components/CategoryCard";
 import TaskCard from "@/src/presentation/components/TaskCard";
-import {icons} from "@/src/shared/constants/icons";
+import {icons} from "../../shared/constants/icons";
 import {useEventStore} from "../stores";
 import {getDuration} from "../../shared/utils";
 
 
 interface EventBottomCardProps {
     update: () => void;
-    remove: (id: string) => Promise<void>;
+    remove: (id: string, recurringId: string, recurring: boolean) => Promise<void>;
     checkTask: (task: ITask, eventId: string) => Promise<void>;
     updateTask: (task: ITask, event: IEvent) => void;
     updateRecurring?: () => void;
@@ -21,7 +21,7 @@ const EventBottomCard = ({ update, remove, checkTask, updateTask, updateRecurrin
 
     if (!selectedEvent) return null;
 
-    const {id, category, description, name, tasks, start, end} = selectedEvent;
+    const {id, category, description, name, start, end, recurringId, isRecurring} = selectedEvent;
 
     return (
         <>
@@ -43,7 +43,7 @@ const EventBottomCard = ({ update, remove, checkTask, updateTask, updateRecurrin
                         <Image source={icons.pencil} className="size-7" />
                     </TouchableOpacity>
 
-                    <TouchableOpacity onPress={() => remove(selectedEvent.id)}>
+                    <TouchableOpacity onPress={() => remove(id, recurringId!, isRecurring)}>
                         <Image source={icons.trash} className="size-7" />
                     </TouchableOpacity>
                 </View>
@@ -60,17 +60,17 @@ const EventBottomCard = ({ update, remove, checkTask, updateTask, updateRecurrin
                         <Text className="font-inter_medium text-light-200 text-lg">{description}</Text>}
                 </View>
 
-                {tasks && tasks.length > 0 &&
-                    <View className="bg-dark-200 px-4 py-4 rounded-[28px] gap-2">
-                        {tasks.map((task) => (
-                            <TaskCard
-                                key={task.id}
-                                task={task}
-                                check={() => checkTask(task, id)}
-                                longPress={() => updateTask(task, selectedEvent)}
-                            />
-                        ))}
-                    </View>}
+                {/*{tasks && tasks.length > 0 &&*/}
+                {/*    <View className="bg-dark-200 px-4 py-4 rounded-[28px] gap-2">*/}
+                {/*        {tasks.map((task) => (*/}
+                {/*            <TaskCard*/}
+                {/*                key={task.id}*/}
+                {/*                task={task}*/}
+                {/*                check={() => checkTask(task, id)}*/}
+                {/*                longPress={() => updateTask(task, selectedEvent)}*/}
+                {/*            />*/}
+                {/*        ))}*/}
+                {/*    </View>}*/}
             </View>
         </>
     );

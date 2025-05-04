@@ -67,7 +67,8 @@ export const db = async () => {
             week_days TEXT,
             month_day INTEGER,
             start_repeat TEXT NOT NULL,
-            end_repeat TEXT
+            end_repeat TEXT,
+            except_days TEXT
         );
     `);
 
@@ -85,5 +86,5 @@ export const db = async () => {
         }
 
         await insertStmt.finalizeAsync();
-    };
+    }
 };

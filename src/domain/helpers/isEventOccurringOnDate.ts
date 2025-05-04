@@ -1,10 +1,6 @@
 import {RecurringOptions} from "@/src/domain/entities";
 
-export function isEventOccurringOnDate(option: RecurringOptions, date: string, events: IEvent[]) {
-    if (events.length > 0) {
-        return events.some(e => e.recurringId !== option.id);
-    }
-
+export function isEventOccurringOnDate(option: RecurringOptions, date: string) {
     const current = new Date(date);
     const start = new Date(option.startRepeat);
 

@@ -18,8 +18,8 @@ export class EventRepositoryImpl implements EventRepository {
         return dtos.map(mapEventDtoToEvent);
     };
 
-    async getSingleId(date: string, recurringId: string) {
-        return await this.datasource.getSingleEventId(date, recurringId);
+    async getEventId(date: string, recurringId: string, isRecurring: number) {
+        return await this.datasource.getEventId(date, recurringId, isRecurring);
     };
 
     async getTimeByDate(date: string, exceptId?: string) {
@@ -32,9 +32,13 @@ export class EventRepositoryImpl implements EventRepository {
 
     async edit(event: Event) {
         await this.datasource.editEvent(mapEventToEventDto(event));
-    }
+    };
 
     async delete(id: string) {
         await this.datasource.deleteEvent(id);
-    }
+    };
+
+    async deleteRecurring(id: string) {
+        await this.datasource.deleteRecurringEvents(id);
+    };
 }

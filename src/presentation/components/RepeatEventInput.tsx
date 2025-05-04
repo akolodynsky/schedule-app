@@ -1,13 +1,15 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import {Text, View} from 'react-native';
 import {useShallow} from "zustand/react/shallow";
 
 import {IntervalSection, LimitDateSection} from "@/src/presentation/components/RepeatSections";
 import {DayButton, FrequencyButton} from "@/src/presentation/components/RepeatButtons";
 import {useDateStore, useRecurringOptionsStore} from "../stores";
+import {getDayIndex} from "@/src/shared/utils";
 
 
-const options = ['once', 'daily', 'weekly', 'monthly'];
+type Frequency = 'once' | 'daily' | 'weekly' | 'monthly';
+const options: Frequency[] = ['once', 'daily', 'weekly', 'monthly'];
 const days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 
 
@@ -18,25 +20,22 @@ const RepeatEventInput = () => {
         }))
     );
 
-    const { frequency, endRepeat, setEndRepeat, daysOfWeek, setDaysOfWeek, disabled } = useRecurringOptionsStore(
+    const { frequency, endRepeat, setEndRepeat, weekDays, setWeekDays, disabled } = useRecurringOptionsStore(
         useShallow((state) => ({
             frequency: state.frequency,
             endRepeat: state.endRepeat,
             setEndRepeat: state.setEndRepeat,
-            daysOfWeek: state.weekDays,
-            setDaysOfWeek: state.setWeekDays,
+            weekDays: state.weekDays,
+            setWeekDays: state.setWeekDays,
             disabled: state.disabled
         }))
     );
 
-    const firstDayIndex = new Date(date).getDay();
-    const adjustedIndex = firstDayIndex === 0 ? 6 : firstDayIndex - 1;
-
     useEffect(() => {
-        if (daysOfWeek.length === 0 && frequency === "weekly") {
-            setDaysOfWeek([adjustedIndex])
+        if (weekDays.length === 0 && frequency === "weekly") {
+            setWeekDays([getDayIndex(date)])
         }
-    }, [date]);
+    }, [frequency, date]);
 
     useEffect(() => {
         if (endRepeat && new Date(date) >= new Date(endRepeat)) setEndRepeat("");

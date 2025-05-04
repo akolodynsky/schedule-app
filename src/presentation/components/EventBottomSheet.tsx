@@ -6,8 +6,7 @@ import {useShallow} from "zustand/react/shallow";
 
 import EventBottomCard from "./EventBottomCard";
 import {useDateStore, useEventStore, useRecurringOptionsStore, useTaskStore} from "../stores";
-import {loadEvents, removeEvent, updateEventState, updateRecurringState} from "@/src/presentation/services/eventActions";
-//import {updateRecurring} from "@/src/storage/recurring-events";
+import {removeEvent, updateEventState, updateRecurringState} from "../services/event";
 
 
 const EventBottomSheet = () => {
@@ -28,9 +27,8 @@ const EventBottomSheet = () => {
         }))
     );
 
-    const { selectedDate, setDate } = useDateStore(
+    const { setDate } = useDateStore(
         useShallow((state) => ({
-            selectedDate: state.selectedDate,
             setDate: state.setDate,
         }))
     );
@@ -47,9 +45,12 @@ const EventBottomSheet = () => {
         }
     }, [selectedEvent]);
 
-    const handleRemoveEvent = async (id: string) => {
-        await removeEvent(id, selectedEvent?.recurringId!);
-        void loadEvents(selectedDate);
+    const handleRemoveEvent = async (id: string, recurringId: string, recurring: boolean) => {
+        if (recurringId && recurring) {
+            await removeEvent(recurringId, true);
+        } else {
+            await removeEvent(id, true);
+        }
         bottomSheetRef.current?.close();
     }
 

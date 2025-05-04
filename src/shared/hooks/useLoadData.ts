@@ -3,7 +3,7 @@ import {useCallback, useEffect} from 'react';
 import {useDateStore, useEventStore} from "../../presentation/stores";
 
 import {useFocusEffect} from "expo-router";
-import {loadEvents} from "@/src/presentation/services/eventActions";
+import {loadEvents} from "../../presentation/services/event";
 import {loadCategories} from "@/src/presentation/services/categoryActions";
 
 

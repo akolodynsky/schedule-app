@@ -4,10 +4,11 @@ export class RecurringOptions {
     public readonly id: string
     public readonly frequency: Frequency
     public readonly interval: number
-    public readonly weekDays: number[] | null
+    public readonly weekDays: number[]
     public readonly monthDay: number | null
     public readonly startRepeat: string
     public readonly endRepeat: string | null
+    public readonly exceptDays: string | null
 
     constructor({
         id,
@@ -16,7 +17,8 @@ export class RecurringOptions {
         weekDays,
         monthDay,
         startRepeat,
-        endRepeat
+        endRepeat,
+        exceptDays,
     }: RecurringOptions) {
         this.id = id;
         this.frequency = frequency;
@@ -25,5 +27,6 @@ export class RecurringOptions {
         this.monthDay = monthDay;
         this.startRepeat = startRepeat;
         this.endRepeat = endRepeat;
+        this.exceptDays = exceptDays;
     }
 }

@@ -4,7 +4,7 @@ import { create } from 'zustand'
 interface RecurringOptionsState {
     frequency: "once" | "daily" | "weekly" | "monthly";
     interval: number;
-    weekDays: number[] | null;
+    weekDays: number[];
     endRepeat: string | null;
     disabled: boolean;
 }
@@ -14,7 +14,7 @@ interface RecurringOptionsAction {
 
     setFrequency: (frequency: "once" | "daily" | "weekly" | "monthly") => void,
     setInterval: (number: number) => void,
-    setWeekDays: (weekDays: number[] | null) => void,
+    setWeekDays: (weekDays: number[]) => void,
     setEndRepeat: (endRepeat: string | null) => void,
     setDisabled: (disabled: boolean) => void,
 }

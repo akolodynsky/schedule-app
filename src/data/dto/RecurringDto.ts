@@ -6,4 +6,5 @@ export interface RecurringDto {
     month_day: number | null;
     start_repeat: string;
     end_repeat: string | null;
+    except_days: string | null;
 }

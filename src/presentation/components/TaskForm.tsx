@@ -9,7 +9,7 @@ import ModalInput from "@/src/presentation/components/ui/ModalInput";
 import ErrorModal from "@/src/presentation/components/ui/ErrorModal";
 import EventsModal from "@/src/presentation/components/EventsModal";
 import {useDateStore, useEventStore, useTaskStore} from "../stores";
-import {loadEvents} from "@/src/presentation/services/eventActions";
+import {loadEvents} from "../services/event";
 
 
 const TaskForm = () => {

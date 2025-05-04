@@ -72,10 +72,15 @@ export function checkTimeOverlap (newStart: string, newEnd: string, events: {sta
     return { isOverlap, maxEndTime };
 }
 
-export const getMonthAndYear = (date: string) => {
+export function getMonthAndYear (date: string)  {
     const options: Intl.DateTimeFormatOptions = {year: 'numeric', month: 'long'};
     const dateText = new Date(date).toLocaleDateString('en-US', options);
     const month = dateText.split(" ")[0];
     const year = dateText.split(" ")[1];
     return {month, year};
-};
+}
+
+export function getDayIndex (date: string) {
+    const firstDayIndex = new Date(date).getDay();
+    return firstDayIndex === 0 ? 6 : firstDayIndex - 1;
+}

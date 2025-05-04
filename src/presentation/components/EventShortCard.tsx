@@ -17,11 +17,11 @@ const EventShortCard = ({event, remove}: {event: IEvent, remove?: () => void}) =
                 </View>
 
                 <View className="gap-4 flex-row items-center">
-                    {event.tasks && event.tasks.length > 0 &&
-                        <Text className="font-inter_medium text-light-300 text-sm">
-                            {event.tasks.length} Task{event.tasks.length > 1 && 's'}
-                        </Text>
-                    }
+                    {/*{event.tasks && event.tasks.length > 0 &&*/}
+                    {/*    <Text className="font-inter_medium text-light-300 text-sm">*/}
+                    {/*        {event.tasks.length} Task{event.tasks.length > 1 && 's'}*/}
+                    {/*    </Text>*/}
+                    {/*}*/}
 
                     {remove && (
                         <TouchableOpacity onPress={remove}>

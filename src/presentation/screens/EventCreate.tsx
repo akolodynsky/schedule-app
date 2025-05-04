@@ -3,11 +3,11 @@ import {KeyboardAvoidingView, Platform, ScrollView, View} from "react-native";
 import {router} from "expo-router";
 import {useShallow} from "zustand/react/shallow";
 
-import PageRouteButtons from "@/src/presentation/components/ui/PageRouteButtons";
-import PageHeader from "@/src/presentation/components/ui/PageHeader";
+import PageRouteButtons from "../components/ui/PageRouteButtons";
+import PageHeader from "../components/ui/PageHeader";
 import EventForm from "../components/EventForm";
 import {useEventStore, useRecurringOptionsStore} from "../stores";
-import {createEvent, updateEvent} from "@/src/presentation/services/eventActions";
+import {createEvent, removeEvent, updateEvent} from "../services/event";
 
 
 export default function EventCreate()  {
@@ -33,24 +33,34 @@ export default function EventCreate()  {
         }
     };
 
+    const handleRemoveRecurringEvents = async () => {
+        if (selectedEvent?.recurringId && selectedEvent?.isRecurring) {
+            await removeEvent(selectedEvent.recurringId);
+            handleBack();
+        }
+    };
+
     const handleBack = () => {
         router.back();
         reset();
         resetRecurring();
     };
 
+    const condition = selectedEvent && (selectedEvent?.recurringId && !disabled);
+
     const header = !selectedEvent
         ? "Add Event"
-        : selectedEvent.recurringId && !disabled
+        : condition
             ? "Update All Events"
             : "Update Event";
 
     return (
         <>
             <PageRouteButtons
-                selected={selectedEvent && true}
+                selected={!!selectedEvent}
                 handleBack={handleBack}
                 handleAdd={handleAddEvent}
+                handleRemove={condition ? handleRemoveRecurringEvents : null}
             />
 
             <View className="flex-1 bg-dark-200">
