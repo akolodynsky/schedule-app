@@ -2,8 +2,6 @@ import {useDateStore, useEventStore} from "@/src/presentation/stores";
 import {checkTimeOverlap} from "@/src/shared/utils";
 import {container} from "@/src/shared/containers/container";
 
-const { eventUseCases } = container;
-
 
 export const validateEvent = async () => {
     const {selectedEvent, category, start, end, setStart, setEnd, setError} = useEventStore.getState();
@@ -14,7 +12,7 @@ export const validateEvent = async () => {
         return;
     }
 
-    const eventsTime = await eventUseCases.getEventsTimeByDate(date, selectedEvent?.id);
+    const eventsTime = await container.eventUseCases.getEventsTimeByDate(date, selectedEvent?.id);
 
     const { isOverlap, maxEndTime } = checkTimeOverlap(start, end, eventsTime);
 

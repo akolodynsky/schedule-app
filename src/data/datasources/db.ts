@@ -20,7 +20,9 @@ const defaultCategories: ICategory[] = [
 ];
 
 export const db = async () => {
-    const db = await SQLite.openDatabaseAsync("santitime");
+    const db = await SQLite.openDatabaseAsync("santitime", { useNewConnection: true });
+
+    console.log("init db")
 
     await db.execAsync(`
         PRAGMA journal_mode = WAL;
@@ -49,7 +51,7 @@ export const db = async () => {
             id TEXT PRIMARY KEY,
             date TEXT NOT NULL,
             name TEXT NOT NULL,
-            completed INTEGER DEFAULT 0
+            is_completed INTEGER DEFAULT 0
         );
 
         CREATE TABLE IF NOT EXISTS event_tasks (

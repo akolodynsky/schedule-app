@@ -16,7 +16,7 @@ const EventList = () => {
         }))
     );
 
-    const handlePress = (event: IEvent | Gap) => {
+    const handlePress = (event: IEvent | IGap) => {
         if (event.id.startsWith("g")) {
             router.push("/create");
             setStart(event.start);

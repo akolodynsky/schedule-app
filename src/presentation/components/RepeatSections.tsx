@@ -33,7 +33,7 @@ export const LimitDateSection = () => {
 
                 <AnimatedComponent ref={dateModalRef} modalStyle="justify-center items-center">
                     <DatePicker
-                        date={endRepeat}
+                        date={endRepeat!}
                         setDate={setEndRepeat}
                         onClose={() => dateModalRef.current?.close()}
                     />

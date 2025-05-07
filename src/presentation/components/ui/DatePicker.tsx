@@ -1,6 +1,7 @@
 import React, {memo} from 'react';
 import {Pressable, Text, View} from 'react-native';
-import {Calendar} from "react-native-calendars";
+import {Calendar, DateData} from "react-native-calendars";
+import {formatDate} from "@/src/shared/utils";
 
 
 interface DatePickerProps {
@@ -22,9 +23,8 @@ const DatePicker = memo(({date, setDate, onClose}: DatePickerProps) => {
                     paddingRight: 20,
                     paddingTop: 10
                 }}
-                onDayPress={(date: { timestamp: string }) => {
-                    const newDate = new Date(date.timestamp);
-                    setDate(newDate.toISOString().split("T")[0])
+                onDayPress={(date: DateData) => {
+                    setDate(date.dateString)
                     onClose()
                 }}
                 markedDates={{
@@ -39,6 +39,9 @@ const DatePicker = memo(({date, setDate, onClose}: DatePickerProps) => {
                     monthTextColor: "#efeff9",
                     textDisabledColor: "#6b6f85",
                     arrowColor: "#6f4bf7"
+                }}
+                renderHeader={(date: string) => {
+                    return <Text className="text-light-100 font-inter_medium text-[15px]">{formatDate(date)}</Text>;
                 }}
             />
 

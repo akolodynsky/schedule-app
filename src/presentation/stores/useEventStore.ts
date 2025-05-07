@@ -4,7 +4,6 @@ import { create } from 'zustand';
 interface EventState {
     events: (IEvent | Gap)[];
     selectedEvent: IEvent | null;
-    shouldReloadEvents: boolean;
     error: string,
 
     category: ICategory | null,
@@ -18,7 +17,6 @@ interface EventState {
 interface EventAction {
     setEvents: (events: (IEvent | Gap)[]) => void;
     setSelectedEvent: (selectedEvent: IEvent | null) => void;
-    setShouldReloadEvents: (shouldReloadEvents: boolean) => void;
     setError: (error: string) => void,
     reset: () => void,
 
@@ -30,7 +28,7 @@ interface EventAction {
     setEnd: (end: string) => void,
 }
 
-const initialState: Omit<EventState, "events" | "shouldReloadEvents"> = {
+const initialState: Omit<EventState, "events"> = {
     selectedEvent: null,
     error: "",
 
@@ -46,8 +44,6 @@ export const useEventStore = create<EventState & EventAction>()((set) => ({
     events: [],
     setEvents: (events: (IEvent | Gap)[]) => set({ events }),
     setSelectedEvent: (selectedEvent: IEvent | null) => set({ selectedEvent }),
-    shouldReloadEvents: false,
-    setShouldReloadEvents: (shouldReloadEvents: boolean) => set({ shouldReloadEvents }),
     setError: (error) => set({ error }),
     reset: () => {
         set(initialState)

@@ -2,14 +2,14 @@ import {generateUniqueId, timeToNumber} from "../../shared/utils";
 import { Event } from "@/src/domain/entities/Event";
 
 
-export const addGaps = (events: Event[]): (Event | Gap)[] => {
+export const addGaps = (events: Event[]): (Event | IGap)[] => {
     if (!events.length) return [{
         id: generateUniqueId("g"),
         start: "00:00",
         end: "24:00"
     }];
 
-    const eventsWithGaps: (Event | Gap)[] = [];
+    const eventsWithGaps: (Event | IGap)[] = [];
 
     const addGap = (start: string, end: string) =>
         eventsWithGaps.push({

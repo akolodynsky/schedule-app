@@ -22,11 +22,11 @@ const TasksInput = () => {
 
     const addTask = () => {
         if (task.trim()) {
-            const newTask: Task = {
+            const newTask: ITask = {
                 id: generateUniqueId("t"),
-                isCompleted: false,
                 name: task,
                 date: date,
+                isCompleted: false,
             };
             setTasks([...tasks, newTask]);
             setTask("");

@@ -1,11 +1,10 @@
 import { create } from 'zustand'
-import {useEventStore} from "@/src/presentation/stores/useEventStore";
 
 
 interface TaskState {
-    selectedTask: Task | undefined,
+    selectedTask: ITask | null,
 
-    mergedTasksBlocks: MergedTasksBlock[];
+    tasks: ITaskBlock[];
     shouldReloadTasks: boolean,
 
     name: string,
@@ -14,10 +13,10 @@ interface TaskState {
 }
 
 interface TaskAction {
-    setMergedTasksBlocks: (mergedTasksBlocks: MergedTasksBlock[]) => void,
-    updateMergedTasks: (date: string, updatedTasks: Task[], eventId?: string) => void,
+    setTasks: (tasks: ITaskBlock[]) => void,
+    updateTaskBlock: (date: string, updatedTask: ITask, eventId?: string) => void,
 
-    setSelectedTask: (selectedTask: Task | undefined) => void,
+    setSelectedTask: (selectedTask: ITask | null) => void,
     setShouldReloadTasks: (shouldReloadTasks: boolean) => void,
 
     setName: (name: string) => void,
@@ -26,60 +25,58 @@ interface TaskAction {
     reset: () => void,
 }
 
-const initialState: Omit<TaskState, "shouldReloadTasks" | "mergedTasksBlocks"> = {
+const initialState: Omit<TaskState, "shouldReloadTasks" | "tasks"> = {
     name: "",
     isCompleted: false,
-    selectedTask: undefined,
+    selectedTask: null,
     error: "",
 }
 
 export const useTaskStore = create<TaskState & TaskAction>()((set) => ({
-    mergedTasksBlocks: [],
-    setMergedTasksBlocks: (mergedTasksBlocks) => {set({ mergedTasksBlocks })},
-    updateMergedTasks: (date, updatedTasks, eventId) => set(state => {
-        const blocks = [...state.mergedTasksBlocks];
+    tasks: [],
+    setTasks: (tasks) => set({ tasks }),
+    updateTaskBlock: (date, updatedTask) => set(state => {
+        const blocks = [...state.tasks];
         const index = blocks.findIndex(block => block.date === date);
 
         if (index !== -1) {
-            if (eventId) {
-                const updatedEvents = blocks[index].events.map(event =>
-                    event.id === eventId
-                        ? {...event, tasks: updatedTasks}
-                        : event
-                );
+            const block = blocks[index];
+            const existingTaskIndex = block.tasks.findIndex(task => task.id === updatedTask.id);
 
-                blocks[index] = {
-                    ...blocks[index],
-                    events: updatedEvents,
-                };
+            let newTasks;
+
+            if (existingTaskIndex !== -1) {
+                newTasks = [...block.tasks];
+                newTasks[existingTaskIndex] = updatedTask;
             } else {
-                blocks[index] = {
-                    ...blocks[index],
-                    tasks: updatedTasks,
-                };
+                newTasks = [...block.tasks, updatedTask];
+            }
+
+            blocks[index] = {
+                ...block,
+                tasks: newTasks,
             }
         } else {
             blocks.push({
-                date,
-                tasks: updatedTasks,
-                events: [],
-            });
+                date: updatedTask.date,
+                tasks: [updatedTask],
+            })
 
             blocks.sort((a, b) => a.date.localeCompare(b.date));
         }
 
-        return { mergedTasksBlocks: blocks };
+        return { tasks: blocks };
     }),
 
-    setSelectedTask: (selectedTask: Task | undefined) => set({ selectedTask }),
+    setSelectedTask: (selectedTask) => set({ selectedTask }),
     shouldReloadTasks: true,
-    setShouldReloadTasks: (shouldReloadTasks: boolean) => set({ shouldReloadTasks }),
+    setShouldReloadTasks: (shouldReloadTasks) => set({ shouldReloadTasks }),
 
     ...initialState,
 
     setName: (name) => set({ name }),
     setIsCompleted: (isCompleted) => set({ isCompleted }),
-    setError: (error: string) => set({ error }),
+    setError: (error) => set({ error }),
     reset: () => {
         set(initialState)
     }

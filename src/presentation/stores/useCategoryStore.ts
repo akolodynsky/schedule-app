@@ -2,16 +2,16 @@ import { create } from 'zustand'
 
 
 interface CategoryState {
-    categories: Category[];
-    selectedCategory: Category | undefined;
+    categories: ICategory[];
+    selectedCategory: ICategory | undefined;
     name: string,
     color: string,
     error: string,
 }
 
 interface CategoryAction {
-    setSelectedCategory: (category: Category | undefined) => void;
-    setCategories: (categories: Category[]) => void,
+    setSelectedCategory: (category: ICategory | undefined) => void;
+    setCategories: (categories: ICategory[]) => void,
     setName: (name: string) => void,
     setColor: (color: string) => void,
     setError: (error: string) => void,
@@ -27,9 +27,9 @@ const initialState: Omit<CategoryState, "categories"> = {
 
 export const useCategoryStore = create<CategoryState & CategoryAction>()((set) => ({
     categories: [],
-    setCategories: (categories: Category[]) => set({ categories }),
+    setCategories: (categories: ICategory[]) => set({ categories }),
 
-    setSelectedCategory: (category: Category | undefined) => set({ selectedCategory: category }),
+    setSelectedCategory: (category: ICategory | undefined) => set({ selectedCategory: category }),
 
     ...initialState,
 

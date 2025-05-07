@@ -10,6 +10,12 @@ interface IEvent {
     isRecurring: boolean,
 }
 
+interface IGap {
+    id: string;
+    start: string;
+    end: string;
+}
+
 interface ICategory  {
     id: string,
     name: string,
@@ -32,4 +38,9 @@ interface ITask {
     date: string;
     name: string;
     isCompleted: boolean;
+}
+
+interface ITaskBlock {
+    date: string,
+    tasks: ITask[],
 }

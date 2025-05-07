@@ -7,7 +7,7 @@ import {getDuration, isCurrentTime} from "../../shared/utils";
 import {useAnimatedScale} from "../../shared/hooks";
 
 
-const EventCard = (props: (IEvent | Gap) & {first: number, handlePress: () => void}) => {
+const EventCard = (props: (IEvent | IGap) & {first: number, handlePress: () => void}) => {
     const { start, end, first, handlePress } = props;
 
     const {animatedStyle, handlePressOut, handlePressIn} = useAnimatedScale();

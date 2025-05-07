@@ -1,16 +1,16 @@
 import {router} from "expo-router";
 
 import {useDateStore, useEventStore, useRecurringOptionsStore} from "@/src/presentation/stores";
-import {container} from "@/src/shared/containers/container";
 import {generateUniqueId, getDayIndex} from "@/src/shared/utils";
 import {RecurringOptions} from "@/src/domain/entities";
-import {validateEvent, loadEvents} from ".";
-
-const { eventUseCases } = container;
+import { validateEvent } from "./validateEvent";
+import { loadEvents } from "./loadEvents";
+import {container} from "@/src/shared/containers/container";
 
 
 export const createEvent = async () => {
-    const {category, name, description, tasks, start, end, reset} = useEventStore.getState();
+
+    const {category, name, description, start, end, reset} = useEventStore.getState();
     const {frequency, interval, weekDays, endRepeat, resetRecurring} = useRecurringOptionsStore.getState();
     const {selectedDate, date} = useDateStore.getState();
 
@@ -25,7 +25,7 @@ export const createEvent = async () => {
         recurringOptions = {id, frequency, interval, weekDays: daysOfWeek, monthDay, startRepeat: date, endRepeat, exceptDays: null};
     }
 
-    await eventUseCases.createEvent(date, name, description, category!, start, end, recurringOptions)
+    await container.eventUseCases.createEvent(date, name, description, category!, start, end, recurringOptions)
 
     await loadEvents(selectedDate);
     router.back();
