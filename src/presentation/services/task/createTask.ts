@@ -6,7 +6,7 @@ import {loadTasks} from "@/src/presentation/services/task/loadTasks";
 
 
 export const createTask = async (handleBack: () => void) => {
-    const {name, reset} = useTaskStore.getState();
+    const {name} = useTaskStore.getState();
     const {date} = useDateStore.getState();
 
     if (await validateTask()) return;

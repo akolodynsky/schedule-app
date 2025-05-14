@@ -4,7 +4,7 @@ import {container} from "@/src/shared/containers/container";
 import {loadTasks} from "@/src/presentation/services/task/loadTasks";
 
 
-export const updateTask = async (id: string, handleBack?: () => void) => {
+export const updateTask = async (id: string, eventId: string | undefined, handleBack?: () => void) => {
     const {name, isCompleted} = useTaskStore.getState();
     const {date} = useDateStore.getState();
 
@@ -12,7 +12,7 @@ export const updateTask = async (id: string, handleBack?: () => void) => {
 
     const completed = !handleBack ? !isCompleted : isCompleted
 
-    await container.taskUseCases.updateTask(id, date, name, completed);
+    await container.taskUseCases.updateTask(id, date, name, completed, eventId);
     if (handleBack) {
         await loadTasks();
         handleBack();

@@ -77,6 +77,8 @@ export class EventUseCases {
 
         const isRecurring = !!recurringOptions;
         await this.eventRepository.edit({id: eventId, date, name, description, category, start, end, isRecurring, recurringId});
+
+        return eventId;
     };
 
     async updateSingleEvent(
@@ -88,17 +90,18 @@ export class EventUseCases {
         end: string,
         recurringId: string,
     ) {
-
-        const id = await this.eventRepository.getEventId(date, recurringId, 0);
+        let id = await this.eventRepository.getEventId(date, recurringId, 0);
 
         await this.recurringRepository.insertExceptDate(recurringId, date);
 
         if (id) {
             await this.eventRepository.edit({id, date, name, description, category, start, end, isRecurring: false, recurringId});
         } else {
-            const id = generateUniqueId("e");
+            id = generateUniqueId("e");
             await this.eventRepository.insert({id, date, name, description, category, start, end, isRecurring: false, recurringId});
         }
+
+        return id;
     };
 
     async deleteSingleEvent(id: string, date: string) {

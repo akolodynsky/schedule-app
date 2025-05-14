@@ -9,7 +9,7 @@ export const validateEvent = async () => {
 
     if (!category) {
         setError("Category is required!");
-        return;
+        return true;
     }
 
     const eventsTime = await container.eventUseCases.getEventsTimeByDate(date, selectedEvent?.id);
@@ -20,6 +20,8 @@ export const validateEvent = async () => {
         setStart(maxEndTime);
         setEnd(maxEndTime);
         setError("Time overload detected!");
-        return;
+        return true;
     }
+
+    return false;
 };

@@ -36,6 +36,7 @@ interface IRecurringOptions {
 
 interface ITask {
     id: string;
+    eventId?: string;
     date: string;
     name: string;
     isCompleted: boolean;

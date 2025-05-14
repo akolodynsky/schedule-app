@@ -28,15 +28,19 @@ export class TaskUseCases {
         return await this.taskRepository.getByEventId(id);
     };
 
-    async createTask(id: string, date: string, name: string, eventId?: string) {
-        await this.taskRepository.insert({id, eventId, date, name, isCompleted: false});
+    async createTask(id: string, date: string, name: string, isCompleted?: boolean, eventId?: string) {
+        await this.taskRepository.insert({id, eventId, date, name, isCompleted: isCompleted ?? false});
     };
 
-    async updateTask(id: string, date: string, name: string, isCompleted: boolean) {
-        await this.taskRepository.edit({id, date, name, isCompleted});
+    async updateTask(id: string, date: string, name: string, isCompleted: boolean, eventId?: string) {
+        await this.taskRepository.edit({id, eventId, date, name, isCompleted});
     };
 
     async deleteTask(id: string) {
-        await this.taskRepository.delete(id);
+        if (id.startsWith("t")) {
+            await this.taskRepository.delete(id);
+        } else {
+            await this.taskRepository.deleteByEventId(id);
+        }
     };
 }

@@ -57,14 +57,6 @@ export const db = async () => {
             FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
         );
 
-        CREATE TABLE IF NOT EXISTS event_tasks (
-            event_id  TEXT,
-            task_id TEXT,
-            PRIMARY KEY (event_id, task_id),
-            FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
-            FOREIGN KEY (task_id) REFERENCES tasks(id)
-        );
-
         CREATE TABLE IF NOT EXISTS recurring_options (
             id TEXT PRIMARY KEY,
             frequency TEXT NOT NULL,

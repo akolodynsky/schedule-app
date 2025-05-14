@@ -21,20 +21,6 @@ const EventBottomSheet = () => {
         }))
     );
 
-    const { setSelectedTask, setName, setIsCompleted } = useTaskStore(
-        useShallow((state) => ({
-            setSelectedTask: state.setSelectedTask,
-            setName: state.setName,
-            setIsCompleted: state.setIsCompleted,
-        }))
-    );
-
-    const { setDate } = useDateStore(
-        useShallow((state) => ({
-            setDate: state.setDate,
-        }))
-    );
-
     const setDisabled = useRecurringOptionsStore(
         useShallow(state => state.setDisabled)
     );
@@ -81,7 +67,7 @@ const EventBottomSheet = () => {
 
     const handleCheckTask = async (task: ITask) => {
         updateTaskState(task);
-        await updateTask(task.id);
+        await updateTask(task.id, task.eventId);
     }
 
     const handleUpdateTask = (task: ITask) => {

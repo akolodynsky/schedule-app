@@ -35,12 +35,16 @@ export class TaskDatasource {
 
     async editTask(dto: TaskDto) {
         await this.db.runAsync(
-            'UPDATE tasks SET date = ?, name = ?, is_completed = ? WHERE id = ?',
-            dto.date, dto.name, dto.is_completed, dto.id
+            'UPDATE tasks SET event_id = ?, date = ?, name = ?, is_completed = ? WHERE id = ?',
+            dto.event_id, dto.date, dto.name, dto.is_completed, dto.id
         );
     };
 
     async deleteTask(id: string) {
         await this.db.runAsync('DELETE FROM tasks WHERE id = ?', id);
+    };
+
+    async deleteTaskByEventId(id: string) {
+        await this.db.runAsync('DELETE FROM tasks WHERE event_id = ?', id);
     };
 }

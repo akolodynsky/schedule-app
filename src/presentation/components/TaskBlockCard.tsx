@@ -15,7 +15,7 @@ const TaskBlockCard = ({taskBlock, taskCheck, taskUpdate}: TaskBlockCardProps) =
     const currentDate = new Date().toISOString().split("T")[0];
     const date = taskBlock.date === currentDate ? "Today" : formatDate(taskBlock.date)
 
-    //console.log(taskBlock.tasks)
+    console.log(taskBlock.tasks)
 
     return (
         taskBlock.tasks.length > 0) && (

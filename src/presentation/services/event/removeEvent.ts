@@ -10,5 +10,7 @@ export const removeEvent = async (id: string, single?: boolean) => {
     } else {
         await container.eventUseCases.deleteRecurringEvents(id);
     }
+
+    await container.taskUseCases.deleteTask(id);
     await loadEvents(selectedDate);
 };

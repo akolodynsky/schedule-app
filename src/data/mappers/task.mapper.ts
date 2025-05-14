@@ -2,7 +2,6 @@ import { TaskDto } from "@/src/data/dto/TaskDto";
 import { Task } from "@/src/domain/entities/Task";
 
 export const mapTaskDtoToTask = (dto: TaskDto) => {
-    console.log("dto", dto)
     return new Task({
         id: dto.id,
         eventId: dto.event_id!,

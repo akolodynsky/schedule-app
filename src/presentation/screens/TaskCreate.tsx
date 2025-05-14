@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {View} from "react-native";
 import {router} from "expo-router";
 import {useShallow} from "zustand/react/shallow";
@@ -19,9 +19,10 @@ export default function TaskCreate()  {
         }))
     );
 
-    const { setSelectedEvent } = useEventStore(
+    const { selectedEvent, setSelectedEvent } = useEventStore(
         useShallow((state) => ({
-            setSelectedEvent: state.setSelectedEvent,
+            selectedEvent: state.selectedEvent,
+            setSelectedEvent: state.setSelectedEvent
         }))
     );
 
@@ -29,7 +30,7 @@ export default function TaskCreate()  {
         if (!selectedTask) {
             await createTask(handleBack);
         } else {
-            await updateTask(selectedTask.id, handleBack);
+            await updateTask(selectedTask.id, selectedEvent?.id, handleBack);
         }
     };
 

@@ -14,13 +14,15 @@ export class RecurringDatasource {
     };
 
     async getRecurringOptionsByDate(date: string) {
-        return await this.db.getAllAsync<RecurringDto>(
+        const options = await this.db.getAllAsync<RecurringDto>(
             `SELECT * FROM recurring_options
              WHERE start_repeat <= ? 
                AND (end_repeat IS NULL OR end_repeat >= ?)
                AND (except_days IS NULL OR ',' || except_days || ',' NOT LIKE ?)
              `, date, date, `%,${date},%`
         );
+        console.log(options)
+        return options;
     };
 
     async getRecurringOptionsById(id: string) {

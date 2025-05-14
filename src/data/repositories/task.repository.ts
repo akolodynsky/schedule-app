@@ -28,4 +28,8 @@ export class TaskRepositoryImpl implements TaskRepository {
     async delete(id: string) {
         await this.datasource.deleteTask(id);
     };
+
+    async deleteByEventId(id: string) {
+        await this.datasource.deleteTaskByEventId(id);
+    };
 }

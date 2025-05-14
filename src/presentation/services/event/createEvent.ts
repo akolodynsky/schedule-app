@@ -13,7 +13,7 @@ export const createEvent = async () => {
     const {frequency, interval, weekDays, endRepeat, resetRecurring} = useRecurringOptionsStore.getState();
     const {selectedDate, date} = useDateStore.getState();
 
-    await validateEvent();
+    if (await validateEvent()) return;
 
     let recurringOptions: RecurringOptions | null = null;
 
@@ -28,11 +28,9 @@ export const createEvent = async () => {
 
     await container.eventUseCases.createEvent(id, date, name, description, category!, start, end, recurringOptions);
 
-    console.log("tasks state", tasks);
-
     if (tasks && tasks.length > 0) {
         tasks.map(async (task) => {
-            await container.taskUseCases.createTask(task.id, task.date, task.name, id);
+            await container.taskUseCases.createTask(task.id, task.date, task.name, task.isCompleted, id);
         });
     }
 
