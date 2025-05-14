@@ -15,6 +15,8 @@ const TaskBlockCard = ({taskBlock, taskCheck, taskUpdate}: TaskBlockCardProps) =
     const currentDate = new Date().toISOString().split("T")[0];
     const date = taskBlock.date === currentDate ? "Today" : formatDate(taskBlock.date)
 
+    //console.log(taskBlock.tasks)
+
     return (
         taskBlock.tasks.length > 0) && (
             <View key={taskBlock.date} className="bg-dark-100 rounded-3xl px-5 py-5 mb-6">

@@ -34,6 +34,7 @@ export class EventUseCases {
     };
 
     async createEvent(
+        id: string,
         date: string,
         name: string,
         description: string,
@@ -49,7 +50,6 @@ export class EventUseCases {
             await this.recurringRepository.insertOrEdit(recurringOptions);
         }
 
-        const id = generateUniqueId("e");
         const isRecurring = !!recurringOptions;
 
         await this.eventRepository.insert({id, date, name, description, category, start, end, isRecurring, recurringId});

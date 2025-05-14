@@ -12,6 +12,11 @@ export class TaskRepositoryImpl implements TaskRepository {
         return dtos.map(mapTaskDtoToTask);
     };
 
+    async getByEventId(id: string) {
+        const dtos = await this.datasource.getTasksByEventId(id);
+        return dtos.map(mapTaskDtoToTask);
+    };
+
     async insert(task: Task) {
         await this.datasource.insertTask(mapTaskToTaskDto(task));
     };

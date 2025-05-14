@@ -6,6 +6,7 @@ export class Event {
     public readonly name: string | null;
     public readonly description: string | null;
     public readonly category: Category;
+    public readonly tasksCount: number;
     public readonly start: string;
     public readonly end: string;
     public readonly isRecurring: boolean;
@@ -19,6 +20,7 @@ export class Event {
         start,
         end,
         category,
+        tasksCount,
         isRecurring,
         recurringId
     }: Event) {
@@ -29,6 +31,7 @@ export class Event {
         this.start = start;
         this.end = end;
         this.category = category;
+        this.tasksCount = tasksCount;
         this.isRecurring = isRecurring;
         this.recurringId = recurringId;
     }

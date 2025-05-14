@@ -6,6 +6,8 @@ export const validateTask = async () => {
 
     if (!name) {
         setError("Name is required!");
-        return;
+        return true;
     }
+
+    return false;
 };

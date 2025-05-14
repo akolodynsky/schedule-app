@@ -14,6 +14,7 @@ export const mapEventDtoToEvent = (dto: EventDto) => {
             name: dto.category_name,
             color: dto.category_color,
         },
+        tasksCount: dto.tasks_count,
         isRecurring: !!dto.is_recurring,
         recurringId: dto.recurring_id,
     })
@@ -30,6 +31,7 @@ export const mapEventToEventDto = (event: Event): EventDto => {
         category_id: event.category.id,
         category_name: event.category.name,
         category_color: event.category.color,
+        tasks_count: event.tasksCount,
         is_recurring: event.isRecurring ? 1 : 0,
         recurring_id: event.recurringId,
     }

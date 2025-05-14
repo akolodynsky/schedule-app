@@ -24,9 +24,12 @@ export class TaskUseCases {
         }));
     };
 
+    async getTasksByEventId(id: string) {
+        return await this.taskRepository.getByEventId(id);
+    };
 
-    async createTask(id: string, date: string, name: string) {
-        await this.taskRepository.insert({id, date, name, isCompleted: false});
+    async createTask(id: string, date: string, name: string, eventId?: string) {
+        await this.taskRepository.insert({id, eventId, date, name, isCompleted: false});
     };
 
     async updateTask(id: string, date: string, name: string, isCompleted: boolean) {

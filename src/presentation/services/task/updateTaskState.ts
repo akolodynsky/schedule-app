@@ -1,4 +1,5 @@
-import {useDateStore, useTaskStore} from "@/src/presentation/stores";
+import {useDateStore, useEventStore, useTaskStore} from "@/src/presentation/stores";
+import {container} from "@/src/shared/containers/container";
 
 
 export const updateTaskState = (selectedTask: ITask) => {
@@ -9,4 +10,10 @@ export const updateTaskState = (selectedTask: ITask) => {
     setName(selectedTask.name);
     setIsCompleted(selectedTask.isCompleted);
     setDate(selectedTask.date);
+};
+
+export const updateTasksState = async (id: string) => {
+    const tasks = await container.taskUseCases.getTasksByEventId(id);
+
+    useEventStore.getState().setTasks(tasks);
 };

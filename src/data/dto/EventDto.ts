@@ -6,6 +6,7 @@ export interface EventDto {
     category_id: string;
     category_name: string;
     category_color: string;
+    tasks_count: number;
     start: string;
     end: string;
     is_recurring: 0 | 1;

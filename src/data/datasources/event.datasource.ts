@@ -14,28 +14,46 @@ export class EventDatasource {
     };
 
     async getSingleEventsByDate(date: string) {
-        return await this.db.getAllAsync<EventDto>(
-            `SELECT events.*,
+        try {
+            return await this.db.getAllAsync<EventDto>(
+                `SELECT events.*,
                     categories.id    AS category_id,
                     categories.name  AS category_name,
-                    categories.color AS category_color
+                    categories.color AS category_color,
+                    (
+                        SELECT COUNT(*)
+                        FROM tasks
+                        WHERE tasks.event_id = events.id
+                    ) AS tasks_count
              FROM events
              LEFT JOIN categories ON events.category_id = categories.id
              WHERE date = ? AND is_recurring = 0`, date
-        );
+            );
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     async getRecurringEventsByOptions(recurringIds: string[]) {
-        const placeholders = recurringIds.map(() => '?').join(', ');
-        return await this.db.getAllAsync<EventDto>(
-            `SELECT events.*,
+        try {
+            const placeholders = recurringIds.map(() => '?').join(', ');
+            return await this.db.getAllAsync<EventDto>(
+                `SELECT events.*,
                     categories.id    AS category_id,
                     categories.name  AS category_name,
-                    categories.color AS category_color
+                    categories.color AS category_color,
+                    (   
+                        SELECT COUNT(*)
+                        FROM tasks
+                        WHERE tasks.event_id = events.id
+                    ) AS tasks_count
              FROM events
              LEFT JOIN categories ON events.category_id = categories.id
              WHERE recurring_id IN (${placeholders}) AND is_recurring = 1`, recurringIds
-        );
+            );
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     async getEventId(date: string, recurringId: string, isRecurring: number) {

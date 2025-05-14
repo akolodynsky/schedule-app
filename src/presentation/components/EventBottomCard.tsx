@@ -17,7 +17,7 @@ interface EventBottomCardProps {
 }
 
 const EventBottomCard = ({ update, remove, checkTask, updateTask, updateRecurring }: EventBottomCardProps) => {
-    const { selectedEvent } = useEventStore();
+    const { selectedEvent, tasks } = useEventStore();
 
     if (!selectedEvent) return null;
 
@@ -60,17 +60,17 @@ const EventBottomCard = ({ update, remove, checkTask, updateTask, updateRecurrin
                         <Text className="font-inter_medium text-light-200 text-lg">{description}</Text>}
                 </View>
 
-                {/*{tasks && tasks.length > 0 &&*/}
-                {/*    <View className="bg-dark-200 px-4 py-4 rounded-[28px] gap-2">*/}
-                {/*        {tasks.map((task) => (*/}
-                {/*            <TaskCard*/}
-                {/*                key={task.id}*/}
-                {/*                task={task}*/}
-                {/*                check={() => checkTask(task, id)}*/}
-                {/*                longPress={() => updateTask(task, selectedEvent)}*/}
-                {/*            />*/}
-                {/*        ))}*/}
-                {/*    </View>}*/}
+                {tasks && tasks.length > 0 &&
+                    <View className="bg-dark-200 px-4 py-4 rounded-[28px] gap-2">
+                        {tasks.map((task) => (
+                            <TaskCard
+                                key={task.id}
+                                task={task}
+                                check={() => checkTask(task, id)}
+                                longPress={() => updateTask(task, selectedEvent)}
+                            />
+                        ))}
+                    </View>}
             </View>
         </>
     );

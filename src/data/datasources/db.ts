@@ -40,6 +40,7 @@ export const db = async () => {
             name TEXT,
             description TEXT,
             category_id TEXT NOT NULL,
+            tasks_count INTEGER DEFAULT 0,
             start TEXT NOT NULL,
             end TEXT NOT NULL,
             is_recurring INTEGER DEFAULT 0,
@@ -49,16 +50,18 @@ export const db = async () => {
 
         CREATE TABLE IF NOT EXISTS tasks (
             id TEXT PRIMARY KEY,
+            event_id TEXT,
             date TEXT NOT NULL,
             name TEXT NOT NULL,
-            is_completed INTEGER DEFAULT 0
+            is_completed INTEGER DEFAULT 0,
+            FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE
         );
 
         CREATE TABLE IF NOT EXISTS event_tasks (
             event_id  TEXT,
             task_id TEXT,
             PRIMARY KEY (event_id, task_id),
-            FOREIGN KEY (event_id) REFERENCES events(id),
+            FOREIGN KEY (event_id) REFERENCES events(id) ON DELETE CASCADE,
             FOREIGN KEY (task_id) REFERENCES tasks(id)
         );
 

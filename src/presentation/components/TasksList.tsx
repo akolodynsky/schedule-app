@@ -17,7 +17,7 @@ const TasksList = () => {
 
     const handleCheck = async (task: ITask) => {
         updateTaskState(task);
-        await updateTask(task.id, true);
+        await updateTask(task.id);
     }
 
     const handleUpdate = (task: ITask) => {

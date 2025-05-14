@@ -4,6 +4,7 @@ interface IEvent {
     name: string | null,
     description: string | null,
     category: ICategory,
+    tasksCount: number,
     start: string,
     end: string,
     recurringId: string | null,

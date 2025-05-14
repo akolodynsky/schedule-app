@@ -13,7 +13,7 @@ import {CategoryDatasource} from "@/src/data/datasources/category.datasource";
 export const container = {
     eventUseCases: new EventUseCases(
         new EventRepositoryImpl(new EventDatasource()),
-        new RecurringRepositoryImpl(new RecurringDatasource())
+        new RecurringRepositoryImpl(new RecurringDatasource()),
     ),
     categoryUseCases: new CategoryUseCases(
         new CategoryRepositoryImpl(new CategoryDatasource()),

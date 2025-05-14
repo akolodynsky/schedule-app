@@ -7,15 +7,17 @@ import {useShallow} from "zustand/react/shallow";
 import EventBottomCard from "./EventBottomCard";
 import {useDateStore, useEventStore, useRecurringOptionsStore, useTaskStore} from "../stores";
 import {removeEvent, updateEventState, updateRecurringState} from "../services/event";
+import {updateTask, updateTasksState, updateTaskState} from "@/src/presentation/services/task";
 
 
 const EventBottomSheet = () => {
     const bottomSheetRef = useRef<BottomSheetMethods>(null);
 
-    const { selectedEvent, setSelectedEvent } = useEventStore(
+    const { selectedEvent, setSelectedEvent, setTasks } = useEventStore(
         useShallow((state) => ({
             selectedEvent: state.selectedEvent,
             setSelectedEvent: state.setSelectedEvent,
+            setTasks: state.setTasks
         }))
     );
 
@@ -40,8 +42,12 @@ const EventBottomSheet = () => {
     useEffect(() => {
         if (selectedEvent) {
             bottomSheetRef.current?.snapToIndex(0)
+            if (selectedEvent.tasksCount > 0) {
+                void updateTasksState(selectedEvent.id)
+            }
         } else {
             bottomSheetRef.current?.close();
+            setTasks([]);
         }
     }, [selectedEvent]);
 
@@ -73,16 +79,13 @@ const EventBottomSheet = () => {
         }
     }
 
-    const handleCheckTask = async (task: ITask, eventId: string) => {
-        //await createTask(task.name, !task.isCompleted, task.date, task.id, eventId);
+    const handleCheckTask = async (task: ITask) => {
+        updateTaskState(task);
+        await updateTask(task.id);
     }
 
-    const handleUpdateTask = (task: ITask, event: IEvent) => {
-        event && setSelectedEvent(event);
-        setSelectedTask(task);
-        setName(task.name);
-        setIsCompleted(task.isCompleted);
-        setDate(task.date);
+    const handleUpdateTask = (task: ITask) => {
+        updateTaskState(task);
         router.push("/task");
     }
 

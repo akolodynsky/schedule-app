@@ -17,11 +17,20 @@ export class TaskDatasource {
         return await this.db.getAllAsync<TaskDto>('SELECT * FROM tasks');
     };
 
+    async getTasksByEventId(id: string) {
+        return await this.db.getAllAsync<TaskDto>('SELECT * FROM tasks WHERE event_id = ?', id);
+    };
+
     async insertTask(dto: TaskDto) {
-        await this.db.runAsync(
-            'INSERT INTO tasks (id, date, name, is_completed) VALUES (?, ?, ?, ?)',
-            [dto.id, dto.name, dto.date, dto.is_completed]
-        );
+        try {
+            await this.db.runAsync(
+                'INSERT INTO tasks (id, event_id, name, date, is_completed) VALUES (?, ?, ?, ?, ?)',
+                [dto.id, dto.event_id, dto.name, dto.date, dto.is_completed]
+            );
+        } catch (error) {
+            console.log(error);
+        }
+
     };
 
     async editTask(dto: TaskDto) {
