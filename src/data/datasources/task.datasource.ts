@@ -1,5 +1,6 @@
 import * as SQLite from "expo-sqlite";
 import {TaskDto} from "@/src/data/dto/TaskDto";
+import {generateUniqueId} from "@/src/shared/utils";
 
 
 export class TaskDatasource {
@@ -23,14 +24,22 @@ export class TaskDatasource {
 
     async insertTask(dto: TaskDto) {
         try {
+            console.log(dto.date)
             await this.db.runAsync(
                 'INSERT INTO tasks (id, event_id, name, date, is_completed) VALUES (?, ?, ?, ?, ?)',
                 [dto.id, dto.event_id, dto.name, dto.date, dto.is_completed]
             );
         } catch (error) {
-            console.log(error);
+            if (error instanceof Error && error.message.includes('UNIQUE constraint failed: tasks.id')) {
+                const id = generateUniqueId("t");
+                await this.db.runAsync(
+                    'INSERT INTO tasks (id, event_id, name, date, is_completed) VALUES (?, ?, ?, ?, ?)',
+                    [id, dto.event_id, dto.name, dto.date, dto.is_completed]
+                );
+            } else {
+                console.log("insertTask", error)
+            }
         }
-
     };
 
     async editTask(dto: TaskDto) {

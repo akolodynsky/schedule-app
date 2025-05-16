@@ -1,6 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 import {colors} from "@/src/shared/constants/colors";
 
+
 const defaultCategories: ICategory[] = [
     {id: "c-0", name: 'Eating', color: colors[0].shades[1]},
     {id: "c-1", name: 'Homework', color: colors[2].shades[1]},

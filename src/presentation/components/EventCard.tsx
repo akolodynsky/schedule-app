@@ -49,7 +49,7 @@ const EventCard = (props: (IEvent | IGap) & {first: number, handlePress: () => v
                             </View>
 
                             {props.tasksCount > 0 &&
-                                <View className="mb-2 bg-dark-100 self-start px-4 py-2 rounded-[36px] flex-row items-center">
+                                <View className="bg-dark-100 self-start px-4 py-2 rounded-[36px] flex-row items-center">
                                     <Text className="font-inter_medium text-light-100 text-sm">
                                         {props.tasksCount} Task{props.tasksCount > 1 && 's'}
                                     </Text>

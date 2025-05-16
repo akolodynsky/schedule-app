@@ -5,12 +5,11 @@ import { StatusBar } from 'expo-status-bar';
 import SplashScreenView from "@/src/presentation/components/ui/SplashScreenView";
 import {useAppLoading} from "../../shared/hooks";
 
+
 export default function RootLayout() {
     const appLoaded = useAppLoading();
 
     if (!appLoaded) return <SplashScreenView />;
-
-
 
     return (
         <>

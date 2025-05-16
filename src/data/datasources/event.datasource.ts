@@ -30,7 +30,7 @@ export class EventDatasource {
              WHERE date = ? AND is_recurring = 0`, date
             );
         } catch (e) {
-            console.error(e);
+            console.error("getSingleEventsByDate", e);
         }
     };
 
@@ -52,7 +52,7 @@ export class EventDatasource {
              WHERE recurring_id IN (${placeholders}) AND is_recurring = 1`, recurringIds
             );
         } catch (e) {
-            console.error(e);
+            console.error("getRecurringEventsByOptions", e);
         }
     };
 

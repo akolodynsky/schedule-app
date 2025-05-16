@@ -6,7 +6,7 @@ import {useShallow} from "zustand/react/shallow";
 import PageRouteButtons from "../components/ui/PageRouteButtons";
 import PageHeader from "../components/ui/PageHeader";
 import EventForm from "../components/EventForm";
-import {useEventStore, useRecurringOptionsStore} from "../stores";
+import {useDateStore, useEventStore, useRecurringOptionsStore} from "../stores";
 import {createEvent, removeEvent, updateEvent} from "../services/event";
 
 
@@ -15,6 +15,13 @@ export default function EventCreate()  {
         useShallow((state) => ({
             reset: state.reset,
             selectedEvent: state.selectedEvent,
+        }))
+    );
+
+    const {setDate, selectedDate} = useDateStore(
+        useShallow((state) => ({
+            setDate: state.setDate,
+            selectedDate: state.selectedDate,
         }))
     );
 
@@ -42,6 +49,7 @@ export default function EventCreate()  {
 
     const handleBack = () => {
         router.back();
+        setDate(selectedDate);
         reset();
         resetRecurring();
     };

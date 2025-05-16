@@ -41,13 +41,13 @@ export class EventUseCases {
         category: ICategory,
         start: string,
         end: string,
-        recurringOptions: IRecurringOptions | null,
+        recurringOptions: Omit<IRecurringOptions, "exceptDays"> | null,
     ) {
         let recurringId: string | null = null;
 
         if (recurringOptions) {
             recurringId = recurringOptions.id;
-            await this.recurringRepository.insertOrEdit(recurringOptions);
+            await this.recurringRepository.insertOrEdit({...recurringOptions, exceptDays: null});
         }
 
         const isRecurring = !!recurringOptions;

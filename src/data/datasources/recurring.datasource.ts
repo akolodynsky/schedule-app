@@ -21,7 +21,6 @@ export class RecurringDatasource {
                AND (except_days IS NULL OR ',' || except_days || ',' NOT LIKE ?)
              `, date, date, `%,${date},%`
         );
-        console.log(options)
         return options;
     };
 
