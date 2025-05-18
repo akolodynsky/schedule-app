@@ -5,7 +5,7 @@ import {container} from "@/src/shared/containers/container";
 import {loadTasks} from "@/src/presentation/services/task/loadTasks";
 
 
-export const createTask = async (handleBack: () => void) => {
+export const createTask = async (handleBack: () => void, eventId?: string) => {
     const {name} = useTaskStore.getState();
     const {date} = useDateStore.getState();
 
@@ -13,7 +13,7 @@ export const createTask = async (handleBack: () => void) => {
 
     const id = generateUniqueId("t");
 
-    await container.taskUseCases.createTask(id, date, name);
+    await container.taskUseCases.createTask(id, date, name, false, eventId);
     await loadTasks();
     handleBack();
 };

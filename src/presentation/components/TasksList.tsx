@@ -6,6 +6,7 @@ import TaskBlockCard from "@/src/presentation/components/TaskBlockCard";
 import {useTaskStore} from "../stores";
 import {loadTasks, updateTask, updateTaskState} from "@/src/presentation/services/task";
 import {router} from "expo-router";
+import {getEventById} from "@/src/presentation/services/event";
 
 
 const TasksList = () => {
@@ -20,16 +21,15 @@ const TasksList = () => {
         await updateTask(task.id, task.eventId);
     }
 
-    const handleUpdate = (task: ITask) => {
+    const handleUpdate = (task: ITask, eventId?: string) => {
         updateTaskState(task);
+        eventId && getEventById(eventId);
         router.push("/task");
     }
 
     useEffect(() => {
         const getTasks = async () => {
-            console.log("worked")
             await loadTasks();
-
         };
         void getTasks();
     }, []);

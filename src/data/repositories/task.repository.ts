@@ -2,6 +2,7 @@ import { Task } from "@/src/domain/entities/Task";
 import {TaskDatasource} from "@/src/data/datasources/task.datasource";
 import {TaskRepository} from "@/src/domain/repositories/task.repository";
 import {mapTaskDtoToTask, mapTaskToTaskDto} from "@/src/data/mappers/task.mapper";
+import {mapCategoryDtoToCategory} from "@/src/data/mappers/category.mapper";
 
 
 export class TaskRepositoryImpl implements TaskRepository {
@@ -9,7 +10,37 @@ export class TaskRepositoryImpl implements TaskRepository {
 
     async getAll() {
         const dtos = await this.datasource.getTasks();
-        return dtos.map(mapTaskDtoToTask);
+
+        const blocksMap: TaskBlockMap = new Map();
+
+        for (const dto of dtos) {
+            const date = dto.date;
+
+            if (!blocksMap.has(date)) {
+                blocksMap.set(date, {
+                    mainTasks: [],
+                    eventTasks: new Map(),
+                })
+            }
+
+            const block = blocksMap.get(date)!;
+
+            const task = mapTaskDtoToTask(dto);
+
+            if (!dto.event_id) {
+                block.mainTasks.push(task);
+            } else {
+                if (!block.eventTasks.has(dto.event_id)) {
+                    block.eventTasks.set(dto.event_id, {
+                        category: mapCategoryDtoToCategory(dto)!,
+                        tasks: [],
+                    });
+                }
+                block.eventTasks.get(dto.event_id)!.tasks.push(task);
+            }
+        }
+
+        return blocksMap;
     };
 
     async getByEventId(id: string) {

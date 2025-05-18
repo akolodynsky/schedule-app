@@ -28,7 +28,7 @@ export default function TaskCreate()  {
 
     const handleAddTask = async () => {
         if (!selectedTask) {
-            await createTask(handleBack);
+            await createTask(handleBack, selectedEvent?.id);
         } else {
             await updateTask(selectedTask.id, selectedEvent?.id, handleBack);
         }

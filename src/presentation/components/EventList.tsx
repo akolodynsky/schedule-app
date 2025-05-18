@@ -26,8 +26,6 @@ const EventList = () => {
         }
     };
 
-    console.log(events)
-
     return (
             <>
                 {events.map((event, index) => (

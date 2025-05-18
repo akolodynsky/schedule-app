@@ -7,29 +7,32 @@ export class TaskUseCases {
         private taskRepository: TaskRepository,
     ) {}
 
-    async getAllTasks(): Promise<ITaskBlock[]> {
-        const tasks = await this.taskRepository.getAll();
+    async getAllTasks() {
+        const blocksMap = await this.taskRepository.getAll();
 
-        const tasksMap = tasks.reduce((map, task) => {
-            if (!map.has(task.date)) {
-                map.set(task.date, []);
-            }
-            map.get(task.date)!.push(task);
-            return map;
-        }, new Map<string, Task[]>());
+        const blocks: ITaskBlock[] = [];
 
-        return Array.from(tasksMap.entries()).map(([date, tasks]) => ({
-            date,
-            tasks,
-        }));
+        for (const [date, { mainTasks, eventTasks }] of blocksMap.entries() as TaskBlockMap) {
+            const events = Array.from(eventTasks.entries()).map(([eventId, data]) => ({
+                id: eventId,
+                category: data.category,
+                tasks: data.tasks,
+            }));
+
+            blocks.push({ date, mainTasks, eventTasks: events });
+        }
+
+        blocks.sort((a, b) => a.date.localeCompare(b.date))
+
+        return blocks;
     };
 
     async getTasksByEventId(id: string) {
         return await this.taskRepository.getByEventId(id);
     };
 
-    async createTask(id: string, date: string, name: string, isCompleted?: boolean, eventId?: string) {
-        await this.taskRepository.insert({id, eventId, date, name, isCompleted: isCompleted ?? false});
+    async createTask(id: string, date: string, name: string, isCompleted: boolean, eventId?: string) {
+        await this.taskRepository.insert({id, eventId, date, name, isCompleted});
     };
 
     async updateTask(id: string, date: string, name: string, isCompleted: boolean, eventId?: string) {

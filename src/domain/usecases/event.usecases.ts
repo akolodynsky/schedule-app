@@ -33,6 +33,10 @@ export class EventUseCases {
         return await this.recurringRepository.getById(id);
     };
 
+    async getEventById(id: string) {
+        return await this.eventRepository.getById(id);
+    };
+
     async createEvent(
         id: string,
         date: string,
@@ -71,7 +75,7 @@ export class EventUseCases {
         if (recurringOptions) {
             const exceptDays = await this.recurringRepository.getExceptDays(recurringId!);
             await this.recurringRepository.insertOrEdit({...recurringOptions, exceptDays});
-            const mainId = await this.eventRepository.getEventId(date, recurringId!, 1);
+            const mainId = await this.eventRepository.getId(date, recurringId!, 1);
             eventId = mainId ? mainId : id;
         }
 
@@ -90,7 +94,7 @@ export class EventUseCases {
         end: string,
         recurringId: string,
     ) {
-        let id = await this.eventRepository.getEventId(date, recurringId, 0);
+        let id = await this.eventRepository.getId(date, recurringId, 0);
 
         await this.recurringRepository.insertExceptDate(recurringId, date);
 

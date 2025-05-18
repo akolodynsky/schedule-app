@@ -18,8 +18,13 @@ export class EventRepositoryImpl implements EventRepository {
         return dtos.map(mapEventDtoToEvent);
     };
 
-    async getEventId(date: string, recurringId: string, isRecurring: number) {
+    async getId(date: string, recurringId: string, isRecurring: number) {
         return await this.datasource.getEventId(date, recurringId, isRecurring);
+    };
+
+    async getById(id: string) {
+        const dto = await this.datasource.getEventById(id);
+        return dto ? mapEventDtoToEvent(dto) : null;
     };
 
     async getTimeByDate(date: string, exceptId?: string) {

@@ -14,46 +14,36 @@ export class EventDatasource {
     };
 
     async getSingleEventsByDate(date: string) {
-        try {
-            return await this.db.getAllAsync<EventDto>(
-                `SELECT events.*,
-                    categories.id    AS category_id,
-                    categories.name  AS category_name,
-                    categories.color AS category_color,
-                    (
-                        SELECT COUNT(*)
-                        FROM tasks
-                        WHERE tasks.event_id = events.id
-                    ) AS tasks_count
-             FROM events
-             LEFT JOIN categories ON events.category_id = categories.id
-             WHERE date = ? AND is_recurring = 0`, date
-            );
-        } catch (e) {
-            console.error("getSingleEventsByDate", e);
-        }
+        return await this.db.getAllAsync<EventDto>(
+            `SELECT events.*,
+                categories.name  AS category_name,
+                categories.color AS category_color,
+                (
+                    SELECT COUNT(*)
+                    FROM tasks
+                    WHERE tasks.event_id = events.id
+                ) AS tasks_count
+         FROM events
+         LEFT JOIN categories ON events.category_id = categories.id
+         WHERE date = ? AND is_recurring = 0`, date
+        );
     };
 
     async getRecurringEventsByOptions(recurringIds: string[]) {
-        try {
-            const placeholders = recurringIds.map(() => '?').join(', ');
-            return await this.db.getAllAsync<EventDto>(
-                `SELECT events.*,
-                    categories.id    AS category_id,
-                    categories.name  AS category_name,
-                    categories.color AS category_color,
-                    (   
-                        SELECT COUNT(*)
-                        FROM tasks
-                        WHERE tasks.event_id = events.id
-                    ) AS tasks_count
-             FROM events
-             LEFT JOIN categories ON events.category_id = categories.id
-             WHERE recurring_id IN (${placeholders}) AND is_recurring = 1`, recurringIds
-            );
-        } catch (e) {
-            console.error("getRecurringEventsByOptions", e);
-        }
+        const placeholders = recurringIds.map(() => '?').join(', ');
+        return await this.db.getAllAsync<EventDto>(
+            `SELECT events.*,
+                categories.name  AS category_name,
+                categories.color AS category_color,
+                (   
+                    SELECT COUNT(*)
+                    FROM tasks
+                    WHERE tasks.event_id = events.id
+                ) AS tasks_count
+         FROM events
+         LEFT JOIN categories ON events.category_id = categories.id
+         WHERE recurring_id IN (${placeholders}) AND is_recurring = 1`, recurringIds
+        );
     };
 
     async getEventId(date: string, recurringId: string, isRecurring: number) {
@@ -62,6 +52,21 @@ export class EventDatasource {
              WHERE date = ? AND recurring_id = ?  AND is_recurring = ?`, [date, recurringId, isRecurring]
         );
         return result ? result.id : null;
+    };
+
+    async getEventById(id: string) {
+        try {
+            return await this.db.getFirstAsync<EventDto>(
+                `SELECT events.*,
+                    categories.name  AS category_name,
+                    categories.color AS category_color
+                 FROM events
+                 LEFT JOIN categories ON events.category_id = categories.id
+                 WHERE events.id = ?`, id
+            );
+        } catch (e) {
+            console.error(e);
+        }
     };
 
     async getEventsTimeByDate(date: string, id: string | null) {
