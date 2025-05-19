@@ -1,5 +1,4 @@
 import {TaskRepository} from "@/src/domain/repositories/task.repository";
-import {Task} from "@/src/domain/entities/Task";
 
 
 export class TaskUseCases {
@@ -12,7 +11,7 @@ export class TaskUseCases {
 
         const blocks: ITaskBlock[] = [];
 
-        for (const [date, { mainTasks, eventTasks }] of blocksMap.entries() as TaskBlockMap) {
+        for (const [date, { mainTasks, eventTasks }] of blocksMap) {
             const events = Array.from(eventTasks.entries()).map(([eventId, data]) => ({
                 id: eventId,
                 category: data.category,
@@ -27,8 +26,8 @@ export class TaskUseCases {
         return blocks;
     };
 
-    async getTasksByEventId(id: string) {
-        return await this.taskRepository.getByEventId(id);
+    async getTasksByEventId(id: string, date: string | null) {
+        return await this.taskRepository.getByEventId(id, date);
     };
 
     async createTask(id: string, date: string, name: string, isCompleted: boolean, eventId?: string) {

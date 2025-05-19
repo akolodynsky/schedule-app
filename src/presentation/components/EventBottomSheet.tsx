@@ -5,7 +5,7 @@ import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import {useShallow} from "zustand/react/shallow";
 
 import EventBottomCard from "./EventBottomCard";
-import {useDateStore, useEventStore, useRecurringOptionsStore, useTaskStore} from "../stores";
+import {useDateStore, useEventStore, useRecurringOptionsStore} from "../stores";
 import {removeEvent, updateEventState, updateRecurringState} from "../services/event";
 import {updateTask, updateTasksState, updateTaskState} from "@/src/presentation/services/task";
 
@@ -21,6 +21,10 @@ const EventBottomSheet = () => {
         }))
     );
 
+    const selectedDate = useDateStore(
+        useShallow(state => state.selectedDate)
+    );
+
     const setDisabled = useRecurringOptionsStore(
         useShallow(state => state.setDisabled)
     );
@@ -29,7 +33,10 @@ const EventBottomSheet = () => {
         if (selectedEvent) {
             bottomSheetRef.current?.snapToIndex(0)
             if (selectedEvent.tasksCount > 0) {
-                void updateTasksState(selectedEvent.id)
+                const date = selectedEvent.recurringId && selectedEvent.isRecurring
+                    ? selectedDate
+                    : null;
+                void updateTasksState(selectedEvent.id, date);
             }
         } else {
             bottomSheetRef.current?.close();

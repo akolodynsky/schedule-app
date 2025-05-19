@@ -13,8 +13,8 @@ export class EventRepositoryImpl implements EventRepository {
         return dtos.map(mapEventDtoToEvent);
     };
 
-    async getRecurringByOptions(ids: string[]) {
-        const dtos = await this.datasource.getRecurringEventsByOptions(ids);
+    async getRecurringByOptions(ids: string[], date: string) {
+        const dtos = await this.datasource.getRecurringEventsByOptions(ids, date);
         return dtos.map(mapEventDtoToEvent);
     };
 

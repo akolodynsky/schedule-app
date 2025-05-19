@@ -18,7 +18,7 @@ export class EventUseCases {
         const recurringIds = recurringOptions
             .filter(option => isEventOccurringOnDate(option, date))
             .map(option => option.id);
-        const recurringEvents = await this.eventRepository.getRecurringByOptions(recurringIds);
+        const recurringEvents = await this.eventRepository.getRecurringByOptions(recurringIds, date);
 
         const allEvents = [...events, ...recurringEvents]
             .sort((a, b) => a.start.localeCompare(b.start));

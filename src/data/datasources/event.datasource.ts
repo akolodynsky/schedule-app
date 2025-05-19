@@ -21,15 +21,17 @@ export class EventDatasource {
                 (
                     SELECT COUNT(*)
                     FROM tasks
-                    WHERE tasks.event_id = events.id
+                    WHERE tasks.event_id = events.id AND tasks.date = ?
                 ) AS tasks_count
          FROM events
          LEFT JOIN categories ON events.category_id = categories.id
-         WHERE date = ? AND is_recurring = 0`, date
+         WHERE date = ? AND is_recurring = 0`, date, date
         );
     };
 
-    async getRecurringEventsByOptions(recurringIds: string[]) {
+    async getRecurringEventsByOptions(recurringIds: string[], date: string) {
+        if (recurringIds.length === 0) return [];
+
         const placeholders = recurringIds.map(() => '?').join(', ');
         return await this.db.getAllAsync<EventDto>(
             `SELECT events.*,
@@ -38,11 +40,11 @@ export class EventDatasource {
                 (   
                     SELECT COUNT(*)
                     FROM tasks
-                    WHERE tasks.event_id = events.id
+                    WHERE tasks.event_id = events.id AND tasks.date = ?
                 ) AS tasks_count
          FROM events
          LEFT JOIN categories ON events.category_id = categories.id
-         WHERE recurring_id IN (${placeholders}) AND is_recurring = 1`, recurringIds
+         WHERE recurring_id IN (${placeholders}) AND is_recurring = 1`, [date, ...recurringIds]
         );
     };
 
