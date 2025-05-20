@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {KeyboardAvoidingView, Platform, ScrollView, TouchableOpacity, View, Text} from "react-native";
+import {KeyboardAvoidingView, Platform, ScrollView, View} from "react-native";
 import {router} from "expo-router";
 import {useShallow} from "zustand/react/shallow";
 

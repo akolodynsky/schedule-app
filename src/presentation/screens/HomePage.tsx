@@ -1,6 +1,6 @@
 import React from "react";
-import {View, Image, ScrollView} from 'react-native';
-import {Link} from "expo-router";
+import {View, Image, ScrollView, Pressable} from 'react-native';
+import {Link, router} from "expo-router";
 import {GestureHandlerRootView, PanGestureHandler} from "react-native-gesture-handler";
 
 import {icons} from "@/src/shared/constants/icons";
@@ -18,12 +18,12 @@ export default function HomePage() {
 
     return (
         <>
-            <GestureHandlerRootView style={{flex: 1}}>
+            <GestureHandlerRootView style={{ flex: 1 }}>
                 <ScrollView
                     ref={scrollViewRef}
                     showsVerticalScrollIndicator={false}
                     className="bg-dark-200"
-                    contentContainerStyle={{flexGrow: 1}}
+                    contentContainerStyle={{ flexGrow: 1 }}
                     scrollEventThrottle={16}
                     overScrollMode="never"
                 >
@@ -50,11 +50,12 @@ export default function HomePage() {
             </GestureHandlerRootView>
 
 
-            <View className="absolute bottom-8 right-8 z-10 bg-primary rounded-full p-3">
-                <Link href={'/create'}>
-                    <Image source={icons.add} className="size-12" />
-                </Link>
-            </View>
+            <Pressable
+                onPress={() => router.push("/create")}
+                className="absolute bottom-8 right-8 z-10 bg-primary rounded-full p-3"
+            >
+                <Image source={icons.add} className="size-12" />
+            </Pressable>
         </>
     );
 }

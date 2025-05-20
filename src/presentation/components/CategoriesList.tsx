@@ -1,11 +1,11 @@
 import React from 'react';
 import {Pressable, View} from 'react-native';
-import {useRouter} from "expo-router";
 import {useShallow} from "zustand/react/shallow";
 
 import CategoryCard from "./CategoryCard";
 import {useCategoryStore} from "../stores";
 import {removeCategory, loadCategories} from "@/src/presentation/services/categoryActions";
+import {router} from "expo-router";
 
 
 const CategoriesList = () => {
@@ -22,8 +22,6 @@ const CategoriesList = () => {
         await removeCategory(id);
         await loadCategories();
     };
-
-    const router = useRouter();
 
     const handleUpdate = (category: ICategory) => {
         setSelectedCategory(category);

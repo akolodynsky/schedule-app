@@ -38,6 +38,7 @@
     "expo-web-browser": "~14.1.6",
     "immer": "^10.1.1",
     "lodash.isequal": "^4.5.0",
+    "moti": "^0.30.0",
     "nativewind": "^4.1.23",
     "patch-package": "^8.0.0",
     "postinstall-postinstall": "^2.1.0",

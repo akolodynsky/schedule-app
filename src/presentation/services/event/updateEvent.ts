@@ -26,9 +26,6 @@ export const updateEvent = async (selectedEvent: IEvent) => {
         await container.eventUseCases.deleteRecurringOptions(recurringId);
     }
 
-    console.log(eventId)
-    console.log(tasks)
-
     if (tasks.length > 0) {
         if (recurringId && !disabled) {
             await container.taskUseCases.deleteTask(eventId);
