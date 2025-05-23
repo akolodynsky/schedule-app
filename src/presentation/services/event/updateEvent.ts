@@ -26,11 +26,7 @@ export const updateEvent = async (selectedEvent: IEvent) => {
         await container.eventUseCases.deleteRecurringOptions(recurringId);
     }
 
-    if (tasks.length > 0) {
-        if (recurringId && !disabled) {
-            await container.taskUseCases.deleteTask(eventId);
-        }
-
+    if (tasks.length > 0 && !(recurringId && !disabled)) {
         tasks.map(async (task) => {
             await container.taskUseCases.createTask(task.id, date, task.name, task.isCompleted, eventId);
         });

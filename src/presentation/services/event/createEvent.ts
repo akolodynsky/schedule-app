@@ -1,8 +1,7 @@
 import {router} from "expo-router";
 
 import {useDateStore, useEventStore, useRecurringOptionsStore} from "@/src/presentation/stores";
-import {generateUniqueId, getDayIndex} from "@/src/shared/utils";
-import {RecurringOptions} from "@/src/domain/entities";
+import {generateUniqueId} from "@/src/shared/utils";
 import { validateEvent } from "./validateEvent";
 import { loadEvents } from "./loadEvents";
 import {container} from "@/src/shared/containers/container";

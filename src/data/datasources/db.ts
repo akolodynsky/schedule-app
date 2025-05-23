@@ -46,7 +46,7 @@ export const db = async () => {
             end TEXT NOT NULL,
             is_recurring INTEGER DEFAULT 0,
             recurring_id TEXT,
-            FOREIGN KEY (recurring_id) REFERENCES recurring_options(id)
+            FOREIGN KEY (recurring_id) REFERENCES recurring_options(id) ON DELETE CASCADE
         );
 
         CREATE TABLE IF NOT EXISTS tasks (
@@ -69,6 +69,16 @@ export const db = async () => {
             except_days TEXT
         );
     `);
+
+    // await db.runAsync("INSERT INTO recurring_options (id, frequency, interval, week_days, month_day, start_repeat, end_repeat, except_days) VALUES ('r1', 'text', 1, '', 1, 'text', 'text', 'text')");
+    // await db.runAsync("INSERT INTO events (id, date, name, category_id, start, end, recurring_id) VALUES ('e2', '2024-01-01', 'Test', 'c-0', '10:00', '11:00', 'r1')");
+    // await db.runAsync("INSERT INTO events (id, date, name, category_id, start, end, recurring_id) VALUES ('e3', '2024-01-01', 'Test', 'c-0', '10:00', '11:00', 'r1')");
+    // await db.runAsync("INSERT INTO tasks (id, event_id, date, name) VALUES ('t1', 'e2', '2024-01-01', 'Do something')");
+    // await db.runAsync("INSERT INTO tasks (id, event_id, date, name) VALUES ('t2', 'e3', '2024-01-01', 'Do something')");
+    //
+    // await db.runAsync("DELETE FROM recurring_options WHERE id = 'r1'");
+    // const tasksLeft = await db.getAllAsync("SELECT * FROM tasks");
+    // console.log("Tasks left:", tasksLeft);
 
     const result = await db.getAllAsync<{ count: number }>(
         'SELECT COUNT(*) as count FROM categories',

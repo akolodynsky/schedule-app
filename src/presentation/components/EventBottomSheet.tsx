@@ -33,10 +33,7 @@ const EventBottomSheet = () => {
         if (selectedEvent) {
             bottomSheetRef.current?.snapToIndex(0)
             if (selectedEvent.tasksCount > 0) {
-                const date = selectedEvent.recurringId && selectedEvent.isRecurring
-                    ? selectedDate
-                    : null;
-                void updateTasksState(selectedEvent.id, date);
+                void updateTasksState(selectedEvent.id, selectedDate);
             }
         } else {
             bottomSheetRef.current?.close();

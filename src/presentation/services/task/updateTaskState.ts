@@ -12,8 +12,7 @@ export const updateTaskState = (selectedTask: ITask) => {
     setDate(selectedTask.date);
 };
 
-export const updateTasksState = async (id: string, date: string | null) => {
-    console.log(date);
+export const updateTasksState = async (id: string, date: string) => {
     const tasks = await container.taskUseCases.getTasksByEventId(id, date);
     useEventStore.getState().setTasks(tasks);
 };

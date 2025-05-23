@@ -9,5 +9,4 @@ export interface EventRepository {
     insert(event: Omit<Event, "tasksCount">): Promise<void>;
     edit(event: Omit<Event, "tasksCount">): Promise<void>;
     delete(id: string): Promise<void>;
-    deleteRecurring(id: string): Promise<void>;
 }

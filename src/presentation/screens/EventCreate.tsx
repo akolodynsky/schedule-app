@@ -43,7 +43,7 @@ export default function EventCreate()  {
     const warnModalRef = useRef<AnimatedComponentRef>(null);
 
     const handleRemoveRecurringEvents = async () => {
-        if (selectedEvent?.recurringId && selectedEvent?.isRecurring) {
+        if (selectedEvent?.recurringId) {
             await removeEvent(selectedEvent.recurringId);
             warnModalRef.current?.close();
             handleBack();
@@ -79,7 +79,7 @@ export default function EventCreate()  {
                     title={"Deletion Warning!"}
                     text={"You are about to delete the main recurring event. All future occurrences and their associated tasks will also be permanently deleted."}
                     buttonText={"Delete"}
-                    onSubmit={() => handleRemoveRecurringEvents}
+                    onSubmit={() => handleRemoveRecurringEvents()}
                     onClose={() => warnModalRef.current?.close()}
                 />
             </AnimatedComponent>

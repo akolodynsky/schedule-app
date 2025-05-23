@@ -95,8 +95,4 @@ export class EventDatasource {
     async deleteEvent(id: string) {
         await this.db.runAsync('DELETE FROM events WHERE id = ?', id);
     };
-
-    async deleteRecurringEvents(id: string) {
-        await this.db.runAsync('DELETE FROM events WHERE recurring_id = ?', id);
-    };
 }

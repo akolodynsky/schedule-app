@@ -42,8 +42,4 @@ export class EventRepositoryImpl implements EventRepository {
     async delete(id: string) {
         await this.datasource.deleteEvent(id);
     };
-
-    async deleteRecurring(id: string) {
-        await this.datasource.deleteRecurringEvents(id);
-    };
 }

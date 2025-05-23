@@ -8,7 +8,7 @@ export const removeEvent = async (id: string, single?: boolean) => {
     if (single) {
         await container.eventUseCases.deleteSingleEvent(id, selectedDate);
     } else {
-        await container.eventUseCases.deleteRecurringEvents(id);
+        await container.eventUseCases.deleteRecurringOptions(id);
     }
 
     await container.taskUseCases.deleteTask(id);

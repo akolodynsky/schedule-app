@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
-import { createStackNavigator, CardStyleInterpolators } from '@react-navigation/stack';
+import { createStackNavigator, CardStyleInterpolators, StackNavigationOptions } from '@react-navigation/stack';
 import {Easing, StatusBar} from 'react-native';
 
 import SplashScreenView from "@/src/presentation/components/ui/SplashScreenView";
@@ -29,6 +29,11 @@ export default function RootLayout() {
         }
     };
 
+    const defaultOptions: StackNavigationOptions = {
+        animation: "none",
+        detachPreviousScreen: false,
+    }
+
     const rightOptions = {
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         detachPreviousScreen: false,
@@ -43,9 +48,9 @@ export default function RootLayout() {
         <>
             <StatusBar backgroundColor="transparent" translucent />
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                <Stack.Screen name="home" component={HomePage} options={{ animation: "none", detachPreviousScreen: false }} />
-                <Stack.Screen name="categories" component={CategoryPage} options={{ animation: "none", detachPreviousScreen: false }} />
-                <Stack.Screen name="tasks" component={TaskPage} options={{ animation: "none", detachPreviousScreen: false }} />
+                <Stack.Screen name="home" component={HomePage} options={defaultOptions} />
+                <Stack.Screen name="categories" component={CategoryPage} options={defaultOptions} />
+                <Stack.Screen name="tasks" component={TaskPage} options={defaultOptions} />
                 <Stack.Screen name="create" component={EventCreate} options={rightOptions}/>
                 <Stack.Screen name="category" component={CategoryCreate} options={rightOptions}/>
                 <Stack.Screen name="task" component={TaskCreate} options={rightOptions}/>

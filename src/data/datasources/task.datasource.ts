@@ -27,10 +27,8 @@ export class TaskDatasource {
         `);
     };
 
-    async getTasksByEventId(id: string, date: string | null) {
-        return date
-            ? await this.db.getAllAsync<TaskDto>('SELECT * FROM tasks WHERE event_id = ? AND date = ?', id, date)
-            : await this.db.getAllAsync<TaskDto>('SELECT * FROM tasks WHERE event_id = ?', id);
+    async getTasksByEventId(id: string, date: string) {
+        return await this.db.getAllAsync<TaskDto>('SELECT * FROM tasks WHERE event_id = ? AND date = ?', id, date);
     };
 
     async insertTask(dto: TaskDto) {
@@ -41,11 +39,7 @@ export class TaskDatasource {
             );
         } catch (error) {
             if (error instanceof Error && error.message.includes('UNIQUE constraint failed: tasks.id')) {
-                const id = generateUniqueId("t");
-                await this.db.runAsync(
-                    'INSERT INTO tasks (id, event_id, name, date, is_completed) VALUES (?, ?, ?, ?, ?)',
-                    [id, dto.event_id, dto.name, dto.date, dto.is_completed]
-                );
+                await this.editTask(dto)
             } else {
                 console.log("insertTask", error)
             }
@@ -63,7 +57,7 @@ export class TaskDatasource {
         await this.db.runAsync('DELETE FROM tasks WHERE id = ?', id);
     };
 
-    async deleteTaskByEventId(id: string) {
-        await this.db.runAsync('DELETE FROM tasks WHERE event_id = ?', id);
+    async deleteTaskByEventId(id: string, date: string) {
+        await this.db.runAsync('DELETE FROM tasks WHERE event_id = ? AND date = ?', id, date);
     };
 }

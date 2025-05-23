@@ -3,18 +3,14 @@ import {View, FlatList} from 'react-native';
 import {useShallow} from "zustand/react/shallow";
 
 import TaskBlockCard from "@/src/presentation/components/TaskBlockCard";
-import {useTaskStore} from "../stores";
+import {useEventStore, useRecurringOptionsStore, useTaskStore} from "../stores";
 import {loadTasks, updateTask, updateTaskState} from "@/src/presentation/services/task";
 import {router} from "expo-router";
 import {getEventById} from "@/src/presentation/services/event";
 
 
 const TasksList = () => {
-    const { tasks } = useTaskStore(
-        useShallow((state) => ({
-            tasks: state.tasks,
-        }))
-    );
+    const tasks = useTaskStore(state => state.tasks);
 
     const handleCheck = async (task: ITask) => {
         updateTaskState(task);

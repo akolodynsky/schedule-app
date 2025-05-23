@@ -3,7 +3,7 @@ import {Image, Keyboard, Text, TouchableOpacity, View} from 'react-native';
 import {useShallow} from "zustand/react/shallow";
 
 import CustomTextInput from "@/src/presentation/components/ui/CustomTextInput";
-import {useDateStore, useEventStore} from "../stores";
+import {useDateStore, useEventStore, useRecurringOptionsStore} from "../stores";
 import {icons} from "@/src/shared/constants/icons";
 import {generateUniqueId} from "../../shared/utils";
 
@@ -16,7 +16,9 @@ const TasksInput = () => {
         }))
     );
 
-    const date = useDateStore(useShallow(state => state.date));
+    const date = useDateStore(state => state.date);
+    const selectedEvent = useEventStore(state => state.selectedEvent);
+    const disabled = useRecurringOptionsStore(state => state.disabled);
 
     const [task, setTask] = useState("");
 
@@ -40,6 +42,7 @@ const TasksInput = () => {
     }
 
     return (
+        !(selectedEvent?.recurringId && !disabled) &&
         <View className="mb-6">
             <Text className="text-light-200 font-inter_medium mb-3">Tasks</Text>
 

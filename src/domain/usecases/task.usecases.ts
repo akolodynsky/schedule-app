@@ -26,7 +26,7 @@ export class TaskUseCases {
         return blocks;
     };
 
-    async getTasksByEventId(id: string, date: string | null) {
+    async getTasksByEventId(id: string, date: string) {
         return await this.taskRepository.getByEventId(id, date);
     };
 
@@ -38,11 +38,11 @@ export class TaskUseCases {
         await this.taskRepository.edit({id, eventId, date, name, isCompleted});
     };
 
-    async deleteTask(id: string) {
-        if (id.startsWith("t")) {
+    async deleteTask(id: string, date?: string) {
+        if (!date) {
             await this.taskRepository.delete(id);
         } else {
-            await this.taskRepository.deleteByEventId(id);
+            await this.taskRepository.deleteByEventId(id, date);
         }
     };
 }

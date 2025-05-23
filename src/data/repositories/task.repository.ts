@@ -43,7 +43,7 @@ export class TaskRepositoryImpl implements TaskRepository {
         return blocksMap;
     };
 
-    async getByEventId(id: string, date: string | null) {
+    async getByEventId(id: string, date: string) {
         const dtos = await this.datasource.getTasksByEventId(id, date);
         return dtos.map(mapTaskDtoToTask);
     };
@@ -60,7 +60,7 @@ export class TaskRepositoryImpl implements TaskRepository {
         await this.datasource.deleteTask(id);
     };
 
-    async deleteByEventId(id: string) {
-        await this.datasource.deleteTaskByEventId(id);
+    async deleteByEventId(id: string, date: string) {
+        await this.datasource.deleteTaskByEventId(id, date);
     };
 }
