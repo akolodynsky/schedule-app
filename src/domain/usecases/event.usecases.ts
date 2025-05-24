@@ -116,7 +116,8 @@ export class EventUseCases {
         }
     };
 
-    async deleteRecurringOptions(id: string) {
+    async deleteRecurringOptions(id: string, date?: string) {
         await this.recurringRepository.delete(id);
+        return await this.eventRepository.deleteByRecurringId(id, date);
     };
 }

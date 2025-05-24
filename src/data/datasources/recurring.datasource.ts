@@ -1,5 +1,5 @@
 import * as SQLite from "expo-sqlite";
-import { RecurringDto } from "@/src/data/dto/RecurringDto";
+import {RecurringDto} from "@/src/data/dto/RecurringDto";
 
 
 export class RecurringDatasource {
@@ -14,14 +14,13 @@ export class RecurringDatasource {
     };
 
     async getRecurringOptionsByDate(date: string) {
-        const options = await this.db.getAllAsync<RecurringDto>(
+        return await this.db.getAllAsync<RecurringDto>(
             `SELECT * FROM recurring_options
              WHERE start_repeat <= ? 
                AND (end_repeat IS NULL OR end_repeat >= ?)
                AND (except_days IS NULL OR ',' || except_days || ',' NOT LIKE ?)
              `, date, date, `%,${date},%`
         );
-        return options;
     };
 
     async getRecurringOptionsById(id: string) {

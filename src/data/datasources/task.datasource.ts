@@ -1,6 +1,7 @@
 import * as SQLite from "expo-sqlite";
 import {TaskDto, TaskWithCategoryDto} from "@/src/data/dto/TaskDto";
 import {generateUniqueId} from "@/src/shared/utils";
+import {RecurringDto} from "@/src/data/dto/RecurringDto";
 
 
 export class TaskDatasource {
@@ -34,15 +35,18 @@ export class TaskDatasource {
     async insertTask(dto: TaskDto) {
         try {
             await this.db.runAsync(
-                'INSERT INTO tasks (id, event_id, name, date, is_completed) VALUES (?, ?, ?, ?, ?)',
-                [dto.id, dto.event_id, dto.name, dto.date, dto.is_completed]
+                `INSERT INTO tasks (id, event_id, name, date, is_completed) 
+             VALUES (?, ?, ?, ?, ?)
+             ON CONFLICT(id) DO UPDATE SET
+                 event_id = excluded.event_id,
+                 name = excluded.name,
+                 is_completed = excluded.is_completed,
+                 date = excluded.date
+            `,
+                dto.id, dto.event_id, dto.name, dto.date, dto.is_completed
             );
-        } catch (error) {
-            if (error instanceof Error && error.message.includes('UNIQUE constraint failed: tasks.id')) {
-                await this.editTask(dto)
-            } else {
-                console.log("insertTask", error)
-            }
+        } catch (e) {
+            console.error(e);
         }
     };
 
@@ -57,7 +61,7 @@ export class TaskDatasource {
         await this.db.runAsync('DELETE FROM tasks WHERE id = ?', id);
     };
 
-    async deleteTaskByEventId(id: string, date: string) {
-        await this.db.runAsync('DELETE FROM tasks WHERE event_id = ? AND date = ?', id, date);
+    async deleteTasksByEventId(id: string) {
+        await this.db.runAsync('DELETE FROM tasks WHERE event_id = ?', id);
     };
 }

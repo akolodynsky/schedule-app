@@ -43,9 +43,9 @@ const EventBottomSheet = () => {
 
     const handleRemoveEvent = async (id: string, recurringId: string, recurring: boolean) => {
         if (recurringId && recurring) {
-            await removeEvent(recurringId, true);
+            await removeEvent(recurringId, selectedDate);
         } else {
-            await removeEvent(id, true);
+            await removeEvent(id, selectedDate);
         }
         bottomSheetRef.current?.close();
     }

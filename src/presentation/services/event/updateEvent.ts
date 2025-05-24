@@ -14,21 +14,33 @@ export const updateEvent = async (selectedEvent: IEvent) => {
 
     if (await validateEvent()) return;
 
+    let eventDate = date;
+
     const recurringId = selectedEvent.recurringId;
 
     const recurringOptions = buildRecurringOptions(selectedEvent.recurringId!);
 
-    const eventId = disabled
-        ? await container.eventUseCases.updateSingleEvent(date, name, description, category!, start, end, recurringId!)
-        : await container.eventUseCases.updateRecurringEvent(selectedEvent.id, date, name, description, category!, start, end, recurringOptions)
-
     if (frequency === "once" && recurringId && !disabled) {
-        await container.eventUseCases.deleteRecurringOptions(recurringId);
+        const eventIds = await container.eventUseCases.deleteRecurringOptions(recurringId, selectedDate);
+
+        if (eventIds.length > 0) {
+            for (const eventId of eventIds) {
+                await container.taskUseCases.deleteTasksByEventId(eventId);
+            }
+        }
+
+        eventDate = selectedDate;
     }
+
+    const eventId = disabled
+        ? await container.eventUseCases.updateSingleEvent(eventDate, name, description, category!, start, end, recurringId!)
+        : await container.eventUseCases.updateRecurringEvent(selectedEvent.id, eventDate, name, description, category!, start, end, recurringOptions)
+
+
 
     if (tasks.length > 0 && !(recurringId && !disabled)) {
         tasks.map(async (task) => {
-            await container.taskUseCases.createTask(task.id, date, task.name, task.isCompleted, eventId);
+            await container.taskUseCases.createTask(task.id, eventDate, task.name, task.isCompleted, eventId);
         });
     }
 

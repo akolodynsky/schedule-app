@@ -38,11 +38,11 @@ export class TaskUseCases {
         await this.taskRepository.edit({id, eventId, date, name, isCompleted});
     };
 
-    async deleteTask(id: string, date?: string) {
-        if (!date) {
-            await this.taskRepository.delete(id);
-        } else {
-            await this.taskRepository.deleteByEventId(id, date);
-        }
+    async deleteTask(id: string) {
+        await this.taskRepository.delete(id);
+    };
+
+    async deleteTasksByEventId(id: string) {
+        await this.taskRepository.deleteByEventId(id);
     };
 }
