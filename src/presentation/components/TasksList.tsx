@@ -3,14 +3,20 @@ import {View, FlatList} from 'react-native';
 import {useShallow} from "zustand/react/shallow";
 
 import TaskBlockCard from "@/src/presentation/components/TaskBlockCard";
-import {useEventStore, useRecurringOptionsStore, useTaskStore} from "../stores";
+import {useTaskStore} from "../stores";
 import {loadTasks, updateTask, updateTaskState} from "@/src/presentation/services/task";
 import {router} from "expo-router";
 import {getEventById} from "@/src/presentation/services/event";
 
 
 const TasksList = () => {
-    const tasks = useTaskStore(state => state.tasks);
+    const {tasks, shouldTasksReload, setShouldTasksReload} = useTaskStore(useShallow(
+        state => ({
+            tasks: state.tasks,
+            shouldTasksReload: state.shouldReloadTasks,
+            setShouldTasksReload: state.setShouldReloadTasks
+        }))
+    );
 
     const handleCheck = async (task: ITask) => {
         updateTaskState(task);
@@ -24,11 +30,14 @@ const TasksList = () => {
     }
 
     useEffect(() => {
-        const getTasks = async () => {
-            await loadTasks();
-        };
-        void getTasks();
-    }, []);
+        if (shouldTasksReload) {
+            const getTasks = async () => {
+                await loadTasks();
+                setShouldTasksReload(false);
+            };
+            void getTasks();
+        }
+    }, [shouldTasksReload]);
 
     const flatListRef = useRef<FlatList>(null);
 

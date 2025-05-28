@@ -15,6 +15,7 @@ export class TaskUseCases {
             const events = Array.from(eventTasks.entries()).map(([eventId, data]) => ({
                 id: eventId,
                 category: data.category,
+                start: data.start,
                 tasks: data.tasks,
             }));
 

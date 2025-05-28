@@ -44,7 +44,7 @@ interface ITask {
 
 type TaskBlockMap = Map<string, {
     mainTasks: ITask[],
-    eventTasks: Map<string, { category: ICategory, tasks: ITask[] }>
+    eventTasks: Map<string, { category: ICategory, start: string, tasks: ITask[] }>
 }>;
 
 interface ITaskBlock {
@@ -53,6 +53,7 @@ interface ITaskBlock {
     eventTasks: {
         id: string,
         category: ICategory,
+        start: string,
         tasks: ITask[],
     }[];
 }

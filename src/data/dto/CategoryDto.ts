@@ -3,3 +3,9 @@ export interface CategoryDto {
     name: string;
     color: string;
 }
+
+export interface CategoryFieldsDto {
+    category_id: string;
+    category_name: string;
+    category_color: string;
+}

@@ -3,4 +3,5 @@ export * from "./createTask";
 export * from "./updateTask";
 export * from "./removeTask";
 export * from "./updateTaskState";
+export * from "./updateTaskStore";
 export * from "./validateTask";

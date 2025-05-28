@@ -1,3 +1,5 @@
+import {CategoryFieldsDto} from "@/src/data/dto/CategoryDto";
+
 export interface EventDto {
     id: string;
     date: string;
@@ -12,3 +14,5 @@ export interface EventDto {
     is_recurring: 0 | 1;
     recurring_id: string | null;
 }
+
+export type EventCategoryAndStartDto = CategoryFieldsDto & { start: string };

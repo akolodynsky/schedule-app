@@ -33,6 +33,7 @@ export class TaskRepositoryImpl implements TaskRepository {
                 if (!block.eventTasks.has(dto.event_id)) {
                     block.eventTasks.set(dto.event_id, {
                         category: mapCategoryDtoToCategory(dto)!,
+                        start: dto.start,
                         tasks: [],
                     });
                 }

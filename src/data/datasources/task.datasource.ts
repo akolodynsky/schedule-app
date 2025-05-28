@@ -1,7 +1,5 @@
 import * as SQLite from "expo-sqlite";
-import {TaskDto, TaskWithCategoryDto} from "@/src/data/dto/TaskDto";
-import {generateUniqueId} from "@/src/shared/utils";
-import {RecurringDto} from "@/src/data/dto/RecurringDto";
+import {TaskDto, TaskWithCategoryAndStartDto} from "@/src/data/dto/TaskDto";
 
 
 export class TaskDatasource {
@@ -16,12 +14,13 @@ export class TaskDatasource {
     };
 
     async getTasks() {
-        return await this.db.getAllAsync<TaskWithCategoryDto>(`
+        return await this.db.getAllAsync<TaskWithCategoryAndStartDto>(`
             SELECT 
                 tasks.*,
                 events.category_id,
                 categories.name as category_name,
-                categories.color as category_color
+                categories.color as category_color,
+                events.start
             FROM tasks
             LEFT JOIN events ON tasks.event_id = events.id
             LEFT JOIN categories ON events.category_id = categories.id

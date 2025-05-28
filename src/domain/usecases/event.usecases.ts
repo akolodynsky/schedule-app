@@ -29,6 +29,10 @@ export class EventUseCases {
         return await this.eventRepository.getTimeByDate(date, exceptId);
     };
 
+    async getCategoryAndStartById(id: string) {
+        return await this.eventRepository.getCategoryAndStartById(id);
+    };
+
     async getRecurringOptionsById(id: string) {
         return await this.recurringRepository.getById(id);
     };

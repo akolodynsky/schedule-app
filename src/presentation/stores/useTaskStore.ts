@@ -1,4 +1,5 @@
 import { create } from 'zustand'
+import {updateTaskStore} from "@/src/presentation/services/task";
 
 
 interface TaskState {
@@ -32,41 +33,14 @@ const initialState: Omit<TaskState, "shouldReloadTasks" | "tasks"> = {
     error: "",
 }
 
-export const useTaskStore = create<TaskState & TaskAction>()((set) => ({
+export const useTaskStore = create<TaskState & TaskAction>()((set, get) => ({
     tasks: [],
     setTasks: (tasks) => set({ tasks }),
-    updateTaskBlock: (date, updatedTask) => set(state => {
-        const blocks = [...state.tasks];
-        const index = blocks.findIndex(block => block.date === date);
 
-        if (index !== -1) {
-            const block = blocks[index];
-            const existingTaskIndex = block.tasks.findIndex(task => task.id === updatedTask.id);
-
-            let newTasks;
-
-            if (existingTaskIndex !== -1) {
-                newTasks = [...block.tasks];
-                newTasks[existingTaskIndex] = updatedTask;
-            } else {
-                newTasks = [...block.tasks, updatedTask];
-            }
-
-            blocks[index] = {
-                ...block,
-                tasks: newTasks,
-            }
-        } else {
-            blocks.push({
-                date: updatedTask.date,
-                tasks: [updatedTask],
-            })
-
-            blocks.sort((a, b) => a.date.localeCompare(b.date));
-        }
-
-        return { tasks: blocks };
-    }),
+    updateTaskBlock: async (date, updatedTask, eventId) => {
+        const updatedTasks = await updateTaskStore(get().tasks, date, updatedTask, eventId);
+        set({ tasks: updatedTasks });
+    },
 
     setSelectedTask: (selectedTask) => set({ selectedTask }),
     shouldReloadTasks: true,

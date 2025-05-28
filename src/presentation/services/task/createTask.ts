@@ -6,7 +6,7 @@ import {loadTasks} from "@/src/presentation/services/task/loadTasks";
 
 
 export const createTask = async (handleBack: () => void, eventId?: string) => {
-    const {name} = useTaskStore.getState();
+    const {name, updateTaskBlock} = useTaskStore.getState();
     const {date} = useDateStore.getState();
 
     if (await validateTask()) return;
@@ -14,6 +14,6 @@ export const createTask = async (handleBack: () => void, eventId?: string) => {
     const id = generateUniqueId("t");
 
     await container.taskUseCases.createTask(id, date, name, false, eventId);
-    await loadTasks();
+    updateTaskBlock(date, {id, date, name, isCompleted: false, eventId}, eventId);
     handleBack();
 };

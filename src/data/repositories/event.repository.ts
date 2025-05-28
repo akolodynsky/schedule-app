@@ -2,6 +2,8 @@ import {EventRepository} from "@/src/domain/repositories/event.repository";
 import {EventDatasource} from "@/src/data/datasources/event.datasource";
 import {mapEventDtoToEvent, mapEventToEventDto} from "@/src/data/mappers/event.mapper";
 import { Event } from "@/src/domain/entities/Event";
+import {mapCategoryDtoToCategory} from "@/src/data/mappers/category.mapper";
+
 
 export class EventRepositoryImpl implements EventRepository {
     constructor(
@@ -29,6 +31,11 @@ export class EventRepositoryImpl implements EventRepository {
 
     async getTimeByDate(date: string, exceptId?: string) {
         return await this.datasource.getEventsTimeByDate(date, exceptId || null);
+    };
+
+    async getCategoryAndStartById(id: string) {
+        const dto = await this.datasource.getCategoryAndStartByEventId(id);
+        return dto ? {category: mapCategoryDtoToCategory(dto), start: dto.start} : null;
     };
 
     async insert(event: Event) {

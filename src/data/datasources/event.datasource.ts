@@ -1,5 +1,6 @@
 import * as SQLite from "expo-sqlite";
-import {EventDto} from "@/src/data/dto/EventDto";
+import {EventCategoryAndStartDto, EventDto} from "@/src/data/dto/EventDto";
+import {TaskWithCategoryAndStartDto} from "@/src/data/dto/TaskDto";
 
 
 export class EventDatasource {
@@ -74,6 +75,19 @@ export class EventDatasource {
         );
     };
 
+    async getCategoryAndStartByEventId(id: string) {
+        return await this.db.getFirstAsync<EventCategoryAndStartDto>(`
+            SELECT 
+                events.category_id,
+                categories.name as category_name,
+                categories.color as category_color,
+                events.start
+            FROM events
+            LEFT JOIN categories ON events.category_id = categories.id
+            WHERE events.id = ?
+        `, id);
+    };
+
     async insertEvent(dto: EventDto) {
         await this.db.runAsync(
             `INSERT INTO events (id, date, name, description, category_id, start, end, is_recurring, recurring_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)`,
@@ -93,23 +107,16 @@ export class EventDatasource {
     };
 
     async deleteRecurringEvents(id: string, date?: string) {
-        try {
-            let rows: { id: string }[];
+        let rows: { id: string }[];
 
-            if (date) {
-                rows = await this.db.getAllAsync('SELECT id FROM events WHERE recurring_id = ? AND date != ?', id, date);
-                await this.db.runAsync('DELETE FROM events WHERE recurring_id = ? AND date != ?', id, date);
-            } else {
-                rows = await this.db.getAllAsync('SELECT id FROM events WHERE recurring_id = ?', id);
-                await this.db.runAsync('DELETE FROM events WHERE recurring_id = ?', id);
-            }
-
-            console.log("events", await this.db.getAllAsync('SELECT * FROM events'));
-            console.log("tasks", await this.db.getAllAsync('SELECT * FROM tasks'));
-
-            return rows.map(row => row.id);
-        } catch (e) {
-            console.error(e);
+        if (date) {
+            rows = await this.db.getAllAsync('SELECT id FROM events WHERE recurring_id = ? AND date != ?', id, date);
+            await this.db.runAsync('DELETE FROM events WHERE recurring_id = ? AND date != ?', id, date);
+        } else {
+            rows = await this.db.getAllAsync('SELECT id FROM events WHERE recurring_id = ?', id);
+            await this.db.runAsync('DELETE FROM events WHERE recurring_id = ?', id);
         }
+
+        return rows.map(row => row.id);
     };
 }

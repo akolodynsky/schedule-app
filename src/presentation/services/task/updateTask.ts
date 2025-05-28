@@ -1,11 +1,10 @@
 import {useDateStore, useTaskStore} from "@/src/presentation/stores";
 import {validateTask} from "./validateTask";
 import {container} from "@/src/shared/containers/container";
-import {loadTasks} from "@/src/presentation/services/task/loadTasks";
 
 
 export const updateTask = async (id: string, eventId: string | undefined, handleBack?: () => void) => {
-    const {name, isCompleted} = useTaskStore.getState();
+    const {name, isCompleted, updateTaskBlock} = useTaskStore.getState();
     const {date} = useDateStore.getState();
 
     if (await validateTask()) return;
@@ -13,8 +12,7 @@ export const updateTask = async (id: string, eventId: string | undefined, handle
     const completed = !handleBack ? !isCompleted : isCompleted
 
     await container.taskUseCases.updateTask(id, date, name, completed, eventId);
-    if (handleBack) {
-        await loadTasks();
-        handleBack();
-    }
+    updateTaskBlock(date, {id, date, name, isCompleted: completed, eventId}, eventId);
+
+    handleBack && handleBack();
 };
