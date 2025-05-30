@@ -25,7 +25,9 @@
     },
     "plugins": [
       "expo-router",
-      "expo-sqlite"
+      "expo-sqlite",
+      "expo-font",
+      "expo-web-browser"
     ],
     "experiments": {
       "typedRoutes": true
@@ -37,6 +39,7 @@
       "eas": {
         "projectId": "3dc4b6a0-d08f-4783-b6b1-12c89249b607"
       }
-    }
+    },
+    "jsEngine": "hermes"
   }
 }

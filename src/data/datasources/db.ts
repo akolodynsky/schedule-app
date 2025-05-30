@@ -1,6 +1,7 @@
 import * as SQLite from 'expo-sqlite';
 import {colors} from "@/src/shared/constants/colors";
 
+
 const defaultCategories: ICategory[] = [
     {id: "c-0", name: 'Eating', color: colors[0].shades[1]},
     {id: "c-1", name: 'Homework', color: colors[2].shades[1]},
@@ -20,7 +21,12 @@ const defaultCategories: ICategory[] = [
 ];
 
 export const db = async () => {
-    const db = await SQLite.openDatabaseAsync("santitime");
+    const db = await SQLite.openDatabaseAsync("santitime", { useNewConnection: true });
+
+    console.log("init db")
+
+    console.log("events", await db.getAllAsync('SELECT * FROM events'));
+    console.log("tasks", await db.getAllAsync('SELECT * FROM tasks'));
 
     await db.execAsync(`
         PRAGMA journal_mode = WAL;
@@ -38,26 +44,22 @@ export const db = async () => {
             name TEXT,
             description TEXT,
             category_id TEXT NOT NULL,
+            tasks_count INTEGER DEFAULT 0,
             start TEXT NOT NULL,
             end TEXT NOT NULL,
             is_recurring INTEGER DEFAULT 0,
             recurring_id TEXT,
+            FOREIGN KEY (category_id) REFERENCES categories(id),
             FOREIGN KEY (recurring_id) REFERENCES recurring_options(id)
         );
 
         CREATE TABLE IF NOT EXISTS tasks (
             id TEXT PRIMARY KEY,
+            event_id TEXT,
             date TEXT NOT NULL,
             name TEXT NOT NULL,
-            completed INTEGER DEFAULT 0
-        );
-
-        CREATE TABLE IF NOT EXISTS event_tasks (
-            event_id  TEXT,
-            task_id TEXT,
-            PRIMARY KEY (event_id, task_id),
-            FOREIGN KEY (event_id) REFERENCES events(id),
-            FOREIGN KEY (task_id) REFERENCES tasks(id)
+            is_completed INTEGER DEFAULT 0,
+            FOREIGN KEY (event_id) REFERENCES events(id)
         );
 
         CREATE TABLE IF NOT EXISTS recurring_options (

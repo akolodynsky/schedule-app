@@ -1,25 +1,21 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View} from "react-native";
 import {router} from "expo-router";
 
 import PageRouteButtons from "@/src/presentation/components/ui/PageRouteButtons";
 import PageHeader from "@/src/presentation/components/ui/PageHeader";
 import TasksList from "../components/TasksList";
-import {useEventStore} from "../stores";
+
 
 
 export default function TaskPage()  {
     const handleAddTask = () => {
-        router.push("/");
+        router.push("/task");
     };
 
     const handleBack = () => {
         router.back();
     };
-
-    useEffect(() => {
-        useEventStore.getState().setShouldReloadEvents(true);
-    }, []);
 
     return (
         <>

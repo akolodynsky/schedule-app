@@ -1,43 +1,53 @@
 import {router} from "expo-router";
 
-import {useDateStore, useEventStore, useRecurringOptionsStore} from "@/src/presentation/stores";
-import {generateUniqueId, getDayIndex} from "@/src/shared/utils";
+import {useDateStore, useEventStore, useRecurringOptionsStore, useTaskStore} from "@/src/presentation/stores";
+import {loadEvents} from "./loadEvents";
+import {validateEvent} from "./validateEvent";
 import {container} from "@/src/shared/containers/container";
-import {validateEvent, loadEvents} from ".";
-
-const { eventUseCases } = container
+import {buildRecurringOptions} from "@/src/presentation/services/event/buildRecurringOptions";
 
 
 export const updateEvent = async (selectedEvent: IEvent) => {
     const {category, name, description, tasks, start, end, reset} = useEventStore.getState();
-    const {frequency, interval, weekDays, endRepeat, resetRecurring, disabled} = useRecurringOptionsStore.getState();
-    const {selectedDate, date} = useDateStore.getState();
+    const {frequency, resetRecurring, disabled} = useRecurringOptionsStore.getState();
+    const {selectedDate, date, setSelectedDate} = useDateStore.getState();
 
-    await validateEvent();
+    if (await validateEvent()) return;
 
-    let recurringOptions: Omit<IRecurringOptions, "exceptDays"> | null = null;
-    const recurringId: string | null = selectedEvent.recurringId;
     let eventDate = date;
 
-    if (frequency !== "once") {
-        const monthDay = frequency === "monthly" ? new Date(date).getDate() : null;
-        const daysOfWeek = weekDays.length === 0 && frequency === "weekly" ? [getDayIndex(date)] : weekDays;
-        const id = recurringId ?? generateUniqueId("r");
-        recurringOptions = {id, frequency, interval, weekDays: daysOfWeek, monthDay, startRepeat: date, endRepeat};
-    } else {
+    const recurringId = selectedEvent.recurringId;
+
+    const recurringOptions = buildRecurringOptions(selectedEvent.recurringId!);
+
+    if (frequency === "once" && recurringId && !disabled) {
+        const eventIds = await container.eventUseCases.deleteRecurringOptions(recurringId, selectedDate);
+
+        if (eventIds.length > 0) {
+            for (const eventId of eventIds) {
+                await container.taskUseCases.deleteTasksByEventId(eventId);
+            }
+        }
+
         eventDate = selectedDate;
     }
 
-    if (!disabled) {
-        await eventUseCases.updateRecurringEvent(selectedEvent.id, eventDate, name, description, category!, start, end, recurringOptions)
-    } else if (recurringId) {
-        await eventUseCases.updateSingleEvent(date, name, description, category!, start, end, recurringId)
-    }
+    const eventId = disabled
+        ? await container.eventUseCases.updateSingleEvent(eventDate, name, description, category!, start, end, recurringId!)
+        : await container.eventUseCases.updateRecurringEvent(selectedEvent.id, eventDate, name, description, category!, start, end, recurringOptions)
 
-    if (frequency === "once" && recurringId) await eventUseCases.deleteRecurringOptions(recurringId);
+
+
+    if (tasks.length > 0 && !(recurringId && !disabled)) {
+        tasks.map(async (task) => {
+            await container.taskUseCases.createTask(task.id, eventDate, task.name, task.isCompleted, eventId);
+        });
+        useTaskStore.getState().setShouldReloadTasks(true);
+    }
 
     await loadEvents(selectedDate);
     router.back();
+    if (!recurringId || disabled) setSelectedDate(date);
     resetRecurring();
     reset();
 };

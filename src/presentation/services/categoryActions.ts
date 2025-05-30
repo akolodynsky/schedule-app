@@ -1,11 +1,10 @@
 import {router} from "expo-router";
-import {useCategoryStore} from "../../presentation/stores";
-import { container } from "@/src/shared/containers/container";
+import {useCategoryStore, useEventStore} from "../../presentation/stores";
+import {container} from "@/src/shared/containers/container";
 
-const { categoryUseCases } = container;
 
 export const loadCategories = async () => {
-    const categories = await categoryUseCases.getAllCategories();
+    const categories = await container.categoryUseCases.getAllCategories();
     useCategoryStore.getState().setCategories(categories);
 }
 
@@ -18,9 +17,10 @@ export const createCategory = async () => {
     }
 
     if (selectedCategory) {
-        await categoryUseCases.updateCategory(selectedCategory.id, name, color);
+        await container.categoryUseCases.updateCategory(selectedCategory.id, name, color);
     } else {
-        await categoryUseCases.createCategory(name, color);
+        const category = await container.categoryUseCases.createCategory(name, color);
+        useEventStore.getState().setCategory(category);
     }
 
     await loadCategories();
@@ -29,6 +29,11 @@ export const createCategory = async () => {
 };
 
 export const removeCategory = async (id: string) => {
-    await categoryUseCases.deleteCategory(id);
+    await container.categoryUseCases.deleteCategory(id);
+    const eventIds = await container.eventUseCases.deleteEventsByCategoryId(id);
+
+    for (const eventId of eventIds) {
+        await container.taskUseCases.deleteTasksByEventId(eventId);
+    }
 }
 

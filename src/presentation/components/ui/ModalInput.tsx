@@ -2,7 +2,6 @@ import React, {memo, ReactNode, useRef} from 'react';
 import {Pressable, Text, View} from 'react-native';
 
 import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
-import {placeholder} from "@babel/types";
 
 
 interface ModalInputProps {

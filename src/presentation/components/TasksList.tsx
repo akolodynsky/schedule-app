@@ -1,58 +1,48 @@
 import React, {useEffect, useRef} from 'react';
 import {View, FlatList} from 'react-native';
-import {router} from "expo-router";
 import {useShallow} from "zustand/react/shallow";
 
 import TaskBlockCard from "@/src/presentation/components/TaskBlockCard";
-import {useDateStore, useEventStore, useTaskStore} from "../stores";
-import {createTask} from "../../storage/tasks";
-import {mergeTaskBlocks} from "../../shared/utils";
+import {useTaskStore} from "../stores";
+import {loadTasks, updateTask, updateTaskState} from "@/src/presentation/services/task";
+import {router} from "expo-router";
+import {getEventById} from "@/src/presentation/services/event";
 
 
 const TasksList = () => {
-    const { mergedTasksBlocks, setMergedTasksBlocks, shouldReloadTasks, setShouldReloadTasks, setSelectedTask, setName, setIsCompleted } = useTaskStore(
-        useShallow((state) => ({
-            setSelectedTask: state.setSelectedTask,
-            setName: state.setName,
-            setIsCompleted: state.setIsCompleted,
-            shouldReloadTasks: state.shouldReloadTasks,
-            setShouldReloadTasks: state.setShouldReloadTasks,
-            mergedTasksBlocks: state.mergedTasksBlocks,
-            setMergedTasksBlocks: state.setMergedTasksBlocks,
+    const {tasks, shouldTasksReload, setShouldTasksReload} = useTaskStore(useShallow(
+        state => ({
+            tasks: state.tasks,
+            shouldTasksReload: state.shouldReloadTasks,
+            setShouldTasksReload: state.setShouldReloadTasks
         }))
     );
 
-    const setDate = useDateStore(useShallow(state => state.setDate));
-    const setSelectedEvent = useEventStore(useShallow(state => state.setSelectedEvent));
+    const handleCheck = async (task: ITask) => {
+        updateTaskState(task);
+        await updateTask(task.id, task.eventId);
+    }
 
-    const handleUpdate = (task: ITask, event?: IEvent) => {
-        event && setSelectedEvent(event);
-        setSelectedTask(task);
-        setName(task.name);
-        setIsCompleted(task.isCompleted);
-        setDate(task.date);
+    const handleUpdate = (task: ITask, eventId?: string) => {
+        updateTaskState(task);
+        eventId && getEventById(eventId);
         router.push("/task");
     }
 
-    const handleCheck = async (task: ITask, eventId?: string) => {
-        await createTask(task.name, !task.isCompleted, task.date, task.id, eventId);
-    }
-
     useEffect(() => {
-        if (!shouldReloadTasks) return;
-
-        const loadMergedTaskBlocks = async () => {
-            setMergedTasksBlocks(await mergeTaskBlocks());
-            setShouldReloadTasks(false);
-        };
-
-        void loadMergedTaskBlocks();
-    }, [shouldReloadTasks]);
+        if (shouldTasksReload) {
+            const getTasks = async () => {
+                await loadTasks();
+                setShouldTasksReload(false);
+            };
+            void getTasks();
+        }
+    }, [shouldTasksReload]);
 
     const flatListRef = useRef<FlatList>(null);
 
     useEffect(() => {
-        if (flatListRef.current && mergedTasksBlocks.length > 0) {
+        if (flatListRef.current && tasks.length > 0) {
             setTimeout(() => {
                 flatListRef.current?.scrollToEnd({ animated: false });
             }, 100);
@@ -64,8 +54,8 @@ const TasksList = () => {
             <View className="flex-1 bg-dark-200 rounded-tr-[76px]">
                 <FlatList
                     ref={flatListRef}
-                    data={mergedTasksBlocks}
-                    keyExtractor={(item: MergedTasksBlock) => item.date}
+                    data={tasks}
+                    keyExtractor={(item: ITaskBlock) => item.date}
                     contentContainerStyle={{paddingHorizontal: 16, paddingTop: 26}}
                     showsVerticalScrollIndicator={false}
                     overScrollMode="never"

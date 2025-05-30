@@ -2,6 +2,8 @@ import {EventRepository} from "@/src/domain/repositories/event.repository";
 import {EventDatasource} from "@/src/data/datasources/event.datasource";
 import {mapEventDtoToEvent, mapEventToEventDto} from "@/src/data/mappers/event.mapper";
 import { Event } from "@/src/domain/entities/Event";
+import {mapCategoryDtoToCategory} from "@/src/data/mappers/category.mapper";
+
 
 export class EventRepositoryImpl implements EventRepository {
     constructor(
@@ -13,17 +15,27 @@ export class EventRepositoryImpl implements EventRepository {
         return dtos.map(mapEventDtoToEvent);
     };
 
-    async getRecurringByOptions(ids: string[]) {
-        const dtos = await this.datasource.getRecurringEventsByOptions(ids);
+    async getRecurringByOptions(ids: string[], date: string) {
+        const dtos = await this.datasource.getRecurringEventsByOptions(ids, date);
         return dtos.map(mapEventDtoToEvent);
     };
 
-    async getEventId(date: string, recurringId: string, isRecurring: number) {
+    async getId(date: string, recurringId: string, isRecurring: number) {
         return await this.datasource.getEventId(date, recurringId, isRecurring);
+    };
+
+    async getById(id: string) {
+        const dto = await this.datasource.getEventById(id);
+        return dto ? mapEventDtoToEvent(dto) : null;
     };
 
     async getTimeByDate(date: string, exceptId?: string) {
         return await this.datasource.getEventsTimeByDate(date, exceptId || null);
+    };
+
+    async getCategoryAndStartById(id: string) {
+        const dto = await this.datasource.getCategoryAndStartByEventId(id);
+        return dto ? {category: mapCategoryDtoToCategory(dto), start: dto.start} : null;
     };
 
     async insert(event: Event) {
@@ -38,7 +50,12 @@ export class EventRepositoryImpl implements EventRepository {
         await this.datasource.deleteEvent(id);
     };
 
-    async deleteRecurring(id: string) {
-        await this.datasource.deleteRecurringEvents(id);
+    async deleteByRecurringId(id: string, date?: string) {
+        return await this.datasource.deleteEventsByRecurringId(id, date);
+    };
+
+    async deleteByCategoryId(id: string) {
+        const dtos = await this.datasource.deleteEventsByCategoryId(id);
+        return dtos.map(dto => dto.id);
     };
 }

@@ -5,32 +5,24 @@ import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
 import {useShallow} from "zustand/react/shallow";
 
 import EventBottomCard from "./EventBottomCard";
-import {useDateStore, useEventStore, useRecurringOptionsStore, useTaskStore} from "../stores";
+import {useDateStore, useEventStore, useRecurringOptionsStore} from "../stores";
 import {removeEvent, updateEventState, updateRecurringState} from "../services/event";
+import {updateTask, updateTasksState, updateTaskState} from "@/src/presentation/services/task";
 
 
 const EventBottomSheet = () => {
     const bottomSheetRef = useRef<BottomSheetMethods>(null);
 
-    const { selectedEvent, setSelectedEvent } = useEventStore(
+    const { selectedEvent, setSelectedEvent, setTasks } = useEventStore(
         useShallow((state) => ({
             selectedEvent: state.selectedEvent,
             setSelectedEvent: state.setSelectedEvent,
+            setTasks: state.setTasks
         }))
     );
 
-    const { setSelectedTask, setName, setIsCompleted } = useTaskStore(
-        useShallow((state) => ({
-            setSelectedTask: state.setSelectedTask,
-            setName: state.setName,
-            setIsCompleted: state.setIsCompleted,
-        }))
-    );
-
-    const { setDate } = useDateStore(
-        useShallow((state) => ({
-            setDate: state.setDate,
-        }))
+    const selectedDate = useDateStore(
+        useShallow(state => state.selectedDate)
     );
 
     const setDisabled = useRecurringOptionsStore(
@@ -40,16 +32,20 @@ const EventBottomSheet = () => {
     useEffect(() => {
         if (selectedEvent) {
             bottomSheetRef.current?.snapToIndex(0)
+            if (selectedEvent.tasksCount > 0) {
+                void updateTasksState(selectedEvent.id, selectedDate);
+            }
         } else {
             bottomSheetRef.current?.close();
+            setTasks([]);
         }
     }, [selectedEvent]);
 
     const handleRemoveEvent = async (id: string, recurringId: string, recurring: boolean) => {
         if (recurringId && recurring) {
-            await removeEvent(recurringId, true);
+            await removeEvent(recurringId, selectedDate);
         } else {
-            await removeEvent(id, true);
+            await removeEvent(id, selectedDate);
         }
         bottomSheetRef.current?.close();
     }
@@ -73,16 +69,13 @@ const EventBottomSheet = () => {
         }
     }
 
-    const handleCheckTask = async (task: ITask, eventId: string) => {
-        //await createTask(task.name, !task.isCompleted, task.date, task.id, eventId);
+    const handleCheckTask = async (task: ITask) => {
+        updateTaskState(task);
+        await updateTask(task.id, task.eventId);
     }
 
-    const handleUpdateTask = (task: ITask, event: IEvent) => {
-        event && setSelectedEvent(event);
-        setSelectedTask(task);
-        setName(task.name);
-        setIsCompleted(task.isCompleted);
-        setDate(task.date);
+    const handleUpdateTask = (task: ITask) => {
+        updateTaskState(task);
         router.push("/task");
     }
 

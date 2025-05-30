@@ -3,6 +3,7 @@ import {RecurringRepository} from "@/src/domain/repositories/recurring.repositor
 import {generateUniqueId} from "@/src/shared/utils";
 import {isEventOccurringOnDate} from "@/src/domain/helpers/isEventOccurringOnDate";
 import {addGaps} from "@/src/domain/helpers/addGaps";
+import {container} from "@/src/shared/containers/container";
 
 
 export class EventUseCases {
@@ -18,7 +19,7 @@ export class EventUseCases {
         const recurringIds = recurringOptions
             .filter(option => isEventOccurringOnDate(option, date))
             .map(option => option.id);
-        const recurringEvents = await this.eventRepository.getRecurringByOptions(recurringIds);
+        const recurringEvents = await this.eventRepository.getRecurringByOptions(recurringIds, date);
 
         const allEvents = [...events, ...recurringEvents]
             .sort((a, b) => a.start.localeCompare(b.start));
@@ -29,27 +30,35 @@ export class EventUseCases {
         return await this.eventRepository.getTimeByDate(date, exceptId);
     };
 
+    async getCategoryAndStartById(id: string) {
+        return await this.eventRepository.getCategoryAndStartById(id);
+    };
+
     async getRecurringOptionsById(id: string) {
         return await this.recurringRepository.getById(id);
     };
 
+    async getEventById(id: string) {
+        return await this.eventRepository.getById(id);
+    };
+
     async createEvent(
+        id: string,
         date: string,
         name: string,
         description: string,
         category: ICategory,
         start: string,
         end: string,
-        recurringOptions: IRecurringOptions | null,
+        recurringOptions: Omit<IRecurringOptions, "exceptDays"> | null,
     ) {
         let recurringId: string | null = null;
 
         if (recurringOptions) {
             recurringId = recurringOptions.id;
-            await this.recurringRepository.insertOrEdit(recurringOptions);
+            await this.recurringRepository.insertOrEdit({...recurringOptions, exceptDays: null});
         }
 
-        const id = generateUniqueId("e");
         const isRecurring = !!recurringOptions;
 
         await this.eventRepository.insert({id, date, name, description, category, start, end, isRecurring, recurringId});
@@ -71,12 +80,14 @@ export class EventUseCases {
         if (recurringOptions) {
             const exceptDays = await this.recurringRepository.getExceptDays(recurringId!);
             await this.recurringRepository.insertOrEdit({...recurringOptions, exceptDays});
-            const mainId = await this.eventRepository.getEventId(date, recurringId!, 1);
+            const mainId = await this.eventRepository.getId(date, recurringId!, 1);
             eventId = mainId ? mainId : id;
         }
 
         const isRecurring = !!recurringOptions;
         await this.eventRepository.edit({id: eventId, date, name, description, category, start, end, isRecurring, recurringId});
+
+        return eventId;
     };
 
     async updateSingleEvent(
@@ -88,17 +99,18 @@ export class EventUseCases {
         end: string,
         recurringId: string,
     ) {
-
-        const id = await this.eventRepository.getEventId(date, recurringId, 0);
+        let id = await this.eventRepository.getId(date, recurringId, 0);
 
         await this.recurringRepository.insertExceptDate(recurringId, date);
 
         if (id) {
             await this.eventRepository.edit({id, date, name, description, category, start, end, isRecurring: false, recurringId});
         } else {
-            const id = generateUniqueId("e");
+            id = generateUniqueId("e");
             await this.eventRepository.insert({id, date, name, description, category, start, end, isRecurring: false, recurringId});
         }
+
+        return id;
     };
 
     async deleteSingleEvent(id: string, date: string) {
@@ -109,12 +121,12 @@ export class EventUseCases {
         }
     };
 
-    async deleteRecurringEvents(id: string) {
-        await this.eventRepository.deleteRecurring(id);
+    async deleteRecurringOptions(id: string, date?: string) {
         await this.recurringRepository.delete(id);
+        return await this.eventRepository.deleteByRecurringId(id, date);
     };
 
-    async deleteRecurringOptions(id: string) {
-        await this.recurringRepository.delete(id);
+    async deleteEventsByCategoryId(id: string) {
+        return await this.eventRepository.deleteByCategoryId(id);
     };
 }

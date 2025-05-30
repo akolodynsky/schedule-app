@@ -13,6 +13,7 @@ import settings from "@/src/shared/assets/icons/settings.png";
 import plus from "@/src/shared/assets/icons/plus.png";
 import minus from "@/src/shared/assets/icons/minus.png";
 import keyboard from "@/src/shared/assets/icons/keyboard.png";
+import warning from "@/src/shared/assets/icons/warning.png";
 
 
 export const icons = {
@@ -31,4 +32,5 @@ export const icons = {
     plus,
     minus,
     keyboard,
+    warning,
 };

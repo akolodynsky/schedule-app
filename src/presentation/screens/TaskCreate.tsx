@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 import {View} from "react-native";
 import {router} from "expo-router";
 import {useShallow} from "zustand/react/shallow";
@@ -7,70 +7,66 @@ import {useDateStore, useEventStore, useTaskStore} from "../stores";
 import PageRouteButtons from "@/src/presentation/components/ui/PageRouteButtons";
 import PageHeader from "@/src/presentation/components/ui/PageHeader";
 import TaskForm from "../components/TaskForm";
-import {createTask, removeTask} from "../../storage/tasks";
+import {createTask, removeTask, updateTask} from "@/src/presentation/services/task";
+import {loadEvents} from "@/src/presentation/services/event";
+
 
 
 export default function TaskCreate()  {
-    const { name, isCompleted, reset, selectedTask, setError } = useTaskStore(
+    const { reset, selectedTask, updateTaskBlock } = useTaskStore(
         useShallow((state) => ({
-            name: state.name,
-            isCompleted: state.isCompleted,
             reset: state.reset,
             selectedTask: state.selectedTask,
-            setError: state.setError,
+            updateTaskBlock: state.updateTaskBlock
+        }))
+    );
+
+    const { selectedEvent, setSelectedEvent } = useEventStore(
+        useShallow((state) => ({
+            selectedEvent: state.selectedEvent,
+            setSelectedEvent: state.setSelectedEvent
         }))
     );
 
     const date = useDateStore(useShallow(state => state.date));
 
-    const { selectedEvent, setSelectedEvent } = useEventStore(
-        useShallow((state) => ({
-            selectedEvent: state.selectedEvent,
-            setSelectedEvent: state.setSelectedEvent,
-        }))
-    );
+    const prevDate = useRef(date);
+    const prevEventId = useRef(selectedEvent?.id);
 
-    const prevDateRef = useRef(date);
-    const prevEventRef = useRef(selectedEvent);
 
-    const cleanupAndBack = () => {
+    const handleAddTask = async () => {
+        if (!selectedTask) {
+            await createTask(handleBack, selectedEvent?.id);
+        } else {
+            if (date !== prevDate.current || selectedEvent?.id !== prevEventId.current) {
+                await updateTaskBlock(selectedTask.id);
+            }
+            await updateTask(selectedTask.id, selectedEvent?.id, handleBack);
+        }
+        await loadEvents(date);
+    };
+
+    const handleRemoveTask = async () => {
+        if (selectedTask) {
+            await removeTask(selectedTask.id);
+            await loadEvents(date);
+            handleBack();
+        }
+    }
+
+    const handleBack = () => {
         setSelectedEvent(null);
         router.back();
         reset();
     }
 
-    const handleAddTask = async () => {
-        if (!name) {
-            setError("Name is required!");
-            return;
-        }
-
-        if ((prevDateRef.current !== date || prevEventRef.current !== selectedEvent) && selectedTask) {
-            await removeTask(prevDateRef.current, selectedTask.id, prevEventRef.current?.id ?? '');
-        }
-
-        await createTask(name, isCompleted, date, selectedTask?.id, selectedEvent?.id ?? '');
-        cleanupAndBack();
-    };
-
-    const handleRemoveTask = async () => {
-        if (selectedTask) {
-            await removeTask(selectedTask.date, selectedTask.id, selectedEvent?.id ?? '');
-            cleanupAndBack();
-        }
-    }
-
-    useEffect(() => {
-        useEventStore.getState().setShouldReloadEvents(true);
-    }, []);
-
     return (
         <>
             <PageRouteButtons
                 selected={!!selectedTask}
-                handleBack={cleanupAndBack}
+                handleBack={handleBack}
                 handleAdd={handleAddTask}
-                handleRemove={handleRemoveTask}
+                handleRemove={selectedTask && handleRemoveTask}
             />
 
             <View className="flex-1 bg-dark-200">

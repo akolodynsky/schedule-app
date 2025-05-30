@@ -1,5 +1,5 @@
 import * as SQLite from "expo-sqlite";
-import { RecurringDto } from "@/src/data/dto/RecurringDto";
+import {RecurringDto} from "@/src/data/dto/RecurringDto";
 
 
 export class RecurringDatasource {
@@ -7,11 +7,11 @@ export class RecurringDatasource {
 
     constructor() {
         void this.init();
-    }
+    };
 
     private async init() {
-        this.db = await SQLite.openDatabaseAsync("santitime");
-    }
+        this.db = await SQLite.openDatabaseAsync("santitime", { useNewConnection: true });
+    };
 
     async getRecurringOptionsByDate(date: string) {
         return await this.db.getAllAsync<RecurringDto>(

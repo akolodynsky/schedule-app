@@ -4,7 +4,7 @@ import {useShallow} from "zustand/react/shallow";
 
 import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
 import DatePicker from "@/src/presentation/components/ui/DatePicker";
-import {useDateStore, useRecurringOptionsStore} from "../stores";
+import {useDateStore} from "../stores";
 import {formatDate} from "../../shared/utils";
 
 
@@ -16,15 +16,11 @@ const DatePickerInput = () => {
         }))
     );
 
-    const disabled = useRecurringOptionsStore(
-        useShallow(state => state.disabled)
-    );
-
     const modalRef = useRef<AnimatedComponentRef>(null);
 
     return (
         <View>
-            <Text className="text-light-200 font-inter_medium mb-3">{!disabled ? "Start Date" : "Date"}</Text>
+            <Text className="text-light-200 font-inter_medium mb-3">Date</Text>
             <Pressable onPress={() => modalRef.current?.open()}>
                 <Text
                     className="bg-dark-100 rounded-lg px-4 py-6 font-inter_regular text-lg text-light-100">{formatDate(date)}</Text>

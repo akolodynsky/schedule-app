@@ -1,34 +1,36 @@
 import {router} from "expo-router";
 
-import {useDateStore, useEventStore, useRecurringOptionsStore} from "@/src/presentation/stores";
+import {useDateStore, useEventStore, useRecurringOptionsStore, useTaskStore} from "@/src/presentation/stores";
+import {generateUniqueId} from "@/src/shared/utils";
+import { validateEvent } from "./validateEvent";
+import { loadEvents } from "./loadEvents";
 import {container} from "@/src/shared/containers/container";
-import {generateUniqueId, getDayIndex} from "@/src/shared/utils";
-import {RecurringOptions} from "@/src/domain/entities";
-import {validateEvent, loadEvents} from ".";
-
-const { eventUseCases } = container;
+import {buildRecurringOptions} from "@/src/presentation/services/event/buildRecurringOptions";
 
 
 export const createEvent = async () => {
-    const {category, name, description, tasks, start, end, reset} = useEventStore.getState();
-    const {frequency, interval, weekDays, endRepeat, resetRecurring} = useRecurringOptionsStore.getState();
-    const {selectedDate, date} = useDateStore.getState();
+    const {category, name, description, start, tasks, end, reset} = useEventStore.getState();
+    const {resetRecurring} = useRecurringOptionsStore.getState();
+    const {selectedDate, date, setSelectedDate} = useDateStore.getState();
 
-    await validateEvent();
+    if (await validateEvent()) return;
 
-    let recurringOptions: RecurringOptions | null = null;
+    const recurringOptions = buildRecurringOptions();
 
-    if (frequency !== "once") {
-        const id = generateUniqueId("r");
-        const monthDay = frequency === "monthly" ? new Date(date).getDate() : null;
-        const daysOfWeek = weekDays.length === 0 && frequency === "weekly" ? [getDayIndex(date)] : weekDays;
-        recurringOptions = {id, frequency, interval, weekDays: daysOfWeek, monthDay, startRepeat: date, endRepeat, exceptDays: null};
+    const id = generateUniqueId("e");
+
+    await container.eventUseCases.createEvent(id, date, name, description, category!, start, end, recurringOptions);
+
+    if (tasks.length > 0) {
+        tasks.map(async (task) => {
+            await container.taskUseCases.createTask(task.id, task.date, task.name, task.isCompleted, id);
+        });
+        useTaskStore.getState().setShouldReloadTasks(true);
     }
-
-    await eventUseCases.createEvent(date, name, description, category!, start, end, recurringOptions)
 
     await loadEvents(selectedDate);
     router.back();
+    setSelectedDate(date);
     resetRecurring();
     reset();
 };

@@ -22,8 +22,9 @@ const TaskForm = () => {
         }))
     );
 
-    const { selectedEvent, setSelectedEvent } = useEventStore(
+    const { events, selectedEvent, setSelectedEvent } = useEventStore(
         useShallow(state => ({
+            events: state.events,
             selectedEvent: state.selectedEvent,
             setSelectedEvent: state.setSelectedEvent,
         }))
@@ -41,8 +42,10 @@ const TaskForm = () => {
     useEffect(() => {
         void loadEvents(date)
         setSelectedDate(date)
-        if (date !== prevDateRef.current) {
-            setSelectedEvent(null)
+        if (date !== prevDateRef.current && selectedEvent) {
+            const index = events.findIndex(e => e.id === selectedEvent.id)
+
+            index === -1 && setSelectedEvent(null)
         }
     }, [date]);
 

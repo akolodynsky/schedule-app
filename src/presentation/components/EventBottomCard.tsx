@@ -17,7 +17,7 @@ interface EventBottomCardProps {
 }
 
 const EventBottomCard = ({ update, remove, checkTask, updateTask, updateRecurring }: EventBottomCardProps) => {
-    const { selectedEvent } = useEventStore();
+    const { selectedEvent, tasks } = useEventStore();
 
     if (!selectedEvent) return null;
 
@@ -49,10 +49,10 @@ const EventBottomCard = ({ update, remove, checkTask, updateTask, updateRecurrin
                 </View>
             </View>
 
-            <View className="gap-3 flex-1 ">
+            <View className="gap-3 flex-1">
                 <View className={`bg-dark-200 w-full px-4 py-5 rounded-[28px] gap-3 ${(!name && !description) && "self-start"}`}>
                     <View className="flex-row flex-wrap-reverse gap-3 justify-between items-center">
-                        {name && <Text className="font-inter_bold text-light-100 text-[21px]">{name}</Text>}
+                        {name && <Text className="font-inter_bold text-light-100 text-[19px]">{name}</Text>}
 
                         <CategoryCard category={category} />
                     </View>
@@ -60,17 +60,17 @@ const EventBottomCard = ({ update, remove, checkTask, updateTask, updateRecurrin
                         <Text className="font-inter_medium text-light-200 text-lg">{description}</Text>}
                 </View>
 
-                {/*{tasks && tasks.length > 0 &&*/}
-                {/*    <View className="bg-dark-200 px-4 py-4 rounded-[28px] gap-2">*/}
-                {/*        {tasks.map((task) => (*/}
-                {/*            <TaskCard*/}
-                {/*                key={task.id}*/}
-                {/*                task={task}*/}
-                {/*                check={() => checkTask(task, id)}*/}
-                {/*                longPress={() => updateTask(task, selectedEvent)}*/}
-                {/*            />*/}
-                {/*        ))}*/}
-                {/*    </View>}*/}
+                {tasks && tasks.length > 0 &&
+                    <View className="bg-dark-200 px-4 py-4 rounded-[28px] gap-2">
+                        {tasks.map((task) => (
+                            <TaskCard
+                                key={task.id}
+                                task={task}
+                                check={() => checkTask(task, id)}
+                                longPress={() => updateTask(task, selectedEvent)}
+                            />
+                        ))}
+                    </View>}
             </View>
         </>
     );

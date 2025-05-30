@@ -1,5 +1,4 @@
 import * as SQLite from "expo-sqlite";
-import { generateUniqueId } from "../../shared/utils";
 import { CategoryDto } from "@/src/data/dto/CategoryDto";
 
 
@@ -8,11 +7,11 @@ export class CategoryDatasource {
 
     constructor() {
         void this.init();
-    }
+    };
 
     private async init() {
-        this.db = await SQLite.openDatabaseAsync("santitime");
-    }
+        this.db = await SQLite.openDatabaseAsync("santitime", { useNewConnection: true });
+    };
 
     async getCategories() {
         return await this.db.getAllAsync<CategoryDto>('SELECT * FROM categories');
