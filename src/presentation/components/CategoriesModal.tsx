@@ -18,8 +18,13 @@ const CategoriesModal = memo(({onClose}: {onClose: () => void}) => {
         onClose();
     }
 
+    const createCategory = () => {
+        router.push("/category")
+        onClose();
+    }
+
     return (
-        <CustomModal title="CategoryPage" button={() => router.push("/category")}>
+        <CustomModal title="Category" button={createCategory}>
             {categories.map((category) => (
                 <TouchableOpacity className="self-start" key={category.id} onPress={() => selectCategory(category)}>
                     <CategoryCard category={category} />

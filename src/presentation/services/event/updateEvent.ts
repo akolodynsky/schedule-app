@@ -1,6 +1,6 @@
 import {router} from "expo-router";
 
-import {useDateStore, useEventStore, useRecurringOptionsStore} from "@/src/presentation/stores";
+import {useDateStore, useEventStore, useRecurringOptionsStore, useTaskStore} from "@/src/presentation/stores";
 import {loadEvents} from "./loadEvents";
 import {validateEvent} from "./validateEvent";
 import {container} from "@/src/shared/containers/container";
@@ -42,6 +42,7 @@ export const updateEvent = async (selectedEvent: IEvent) => {
         tasks.map(async (task) => {
             await container.taskUseCases.createTask(task.id, eventDate, task.name, task.isCompleted, eventId);
         });
+        useTaskStore.getState().setShouldReloadTasks(true);
     }
 
     await loadEvents(selectedDate);

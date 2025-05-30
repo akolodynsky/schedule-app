@@ -51,6 +51,11 @@ export class EventRepositoryImpl implements EventRepository {
     };
 
     async deleteByRecurringId(id: string, date?: string) {
-        return await this.datasource.deleteRecurringEvents(id, date);
+        return await this.datasource.deleteEventsByRecurringId(id, date);
+    };
+
+    async deleteByCategoryId(id: string) {
+        const dtos = await this.datasource.deleteEventsByCategoryId(id);
+        return dtos.map(dto => dto.id);
     };
 }

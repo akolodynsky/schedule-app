@@ -106,7 +106,7 @@ export class EventDatasource {
         await this.db.runAsync('DELETE FROM events WHERE id = ?', id);
     };
 
-    async deleteRecurringEvents(id: string, date?: string) {
+    async deleteEventsByRecurringId(id: string, date?: string) {
         let rows: { id: string }[];
 
         if (date) {
@@ -118,5 +118,11 @@ export class EventDatasource {
         }
 
         return rows.map(row => row.id);
+    };
+
+    async deleteEventsByCategoryId(id: string) {
+        const rows = await this.db.getAllAsync<{ id: string }>('SELECT id FROM events WHERE category_id = ?', id);
+        await this.db.runAsync('DELETE FROM events WHERE category_id = ?', id);
+        return rows;
     };
 }

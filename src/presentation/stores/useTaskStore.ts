@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import {updateTaskStore} from "@/src/presentation/services/task";
+import {deleteFromTaskStore, updateTaskStore} from "@/src/presentation/services/task/updateTaskStore";
 
 
 interface TaskState {
@@ -15,7 +15,7 @@ interface TaskState {
 
 interface TaskAction {
     setTasks: (tasks: ITaskBlock[]) => void,
-    updateTaskBlock: (date: string, updatedTask: ITask, eventId?: string) => void,
+    updateTaskBlock: (updatedTask: ITask | string) => Promise<void>,
 
     setSelectedTask: (selectedTask: ITask | null) => void,
     setShouldReloadTasks: (shouldReloadTasks: boolean) => void,
@@ -37,8 +37,11 @@ export const useTaskStore = create<TaskState & TaskAction>()((set, get) => ({
     tasks: [],
     setTasks: (tasks) => set({ tasks }),
 
-    updateTaskBlock: async (date, updatedTask, eventId) => {
-        const updatedTasks = await updateTaskStore(get().tasks, date, updatedTask, eventId);
+    updateTaskBlock: async (updatedTask) => {
+        const updatedTasks = typeof updatedTask === 'string'
+            ? deleteFromTaskStore(get().tasks, updatedTask)
+            : await updateTaskStore(get().tasks, updatedTask)
+
         set({ tasks: updatedTasks });
     },
 

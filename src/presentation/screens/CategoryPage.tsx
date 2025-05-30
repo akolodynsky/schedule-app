@@ -5,16 +5,20 @@ import {useRouter} from "expo-router";
 import PageRouteButtons from "@/src/presentation/components/ui/PageRouteButtons";
 import PageHeader from "@/src/presentation/components/ui/PageHeader";
 import CategoriesList from "../components/CategoriesList";
+import {useEventStore} from "@/src/presentation/stores";
+import {useShallow} from "zustand/react/shallow";
 
 
 export default function CategoryPage()  {
     const router = useRouter();
+    const setCategory = useEventStore(useShallow(state => state.setCategory));
 
     const handleAddCategory = async () => {
         router.push('/category');
     };
 
     const handleBack = () => {
+        setCategory(null);
         router.back();
     };
 

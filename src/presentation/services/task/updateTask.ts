@@ -12,7 +12,7 @@ export const updateTask = async (id: string, eventId: string | undefined, handle
     const completed = !handleBack ? !isCompleted : isCompleted
 
     await container.taskUseCases.updateTask(id, date, name, completed, eventId);
-    updateTaskBlock(date, {id, date, name, isCompleted: completed, eventId}, eventId);
+    await updateTaskBlock({id, date, name, isCompleted: completed, eventId});
 
     handleBack && handleBack();
 };

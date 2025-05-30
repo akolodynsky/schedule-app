@@ -2,7 +2,7 @@ import { create } from 'zustand';
 
 
 interface EventState {
-    events: (IEvent | Gap)[];
+    events: (IEvent | IGap)[];
     selectedEvent: IEvent | null;
     error: string,
 
@@ -15,7 +15,7 @@ interface EventState {
 }
 
 interface EventAction {
-    setEvents: (events: (IEvent | Gap)[]) => void;
+    setEvents: (events: (IEvent | IGap)[]) => void;
     setSelectedEvent: (selectedEvent: IEvent | null) => void;
     setError: (error: string) => void,
     reset: () => void,
@@ -42,8 +42,8 @@ const initialState: Omit<EventState, "events"> = {
 
 export const useEventStore = create<EventState & EventAction>()((set) => ({
     events: [],
-    setEvents: (events: (IEvent | Gap)[]) => set({ events }),
-    setSelectedEvent: (selectedEvent: IEvent | null) => set({ selectedEvent }),
+    setEvents: (events) => set({ events }),
+    setSelectedEvent: (selectedEvent) => set({ selectedEvent }),
     setError: (error) => set({ error }),
     reset: () => {
         set(initialState)

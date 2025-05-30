@@ -14,6 +14,7 @@ export class CategoryUseCases {
     async createCategory(name: string, color: string,) {
         const id = generateUniqueId("c");
         await this.categoryRepository.insert({id, name, color});
+        return {id, name, color};
     };
 
     async updateCategory(id: string, name: string, color: string,) {

@@ -2,10 +2,11 @@ import {container} from "@/src/shared/containers/container";
 
 export const updateTaskStore = async (
     tasks: ITaskBlock[],
-    date: string,
     updatedTask: ITask,
-    eventId?: string,
 ) => {
+    const date = updatedTask.date;
+    const eventId = updatedTask.eventId;
+
     const blocks = [...tasks];
     const blockIndex = blocks.findIndex(block => block.date === date);
 
@@ -54,4 +55,33 @@ export const updateTaskStore = async (
     }
 
     return blocks.sort((a, b) => a.date.localeCompare(b.date));
+};
+
+
+export const deleteFromTaskStore = (
+    tasks: ITaskBlock[],
+    taskId: string,
+) => {
+    const updatedBlocks: ITaskBlock[] = [];
+
+    for (const block of tasks) {
+        const filteredMainTasks = block.mainTasks.filter(t => t.id !== taskId);
+
+        const filteredEventTasks = block.eventTasks
+            .map(event => ({
+                ...event,
+                tasks: event.tasks.filter(t => t.id !== taskId)
+            }))
+            .filter(event => event.tasks.length > 0);
+
+        if (filteredMainTasks.length > 0 || filteredEventTasks.length > 0) {
+            updatedBlocks.push({
+                ...block,
+                mainTasks: filteredMainTasks,
+                eventTasks: filteredEventTasks
+            });
+        }
+    }
+
+    return updatedBlocks.sort((a, b) => a.date.localeCompare(b.date));
 };

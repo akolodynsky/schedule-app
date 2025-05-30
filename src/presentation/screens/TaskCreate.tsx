@@ -1,21 +1,23 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {View} from "react-native";
 import {router} from "expo-router";
 import {useShallow} from "zustand/react/shallow";
 
-import {useEventStore, useTaskStore} from "../stores";
+import {useDateStore, useEventStore, useTaskStore} from "../stores";
 import PageRouteButtons from "@/src/presentation/components/ui/PageRouteButtons";
 import PageHeader from "@/src/presentation/components/ui/PageHeader";
 import TaskForm from "../components/TaskForm";
 import {createTask, removeTask, updateTask} from "@/src/presentation/services/task";
+import {loadEvents} from "@/src/presentation/services/event";
 
 
 
 export default function TaskCreate()  {
-    const { reset, selectedTask } = useTaskStore(
+    const { reset, selectedTask, updateTaskBlock } = useTaskStore(
         useShallow((state) => ({
             reset: state.reset,
             selectedTask: state.selectedTask,
+            updateTaskBlock: state.updateTaskBlock
         }))
     );
 
@@ -26,17 +28,28 @@ export default function TaskCreate()  {
         }))
     );
 
+    const date = useDateStore(useShallow(state => state.date));
+
+    const prevDate = useRef(date);
+    const prevEventId = useRef(selectedEvent?.id);
+
+
     const handleAddTask = async () => {
         if (!selectedTask) {
             await createTask(handleBack, selectedEvent?.id);
         } else {
+            if (date !== prevDate.current || selectedEvent?.id !== prevEventId.current) {
+                await updateTaskBlock(selectedTask.id);
+            }
             await updateTask(selectedTask.id, selectedEvent?.id, handleBack);
         }
+        await loadEvents(date);
     };
 
     const handleRemoveTask = async () => {
         if (selectedTask) {
             await removeTask(selectedTask.id);
+            await loadEvents(date);
             handleBack();
         }
     }

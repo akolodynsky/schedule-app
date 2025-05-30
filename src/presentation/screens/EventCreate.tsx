@@ -45,7 +45,6 @@ export default function EventCreate()  {
     const handleRemoveRecurringEvents = async () => {
         if (selectedEvent?.recurringId) {
             await removeEvent(selectedEvent.recurringId);
-            warnModalRef.current?.close();
             handleBack();
         }
     };

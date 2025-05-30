@@ -30,7 +30,7 @@ export const WarnModal = ({title, text, buttonText, onSubmit, onClose}: WarnModa
                     <Text className="font-inter_semibold text-light-100 text-[16px]">Cancel</Text>
                 </Pressable>
 
-                <Pressable onPress={() => onSubmit()} className="rounded-xl px-6 py-2 flex-row items-center bg-primary">
+                <Pressable onPress={() => {onSubmit(); onClose()}} className="rounded-xl px-6 py-2 flex-row items-center bg-primary">
                     <Text className="font-inter_semibold text-light-100 text-[16px]">{buttonText}</Text>
                 </Pressable>
             </View>

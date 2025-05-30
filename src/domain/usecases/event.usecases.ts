@@ -3,6 +3,7 @@ import {RecurringRepository} from "@/src/domain/repositories/recurring.repositor
 import {generateUniqueId} from "@/src/shared/utils";
 import {isEventOccurringOnDate} from "@/src/domain/helpers/isEventOccurringOnDate";
 import {addGaps} from "@/src/domain/helpers/addGaps";
+import {container} from "@/src/shared/containers/container";
 
 
 export class EventUseCases {
@@ -123,5 +124,9 @@ export class EventUseCases {
     async deleteRecurringOptions(id: string, date?: string) {
         await this.recurringRepository.delete(id);
         return await this.eventRepository.deleteByRecurringId(id, date);
+    };
+
+    async deleteEventsByCategoryId(id: string) {
+        return await this.eventRepository.deleteByCategoryId(id);
     };
 }

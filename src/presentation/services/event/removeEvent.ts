@@ -1,6 +1,6 @@
 import {loadEvents} from "./loadEvents";
 import {container} from "@/src/shared/containers/container";
-import {useDateStore} from "@/src/presentation/stores";
+import {useDateStore, useTaskStore} from "@/src/presentation/stores";
 
 
 export const removeEvent = async (id: string, date?: string) => {
@@ -17,6 +17,8 @@ export const removeEvent = async (id: string, date?: string) => {
             await container.taskUseCases.deleteTasksByEventId(eventId);
         }
     }
+
+    useTaskStore.getState().setShouldReloadTasks(true);
 
     await loadEvents(useDateStore.getState().selectedDate);
 };
