@@ -12,8 +12,8 @@ interface CustomModalProps {
 
 const CustomModal = ({children, title, button}: CustomModalProps) => {
     return (
-        <View className="w-[300px] h-[650px] px-5 py-9 bg-dark-200 rounded-[24px]">
-            <View className="flex-row justify-between mb-9">
+        <View className="w-[300px] max-h-[650px] px-5 py-8 bg-dark-200 rounded-[24px]">
+            <View className="flex-row justify-between mb-8">
                 <Text className="font-inter_semibold text-2xl text-light-100">{title}</Text>
 
                 {button && (

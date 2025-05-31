@@ -5,8 +5,8 @@ import {icons} from "@/src/shared/constants/icons";
 
 
 interface PageRouteButtonsProps {
-    handleAdd: () => Promise<void> | void;
-    handleBack: () => void;
+    handleAdd?: () => Promise<void> | void;
+    handleBack?: () => void;
     handleRemove?: (() => void) | null;
     selected?: boolean | null;
 }
@@ -26,10 +26,11 @@ const PageRouteButtons = ({ handleAdd, handleBack, handleRemove, selected }: Pag
                         <Image source={icons.trash} className={selected ? "size-8" : "size-11"} />
                     </TouchableOpacity>
                 )}
-
-                <TouchableOpacity onPress={handleAdd}>
-                    <Image source={icon} className={selected ? "size-8" : "size-11"} />
-                </TouchableOpacity>
+                {handleAdd && (
+                    <TouchableOpacity onPress={handleAdd}>
+                        <Image source={icon} className={selected ? "size-8" : "size-11"} />
+                    </TouchableOpacity>
+                )}
             </View>
         </View>
     );

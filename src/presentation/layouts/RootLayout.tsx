@@ -12,6 +12,7 @@ import CategoryPage from "@/src/presentation/screens/CategoryPage";
 import TaskCreate from "@/src/presentation/screens/TaskCreate";
 import CategoryCreate from "@/src/presentation/screens/CategoryCreate";
 import HomePage from "@/src/presentation/screens/HomePage";
+import SettingsPage from "@/src/presentation/screens/SettingsPage";
 
 
 const Stack = createStackNavigator();
@@ -51,6 +52,7 @@ export default function RootLayout() {
                 <Stack.Screen name="home" component={HomePage} options={defaultOptions} />
                 <Stack.Screen name="categories" component={CategoryPage} options={defaultOptions} />
                 <Stack.Screen name="tasks" component={TaskPage} options={defaultOptions} />
+                <Stack.Screen name="settings" component={SettingsPage} options={defaultOptions} />
                 <Stack.Screen name="create" component={EventCreate} options={rightOptions}/>
                 <Stack.Screen name="category" component={CategoryCreate} options={rightOptions}/>
                 <Stack.Screen name="task" component={TaskCreate} options={rightOptions}/>

@@ -17,11 +17,11 @@ export const FrequencyButton = ({option}: {option: "once" | "daily" | "weekly" |
             className="flex-1"
             onPress={() => setFrequency(option)}
         >
-            <Animated.View className={`rounded-2xl py-4 items-center ${frequency === option ? "bg-primary" : "bg-dark-200"}`}>
+            <View className={`rounded-2xl py-4 items-center ${frequency === option ? "bg-primary" : "bg-dark-200"}`}>
                 <Text className={`font-inter_regular text-lg ${frequency === option ? "text-light-100" : "text-light-300"}`}>
                     {option.slice(0, 1).toUpperCase() + option.slice(1)}
                 </Text>
-            </Animated.View>
+            </View>
         </Pressable>
     )
 };

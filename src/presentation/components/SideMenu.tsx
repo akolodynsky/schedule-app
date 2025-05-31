@@ -8,7 +8,7 @@ import {icons} from "@/src/shared/constants/icons";
 const sideMenuButtons = [
     {text: "Categories", icon: icons.categories, route: () => router.push("/categories")},
     {text: "Tasks", icon: icons.tasks, route: () => router.push("/tasks")},
-    {text: "Settings", icon: icons.settings, route: () => router.push("/category")},
+    {text: "Settings", icon: icons.settings, route: () => router.push("/settings")},
 ];
 
 
