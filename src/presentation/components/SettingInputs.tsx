@@ -3,8 +3,6 @@ import {Pressable, Text, View} from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox/lib";
 import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
 import CustomModal from "@/src/presentation/components/ui/CustomModal";
-import {FrequencyButton} from "@/src/presentation/components/RepeatButtons";
-import Animated from "react-native-reanimated";
 
 
 export const SettingModal = ({title, options}: { title: string, options: string[]}) => {
@@ -22,6 +20,7 @@ export const SettingModal = ({title, options}: { title: string, options: string[
                 <CustomModal title={title}>
                     {options.map((option) => (
                         <BouncyCheckbox
+                            key={option}
                             size={17}
                             fillColor="#6f4bf7"
                             innerIconStyle={{ borderWidth: 2 }}
@@ -44,6 +43,7 @@ export const SettingModal = ({title, options}: { title: string, options: string[
     );
 };
 
+
 export const SettingCheck = ({title}: { title: string}) => {
     const [checked, setChecked] = useState(false);
 
@@ -61,6 +61,7 @@ export const SettingCheck = ({title}: { title: string}) => {
         </SettingInput>
     );
 };
+
 
 export const SettingDual = ({title, options}: { title: string, options: string[]}) => {
     const [selectedOption, setSelectedOption] = useState(options[0]);
@@ -82,9 +83,12 @@ export const SettingDual = ({title, options}: { title: string, options: string[]
     );
 };
 
+
 export const SettingInput = ({title, children, press, small}: { title: string, children?: ReactNode, press?: () => void, small?: boolean}) => {
+    const size = small ? "py-3" : "py-6";
+
     return (
-        <Pressable onPress={press} className={`bg-dark-100 px-4 rounded-lg gap-2 justify-between flex-row items-center ${small ? "py-3" : "py-6"}`}>
+        <Pressable onPress={press} className={`bg-dark-100 px-4 rounded-lg gap-2 justify-between flex-row items-center ${size}`}>
             <Text className="font-inter_regular text-light-100 text-lg">
                 {title}
             </Text>

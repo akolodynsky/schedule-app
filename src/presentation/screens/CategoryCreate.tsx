@@ -7,7 +7,7 @@ import PageRouteButtons from "@/src/presentation/components/ui/PageRouteButtons"
 import PageHeader from "@/src/presentation/components/ui/PageHeader";
 import CategoryForm from "../components/CategoryForm";
 import {useCategoryStore} from "../stores";
-import {createCategory} from "@/src/presentation/services/categoryActions";
+import {createCategory, updateCategory} from "@/src/presentation/services/category";
 
 
 export default function CategoryCreate()   {
@@ -19,7 +19,12 @@ export default function CategoryCreate()   {
     );
 
     const handleAddCategory = async () => {
-        await createCategory();
+        if (selectedCategory) {
+            await updateCategory(selectedCategory.id, handleBack);
+        } else {
+            await createCategory(handleBack);
+        }
+
     };
 
     const handleBack = () => {

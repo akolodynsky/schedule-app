@@ -13,8 +13,10 @@ export default function SettingsPage()  {
         <>
             <PageRouteButtons handleBack={() => router.back()} />
 
-            <View className="bg-primary rounded-xl absolute w-[50%] top-12 z-10">
-                <Text className="font-inter_regular text-light-100 text-xl text-center">This page is still in development and currently not functional.</Text>
+            <View className="bg-primary rounded-full absolute w-[50%] top-12 z-10 self-center">
+                <Text className="font-inter_regular text-light-100 text-[15px] text-center">
+                    This page only mock-up
+                </Text>
             </View>
 
             <ScrollView

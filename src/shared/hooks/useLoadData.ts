@@ -1,29 +1,16 @@
-import {useCallback, useEffect} from 'react';
+import {useEffect} from 'react';
 
-import {useDateStore, useEventStore} from "../../presentation/stores";
-
-import {useFocusEffect} from "expo-router";
-import {loadEvents} from "../../presentation/services/event";
-import {loadCategories} from "@/src/presentation/services/categoryActions";
+import {useDateStore} from "@/src/presentation/stores";
+import {loadCategories} from "@/src/presentation/services/category";
+import {loadEvents} from "@/src/presentation/services/event";
 
 
 export const useLoadData = () => {
     const {selectedDate} = useDateStore.getState();
-    const shouldReloadEvents = useEventStore(state => state.shouldReloadEvents);
-    const setShouldReloadEvents = useEventStore(state => state.setShouldReloadEvents);
 
     useEffect(() => {
         void loadEvents(selectedDate)
     }, [selectedDate]);
-
-    useFocusEffect(
-        useCallback(() => {
-            if (shouldReloadEvents) {
-                void loadEvents(selectedDate);
-                setShouldReloadEvents(false);
-            }
-        }, [shouldReloadEvents, selectedDate])
-    );
 
     useEffect(() => void loadCategories(), []);
 };

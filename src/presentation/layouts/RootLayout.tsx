@@ -1,8 +1,8 @@
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
-import { createStackNavigator, CardStyleInterpolators, StackNavigationOptions } from '@react-navigation/stack';
 import {Easing, StatusBar} from 'react-native';
+import { createStackNavigator, CardStyleInterpolators, StackNavigationOptions } from '@react-navigation/stack';
 
 import SplashScreenView from "@/src/presentation/components/ui/SplashScreenView";
 import {useAppLoading} from "../../shared/hooks";

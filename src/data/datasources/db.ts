@@ -25,9 +25,6 @@ export const db = async () => {
 
     console.log("init db")
 
-    console.log("events", await db.getAllAsync('SELECT * FROM events'));
-    console.log("tasks", await db.getAllAsync('SELECT * FROM tasks'));
-
     await db.execAsync(`
         PRAGMA journal_mode = WAL;
         PRAGMA foreign_keys = ON;
@@ -89,4 +86,15 @@ export const db = async () => {
 
         await insertStmt.finalizeAsync();
     }
+};
+
+export const clearAllTables = async () => {
+    const db = await SQLite.openDatabaseAsync("santitime", { useNewConnection: true });
+
+    await db.withTransactionAsync(async () => {
+        await db.execAsync('DELETE FROM events;');
+        await db.execAsync('DELETE FROM tasks;');
+        await db.execAsync('DELETE FROM categories;');
+        await db.execAsync('DELETE FROM recurring_options;');
+    });
 };
