@@ -1,8 +1,8 @@
-import {useCallback, useRef} from "react";
-import {PanGestureHandlerGestureEvent} from "react-native-gesture-handler";
+import {Gesture} from "react-native-gesture-handler";
 import {useShallow} from "zustand/react/shallow";
 
 import {useDateStore} from "../../presentation/stores";
+import {runOnJS} from "react-native-reanimated";
 
 
 export const useGestureScroll = () => {
@@ -14,25 +14,32 @@ export const useGestureScroll = () => {
         }))
     );
 
-    const scrollViewRef = useRef(null);
-
     const changeDate = (date: string, direction: 'next' | 'prev') => {
         const newDate = new Date(date);
         newDate.setDate(newDate.getDate() + (direction === 'next' ? 1 : -1));
         return newDate.toISOString().split('T')[0];
     }
 
-    const onGestureEvent = useCallback((event: PanGestureHandlerGestureEvent) => {
-        if (event.nativeEvent.state === 5) {
-            if (event.nativeEvent.translationX > 60) {
-                setSelectedDate(changeDate(selectedDate, 'prev'));
-                setDate(changeDate(selectedDate, 'prev'));
-            } else if (event.nativeEvent.translationX < -60) {
-                setSelectedDate(changeDate(selectedDate, 'next'));
-                setDate(changeDate(selectedDate, 'next'));
-            }
-        }
-    }, [selectedDate]);
+    const handleSwipe = (direction: 'next' | 'prev') => {
+        const newDate = changeDate(selectedDate, direction);
+        setSelectedDate(newDate);
+        setDate(newDate);
+    };
 
-    return {scrollViewRef, onGestureEvent};
+    const scrollGesture = Gesture.Native();
+
+    const panGesture = Gesture.Pan()
+        .activeOffsetX([-20, 20])
+        .failOffsetY([-10, 10])
+        .onEnd((event) => {
+            if (event.translationX > 60) {
+                runOnJS(handleSwipe)('prev')
+            } else if (event.translationX < -60) {
+                runOnJS(handleSwipe)('next')
+            }
+        })
+        .simultaneousWithExternalGesture(scrollGesture);
+
+
+    return {panGesture: Gesture.Simultaneous(panGesture, scrollGesture)};
 };

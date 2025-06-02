@@ -55,7 +55,7 @@ const TaskForm = () => {
 
             <View className="bg-dark-100 flex-1">
                 <View className="flex-1 pt-10 px-6 bg-dark-200 rounded-tr-[76px]">
-                    <CustomTextInput title={"Name"} value={name} setValue={setName} />
+                    <CustomTextInput title={"Name"} value={name} setValue={setName} length={450} />
 
                     <ModalInput
                         title="Events"

@@ -15,7 +15,7 @@ const PageRouteButtons = ({ handleAdd, handleBack, handleRemove, selected }: Pag
     const icon = selected ? icons.ok : icons.add;
 
     return (
-        <View className="absolute z-10 top-12 w-full px-6 flex-row justify-between items-center">
+        <View className="absolute z-20 top-12 w-full px-6 flex-row justify-between items-center">
             <TouchableOpacity onPress={handleBack}>
                 <Image source={icons.back} className="size-11" />
             </TouchableOpacity>

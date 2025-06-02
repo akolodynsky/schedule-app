@@ -1,5 +1,5 @@
 import React, {useRef} from 'react';
-import {Pressable, View} from 'react-native';
+import {Pressable, ScrollView, View} from 'react-native';
 import {useShallow} from "zustand/react/shallow";
 
 import CategoryCard from "./CategoryCard";
@@ -9,6 +9,7 @@ import {router} from "expo-router";
 import {WarnModal} from "@/src/presentation/components/ui/WarnModal";
 import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
 import {loadEvents} from "@/src/presentation/services/event";
+import {clearAllTables} from "@/src/data/datasources/db";
 
 
 const CategoriesList = () => {
@@ -31,15 +32,14 @@ const CategoriesList = () => {
 
     return (
         <>
-            <AnimatedComponent ref={warnModalRef} modalStyle="justify-center items-center">
-                <WarnModal
-                    title={"Deletion Warning!"}
-                    text={"You are about to delete a category. All events associated with this category, along with their tasks, will be permanently deleted."}
-                    buttonText={"Delete"}
-                    onSubmit={() => handleRemove()}
-                    onClose={() => warnModalRef.current?.close()}
-                />
-            </AnimatedComponent>
+            <WarnModal
+                ref={warnModalRef}
+                title={"Database Reset Warning!"}
+                text={"You are about to permanently delete all saved data, including your events, tasks, and categories. This action cannot be undone."}
+                buttonText={"Delete"}
+                onSubmit={() => clearAllTables()}
+                onClose={() => warnModalRef.current?.close()}
+            />
 
             <View className="bg-dark-100 flex-1">
                 <View className="flex-1 pt-10 px-8 gap-5 bg-dark-200 rounded-tr-[76px]">

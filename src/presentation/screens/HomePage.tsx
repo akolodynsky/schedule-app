@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {View, Image, ScrollView, Pressable} from 'react-native';
-import {Link, router} from "expo-router";
-import {GestureHandlerRootView, PanGestureHandler} from "react-native-gesture-handler";
+import {router} from "expo-router";
+import {GestureHandlerRootView, GestureDetector} from "react-native-gesture-handler";
 
 import {icons} from "@/src/shared/constants/icons";
 import {useLoadData, useGestureScroll} from "../../shared/hooks";
@@ -14,13 +14,12 @@ import SideMenuModal from "@/src/presentation/components/ui/SideMenuModal";
 export default function HomePage() {
     useLoadData();
 
-    const { scrollViewRef, onGestureEvent } = useGestureScroll();
+    const { panGesture } = useGestureScroll();
 
     return (
         <>
             <GestureHandlerRootView style={{ flex: 1 }}>
                 <ScrollView
-                    ref={scrollViewRef}
                     showsVerticalScrollIndicator={false}
                     className="bg-dark-200"
                     contentContainerStyle={{ flexGrow: 1 }}
@@ -31,23 +30,18 @@ export default function HomePage() {
 
                     <DayList />
 
-                    <PanGestureHandler
-                        simultaneousHandlers={scrollViewRef}
-                        activeOffsetX={[-20, 20]}
-                        activeOffsetY={[-20, 20]}
-                        onHandlerStateChange={onGestureEvent}
-                    >
+                    <GestureDetector gesture={panGesture}>
                         <View className="bg-dark-100 flex-1">
                             <View className="py-10 px-6 flex-1 bg-dark-200 rounded-tr-[76px]">
                                 <EventList />
                             </View>
                         </View>
-                    </PanGestureHandler>
+                    </GestureDetector>
                 </ScrollView>
+            </GestureHandlerRootView>
 
                 <EventBottomSheet />
 
-            </GestureHandlerRootView>
 
 
             <Pressable

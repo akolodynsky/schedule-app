@@ -21,15 +21,14 @@ const SettingsList = () => {
 
     return (
         <>
-            <AnimatedComponent ref={warnModalRef} modalStyle="justify-center items-center">
-                <WarnModal
-                    title={"Database Reset Warning!"}
-                    text={"You are about to permanently delete all saved data, including your events, tasks, and categories. This action cannot be undone."}
-                    buttonText={"Delete"}
-                    onSubmit={() => clearAllTables()}
-                    onClose={() => warnModalRef.current?.close()}
-                />
-            </AnimatedComponent>
+            <WarnModal
+                ref={warnModalRef}
+                title={"Database Reset Warning!"}
+                text={"You are about to permanently delete all saved data, including your events, tasks, and categories. This action cannot be undone."}
+                buttonText={"Delete"}
+                onSubmit={() => clearAllTables()}
+                onClose={() => warnModalRef.current?.close()}
+            />
 
             <View className="bg-dark-100 flex-1">
                 <View className="flex-1 pt-10 px-8 gap-5 bg-dark-200 rounded-tr-[76px]">

@@ -1,6 +1,5 @@
 import React from "react";
 import {Pressable, Text, View} from "react-native";
-import Animated from "react-native-reanimated";
 import {useRecurringOptionsStore} from "@/src/presentation/stores/useRecurringOptionsStore";
 import {useShallow} from "zustand/react/shallow";
 

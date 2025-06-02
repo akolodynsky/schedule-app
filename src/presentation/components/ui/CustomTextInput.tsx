@@ -2,10 +2,18 @@ import React, {memo} from 'react';
 import {Text, TextInput, View} from 'react-native';
 
 
-const CustomTextInput = ({value, setValue, title}: TextInputProps) => {
+interface TextInputProps {
+    title: string;
+    value: string;
+    setValue: (value: string) => void;
+    length?: number;
+}
+
+const CustomTextInput = ({value, setValue, title, length}: TextInputProps) => {
     if (title === "task") {
         return (
             <TextInput
+                maxLength={length}
                 placeholder="Type a task"
                 multiline
                 cursorColor="#6f4bf7"
@@ -22,6 +30,7 @@ const CustomTextInput = ({value, setValue, title}: TextInputProps) => {
         <View className="mb-6">
             <Text className="text-light-200 font-inter_medium mb-3">{title}</Text>
             <TextInput
+                maxLength={length}
                 placeholder={`Type a ${title.toLowerCase()}`}
                 multiline
                 cursorColor="#6f4bf7"

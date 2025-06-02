@@ -73,15 +73,14 @@ export default function EventCreate()  {
                 handleRemove={condition ? () => warnModalRef.current!.open() : null}
             />
 
-            <AnimatedComponent ref={warnModalRef} modalStyle="justify-center items-center">
-                <WarnModal
-                    title={"Deletion Warning!"}
-                    text={"You are about to delete the main recurring event. All future occurrences and their associated tasks will also be permanently deleted."}
-                    buttonText={"Delete"}
-                    onSubmit={() => handleRemoveRecurringEvents()}
-                    onClose={() => warnModalRef.current?.close()}
-                />
-            </AnimatedComponent>
+            <WarnModal
+                ref={warnModalRef}
+                title={"Deletion Warning!"}
+                text={"You are about to delete the main recurring event. All future occurrences and their associated tasks will also be permanently deleted."}
+                buttonText={"Delete"}
+                onSubmit={() => handleRemoveRecurringEvents()}
+                onClose={() => warnModalRef.current?.close()}
+            />
 
             <View className="flex-1 bg-dark-200">
                 <KeyboardAvoidingView

@@ -1,5 +1,4 @@
 import React from 'react';
-import {View} from "react-native";
 import {router} from "expo-router";
 import {useShallow} from "zustand/react/shallow";
 
@@ -19,12 +18,9 @@ export default function CategoryCreate()   {
     );
 
     const handleAddCategory = async () => {
-        if (selectedCategory) {
-            await updateCategory(selectedCategory.id, handleBack);
-        } else {
-            await createCategory(handleBack);
-        }
-
+        selectedCategory
+            ? await updateCategory(selectedCategory.id, handleBack)
+            : await createCategory(handleBack);
     };
 
     const handleBack = () => {
@@ -34,16 +30,10 @@ export default function CategoryCreate()   {
 
     return (
         <>
-            <PageRouteButtons
-                selected={selectedCategory && true}
-                handleBack={handleBack}
-                handleAdd={handleAddCategory}
-            />
+            <PageRouteButtons selected={selectedCategory && true} handleBack={handleBack} handleAdd={handleAddCategory}/>
 
-            <View className="flex-1 bg-dark-200">
-                <PageHeader name={(selectedCategory ? "Update" : "Add") + " Category"} />
-                <CategoryForm />
-            </View>
+            <PageHeader name={(selectedCategory ? "Update" : "Add") + " Category"} />
+            <CategoryForm />
         </>
     );
 };

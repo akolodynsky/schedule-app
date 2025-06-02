@@ -44,9 +44,9 @@ const EventForm = () => {
                         {({onClose}) => <CategoriesModal onClose={onClose} />}
                     </ModalInput>
 
-                    <CustomTextInput title={"Name"} value={name} setValue={setName} />
+                    <CustomTextInput title={"Name"} value={name} setValue={setName} length={90} />
 
-                    <CustomTextInput title={"Description"} value={description} setValue={setDescription} />
+                    <CustomTextInput title={"Description"} value={description} setValue={setDescription} length={450} />
 
                     <TasksInput />
 

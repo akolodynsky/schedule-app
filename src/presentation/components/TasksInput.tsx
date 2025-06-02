@@ -48,7 +48,7 @@ const TasksInput = () => {
 
             <View className="bg-dark-100 rounded-lg px-4 pt-3 pb-1">
                 <View className="flex-row justify-between items-center mb-2">
-                    <CustomTextInput title={"task"} value={task} setValue={setTask} />
+                    <CustomTextInput title={"task"} value={task} setValue={setTask} length={450} />
 
                     <TouchableOpacity onPress={addTask}>
                         <Image source={icons.add} className="size-8" />

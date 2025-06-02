@@ -1,5 +1,5 @@
 import React, {useEffect, useRef} from 'react';
-import {View, FlatList} from 'react-native';
+import {View, FlatList, Text} from 'react-native';
 import {useShallow} from "zustand/react/shallow";
 
 import TaskBlockCard from "@/src/presentation/components/TaskBlockCard";
@@ -50,13 +50,14 @@ const TasksList = () => {
     }, []);
 
     return (
-        <View className="bg-dark-100 flex-1">
-            <View className="flex-1 bg-dark-200 rounded-tr-[76px]">
+
+
+            tasks.length > 0 ? (
                 <FlatList
                     ref={flatListRef}
                     data={tasks}
                     keyExtractor={(item: ITaskBlock) => item.date}
-                    contentContainerStyle={{paddingHorizontal: 16, paddingTop: 26}}
+                    contentContainerStyle={{paddingHorizontal: 16, paddingTop: 142}}
                     showsVerticalScrollIndicator={false}
                     overScrollMode="never"
                     initialNumToRender={5}
@@ -70,8 +71,10 @@ const TasksList = () => {
                         />
                     )}
                 />
-            </View>
-        </View>
+            ) : <Text className="font-inter_medium text-light-300 self-center text-sm mt-8">No tasks available...</Text>
+
+
+
     );
 };
 
