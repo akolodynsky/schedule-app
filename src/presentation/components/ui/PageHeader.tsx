@@ -1,6 +1,6 @@
 import React from 'react';
 import {Text, View} from 'react-native';
-import Svg, { G, Rect, Circle, Defs, Mask } from 'react-native-svg';
+import Svg, { Rect, Circle, Defs, Mask } from 'react-native-svg';
 
 
 const PageHeader = ({ name }: {name: string}) => {

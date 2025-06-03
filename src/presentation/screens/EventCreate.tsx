@@ -1,5 +1,4 @@
 import React, {useRef} from 'react';
-import {KeyboardAvoidingView, Platform, ScrollView, View} from "react-native";
 import {router} from "expo-router";
 import {useShallow} from "zustand/react/shallow";
 
@@ -8,7 +7,7 @@ import PageHeader from "../components/ui/PageHeader";
 import EventForm from "../components/EventForm";
 import {useDateStore, useEventStore, useRecurringOptionsStore} from "../stores";
 import {createEvent, removeEvent, updateEvent} from "../services/event";
-import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
+import {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
 import {WarnModal} from "@/src/presentation/components/ui/WarnModal";
 
 
@@ -82,21 +81,8 @@ export default function EventCreate()  {
                 onClose={() => warnModalRef.current?.close()}
             />
 
-            <View className="flex-1 bg-dark-200">
-                <KeyboardAvoidingView
-                    style={{ flex: 1 }}
-                    behavior={Platform.OS === 'ios' ? 'padding' : "height"}
-                >
-                    <ScrollView
-                        showsVerticalScrollIndicator={false}
-                        keyboardShouldPersistTaps="handled"
-                        overScrollMode="never"
-                    >
-                        <PageHeader name={header} />
-                        <EventForm />
-                    </ScrollView>
-                </KeyboardAvoidingView>
-            </View>
+            <PageHeader name={header} />
+            <EventForm />
         </>
     );
 };

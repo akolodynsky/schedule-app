@@ -53,23 +53,21 @@ const TaskForm = () => {
         <>
             <ErrorModal error={error} setError={setError} />
 
-            <View className="bg-dark-100 flex-1">
-                <View className="flex-1 pt-10 px-6 bg-dark-200 rounded-tr-[76px]">
-                    <CustomTextInput title={"Name"} value={name} setValue={setName} length={450} />
+            <View className="flex-1 pt-44 px-6 bg-dark-200">
+                <CustomTextInput title={"Name"} value={name} setValue={setName} length={450} />
 
-                    <ModalInput
-                        title="Events"
-                        placeholder="Main Task"
-                        renderContent={selectedEvent && (
-                            <EventShortCard event={selectedEvent} remove={() => setSelectedEvent(null)} />
-                        )}
-                    >
-                        {({onClose}) => <EventsModal onClose={onClose} />}
-                    </ModalInput>
+                <ModalInput
+                    title="Events"
+                    placeholder="Main Task"
+                    renderContent={selectedEvent && (
+                        <EventShortCard event={selectedEvent} remove={() => setSelectedEvent(null)} />
+                    )}
+                >
+                    {({onClose}) => <EventsModal onClose={onClose} />}
+                </ModalInput>
 
-                    <DatePickerInput />
+                <DatePickerInput />
 
-                </View>
             </View>
         </>
 

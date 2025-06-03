@@ -1,5 +1,4 @@
-import {useCategoryStore, useDateStore, useEventStore, useTaskStore} from "@/src/presentation/stores";
-import {container} from "@/src/shared/containers/container";
+import {useCategoryStore} from "@/src/presentation/stores";
 
 
 export const updateCategoryState = (selectedCategory: ICategory) => {

@@ -1,15 +1,14 @@
 import React, {useRef} from 'react';
-import {Pressable, ScrollView, View} from 'react-native';
+import {Pressable, ScrollView} from 'react-native';
 import {useShallow} from "zustand/react/shallow";
+import {router} from "expo-router";
 
+import {removeCategory, loadCategories, updateCategoryState} from "@/src/presentation/services/category";
+import {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
+import {WarnModal} from "@/src/presentation/components/ui/WarnModal";
+import {loadEvents} from "@/src/presentation/services/event";
 import CategoryCard from "./CategoryCard";
 import {useCategoryStore, useDateStore, useTaskStore} from "../stores";
-import {removeCategory, loadCategories, updateCategoryState} from "@/src/presentation/services/category";
-import {router} from "expo-router";
-import {WarnModal} from "@/src/presentation/components/ui/WarnModal";
-import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
-import {loadEvents} from "@/src/presentation/services/event";
-import {clearAllTables} from "@/src/data/datasources/db";
 
 
 const CategoriesList = () => {
@@ -34,35 +33,37 @@ const CategoriesList = () => {
         <>
             <WarnModal
                 ref={warnModalRef}
-                title={"Database Reset Warning!"}
-                text={"You are about to permanently delete all saved data, including your events, tasks, and categories. This action cannot be undone."}
+                title={"Deletion Warning!"}
+                text={"You are about to delete this category. All events and tasks associated with it will also be deleted."}
                 buttonText={"Delete"}
-                onSubmit={() => clearAllTables()}
+                onSubmit={() => handleRemove()}
                 onClose={() => warnModalRef.current?.close()}
             />
 
-            <View className="bg-dark-100 flex-1">
-                <View className="flex-1 pt-10 px-8 gap-5 bg-dark-200 rounded-tr-[76px]">
-                    {categories.map((category) => (
-                        <Pressable
-                            key={category.id}
-                            className="self-start"
-                            onPress={() => {
-                                updateCategoryState(category);
-                                router.push("/category");
+            <ScrollView
+                className="flex-1 px-6 bg-dark-200"
+                contentContainerStyle={{ paddingBottom: 40, paddingTop: 160, gap: 20 }}
+                overScrollMode="never"
+            >
+                {categories.map((category) => (
+                    <Pressable
+                        key={category.id}
+                        className="self-start max-w-[91%]"
+                        onPress={() => {
+                            updateCategoryState(category);
+                            router.push("/category");
+                        }}
+                    >
+                        <CategoryCard
+                            category={category}
+                            remove={() => {
+                                categoryIdRef.current = category.id;
+                                warnModalRef.current?.open()
                             }}
-                        >
-                            <CategoryCard
-                                category={category}
-                                remove={() => {
-                                    categoryIdRef.current = category.id;
-                                    warnModalRef.current?.open()
-                                }}
-                            />
-                        </Pressable>
-                    ))}
-                </View>
-            </View>
+                        />
+                    </Pressable>
+                ))}
+            </ScrollView>
         </>
     );
 };

@@ -1,6 +1,5 @@
 import * as SQLite from "expo-sqlite";
 import {EventCategoryAndStartDto, EventDto} from "@/src/data/dto/EventDto";
-import {TaskWithCategoryAndStartDto} from "@/src/data/dto/TaskDto";
 
 
 export class EventDatasource {

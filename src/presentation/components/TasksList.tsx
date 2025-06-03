@@ -50,14 +50,13 @@ const TasksList = () => {
     }, []);
 
     return (
-
-
-            tasks.length > 0 ? (
-                <FlatList
+        <View className="flex-1 bg-dark-200 px-4">
+            {tasks.length > 0
+              ? <FlatList
                     ref={flatListRef}
                     data={tasks}
                     keyExtractor={(item: ITaskBlock) => item.date}
-                    contentContainerStyle={{paddingHorizontal: 16, paddingTop: 142}}
+                    contentContainerStyle={{paddingTop: 160}}
                     showsVerticalScrollIndicator={false}
                     overScrollMode="never"
                     initialNumToRender={5}
@@ -71,10 +70,11 @@ const TasksList = () => {
                         />
                     )}
                 />
-            ) : <Text className="font-inter_medium text-light-300 self-center text-sm mt-8">No tasks available...</Text>
-
-
-
+              : <Text className="font-inter_medium text-light-300 self-center text-sm mt-8">
+                    No tasks available...
+                </Text>
+            }
+        </View>
     );
 };
 

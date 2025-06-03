@@ -1,5 +1,4 @@
 import React, {useRef} from 'react';
-import {View} from "react-native";
 import {router} from "expo-router";
 import {useShallow} from "zustand/react/shallow";
 
@@ -69,10 +68,8 @@ export default function TaskCreate()  {
                 handleRemove={selectedTask && handleRemoveTask}
             />
 
-            <View className="flex-1 bg-dark-200">
-                <PageHeader name={(selectedTask ? "Update" : "Add") + " Task"} />
-                <TaskForm />
-            </View>
+            <PageHeader name={(selectedTask ? "Update" : "Add") + " Task"} />
+            <TaskForm />
         </>
     );
 };

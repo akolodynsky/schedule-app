@@ -1,5 +1,5 @@
 import React from 'react';
-import {ScrollView, Text, View} from "react-native";
+import {Text, View} from "react-native";
 import {router} from "expo-router";
 
 import PageRouteButtons from "@/src/presentation/components/ui/PageRouteButtons";
@@ -19,14 +19,8 @@ export default function SettingsPage()  {
                 </Text>
             </View>
 
-            <ScrollView
-                className="flex-1 bg-dark-200"
-                contentContainerStyle={{ paddingBottom: 40 }}
-                overScrollMode="never"
-            >
-                <PageHeader name={"Settings"} />
-                <SettingsList />
-            </ScrollView>
+            <PageHeader name={"Settings"} />
+            <SettingsList />
         </>
     );
 };

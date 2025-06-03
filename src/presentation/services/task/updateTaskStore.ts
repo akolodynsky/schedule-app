@@ -10,16 +10,19 @@ export const updateTaskStore = async (
     const blocks = [...tasks];
     const blockIndex = blocks.findIndex(block => block.date === date);
 
-    const { category, start } = eventId ? await container.eventUseCases.getCategoryAndStartById(eventId) : {};
+    const result = eventId ? await container.eventUseCases.getCategoryAndStartById(eventId) : null;
+    const category = result?.category;
+    const start = result?.start;
+
 
     if (blockIndex === -1) {
         blocks.push({
             date,
             mainTasks: eventId ? [] : [updatedTask],
-            eventTasks: eventId && category && start ? [{
+            eventTasks: eventId ? [{
                 id: eventId,
-                category: category,
-                start: start,
+                category: category!,
+                start: start!,
                 tasks: [updatedTask]
             }] : []
         });

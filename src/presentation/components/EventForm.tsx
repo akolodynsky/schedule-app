@@ -1,16 +1,16 @@
 import React, {memo} from 'react';
-import {View} from 'react-native';
+import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
 import {useShallow} from "zustand/react/shallow";
 
 import CustomTextInput from "@/src/presentation/components/ui/CustomTextInput";
 import DateTimeInput from "@/src/presentation/components/DateTimeInput";
 import TasksInput from "@/src/presentation/components/TasksInput";
-import CategoriesModal from "@/src/presentation/components/CategoriesModal";
 import ModalInput from "@/src/presentation/components/ui/ModalInput";
+import RepeatEventInput from "@/src/presentation/components/RepeatEventInput";
+import CategoriesModal from "@/src/presentation/components/CategoriesModal";
 import CategoryCard from "@/src/presentation/components/CategoryCard";
 import ErrorModal from "@/src/presentation/components/ui/ErrorModal";
 import {useEventStore} from "../stores";
-import RepeatEventInput from "@/src/presentation/components/RepeatEventInput";
 
 
 const EventForm = () => {
@@ -31,12 +31,21 @@ const EventForm = () => {
         <>
             <ErrorModal error={error} setError={setError} />
 
-            <View className="bg-dark-100 flex-1">
-                <View className="flex-1 pt-10 px-6 bg-dark-200 rounded-tr-[76px]">
+
+            <KeyboardAvoidingView
+                style={{ flex: 1 }}
+                behavior={Platform.OS === 'ios' ? 'padding' : "height"}
+            >
+                <ScrollView
+                    className="px-6 bg-dark-200"
+                    contentContainerStyle={{ paddingBottom: 40, paddingTop: 160 }}
+                    overScrollMode="never"
+                    keyboardShouldPersistTaps="handled"
+                >
                     <ModalInput
                         title="Category"
                         renderContent={category && (
-                            <View className="max-w-[95%]">
+                            <View className="max-w-[90%]">
                                 <CategoryCard category={category} remove={() => {setCategory(null)}} />
                             </View>
                         )}
@@ -53,8 +62,8 @@ const EventForm = () => {
                     <RepeatEventInput />
 
                     <DateTimeInput />
-                </View>
-            </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
         </>
     );
 };
