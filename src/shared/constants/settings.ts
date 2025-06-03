@@ -1,13 +1,10 @@
-
-type SettingType = "modal" | "dual" | "check" | "button";
-
 type Block= {
     type: string,
     settings: Setting[]
 };
 
 type Setting = {
-    type: SettingType,
+    type: "modal" | "dual" | "check" | "button",
     title: string,
     options?: string[]
 };

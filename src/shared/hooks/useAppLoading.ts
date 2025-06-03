@@ -1,6 +1,7 @@
-import {useEffect, useState} from "react";
-import {SplashScreen} from "expo-router";
-import {db} from "@/src/data/datasources/db";
+import { useEffect, useState } from "react";
+import { SplashScreen } from "expo-router";
+
+import { db } from "@/src/data/datasources";
 
 
 export const useAppLoading = () => {

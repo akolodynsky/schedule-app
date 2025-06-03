@@ -1,10 +1,11 @@
-import React, {memo} from 'react';
-import {TouchableOpacity, View} from 'react-native';
-import {useShallow} from "zustand/react/shallow";
+import React, { memo } from 'react';
+import { TouchableOpacity, View } from 'react-native';
+import { useShallow } from "zustand/react/shallow";
 
-import CustomModal from "@/src/presentation/components/ui/CustomModal";
-import {useCategoryStore} from "../stores";
-import {colors} from "@/src/shared/constants/colors";
+import { CustomModal } from "./ui";
+
+import { useCategoryStore } from "../stores";
+import { colors } from "@/src/shared/constants";
 
 
 const ColorsModal = memo(({onClose}: {onClose: () => void}) => {

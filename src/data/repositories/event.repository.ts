@@ -1,8 +1,7 @@
-import {EventRepository} from "@/src/domain/repositories/event.repository";
-import {EventDatasource} from "@/src/data/datasources/event.datasource";
-import {mapEventDtoToEvent, mapEventToEventDto} from "@/src/data/mappers/event.mapper";
-import { Event } from "@/src/domain/entities/Event";
-import {mapCategoryDtoToCategory} from "@/src/data/mappers/category.mapper";
+import { Event } from "@/src/domain/entities";
+import { EventDatasource } from "@/src/data/datasources";
+import { EventRepository } from "@/src/domain/repositories";
+import { mapEventDtoToEvent, mapEventToEventDto, mapCategoryDtoToCategory } from "@/src/data/mappers";
 
 
 export class EventRepositoryImpl implements EventRepository {
@@ -21,7 +20,8 @@ export class EventRepositoryImpl implements EventRepository {
     };
 
     async getId(date: string, recurringId: string, isRecurring: number) {
-        return await this.datasource.getEventId(date, recurringId, isRecurring);
+        const dto = await this.datasource.getEventId(date, recurringId, isRecurring);
+        return dto && dto.id;
     };
 
     async getById(id: string) {
@@ -51,7 +51,8 @@ export class EventRepositoryImpl implements EventRepository {
     };
 
     async deleteByRecurringId(id: string, date?: string) {
-        return await this.datasource.deleteEventsByRecurringId(id, date);
+        const dtos = await this.datasource.deleteEventsByRecurringId(id, date);
+        return dtos.map(dto => dto.id);
     };
 
     async deleteByCategoryId(id: string) {

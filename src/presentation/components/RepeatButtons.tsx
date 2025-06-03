@@ -1,7 +1,9 @@
 import React from "react";
-import {Pressable, Text, View} from "react-native";
-import {useRecurringOptionsStore} from "@/src/presentation/stores/useRecurringOptionsStore";
-import {useShallow} from "zustand/react/shallow";
+import { Pressable, Text, View } from "react-native";
+import { useShallow } from "zustand/react/shallow";
+
+import { useRecurringOptionsStore } from "../stores";
+
 
 export const FrequencyButton = ({option}: {option: "once" | "daily" | "weekly" | "monthly"}) => {
     const { frequency, setFrequency} = useRecurringOptionsStore(

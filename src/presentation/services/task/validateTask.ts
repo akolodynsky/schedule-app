@@ -1,4 +1,4 @@
-import {useTaskStore} from "@/src/presentation/stores";
+import { useTaskStore } from "@/src/presentation/stores";
 
 
 export const validateTask = async () => {

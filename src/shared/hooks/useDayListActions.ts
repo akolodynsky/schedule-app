@@ -1,12 +1,12 @@
 import React, {useRef} from 'react';
-import {FlatList, ViewToken} from 'react-native';
+import { FlatList, ViewToken } from 'react-native';
 
-import {generateWeeks, getMonthAndYear} from "../utils";
+import { generateWeeks, getMonthAndYear } from "@/src/shared/utils";
 
 
 interface FlatListActionsProps {
-    weeks: Day[][];
-    setWeeks: (weeks: React.SetStateAction<Day[][]>) => void;
+    weeks: IDay[][];
+    setWeeks: (weeks: React.SetStateAction<IDay[][]>) => void;
     setCurrentMonth: (currentMonth: string) => void;
 }
 
@@ -35,7 +35,7 @@ export const useDayListActions = ({weeks, setWeeks, setCurrentMonth}: FlatListAc
         }, 50)
     };
 
-    const handleViewableItemsChanged = ({ viewableItems }: { viewableItems: ViewToken<Day[]>[] }) => {
+    const handleViewableItemsChanged = ({ viewableItems }: { viewableItems: ViewToken<IDay[]>[] }) => {
         if (!viewableItems.length) return;
         const { item: week } = viewableItems[0];
         const first = getMonthAndYear(week[0].date);

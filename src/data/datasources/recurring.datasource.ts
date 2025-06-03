@@ -1,5 +1,5 @@
 import * as SQLite from "expo-sqlite";
-import {RecurringDto} from "@/src/data/dto/RecurringDto";
+import { RecurringDto } from "@/src/data/dto";
 
 
 export class RecurringDatasource {
@@ -51,16 +51,15 @@ export class RecurringDatasource {
     };
 
     async getExceptDays(id: string) {
-        const days = await this.db.getFirstAsync<{ except_days: string }>(
+        return await this.db.getFirstAsync<{ except_days: string }>(
             'SELECT except_days FROM recurring_options WHERE id = ?', id
         );
-        return days && days.except_days;
     }
 
     async insertDateToExceptDays(id: string, newDate: string) {
-        const exceptDays = await this.getExceptDays(id);
+        const days = await this.getExceptDays(id);
 
-        const dates = (exceptDays || '').split(',').filter(Boolean);
+        const dates = (days?.except_days || '').split(',').filter(Boolean);
         if (!dates.includes(newDate)) {
             dates.push(newDate);
             const updated = dates.join(',');

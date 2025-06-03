@@ -1,5 +1,5 @@
-import React, {memo} from 'react';
-import {Text, TextInput, View} from 'react-native';
+import React from 'react';
+import { Text, TextInput, View } from 'react-native';
 
 
 interface TextInputProps {
@@ -9,7 +9,7 @@ interface TextInputProps {
     length?: number;
 }
 
-const CustomTextInput = ({value, setValue, title, length}: TextInputProps) => {
+export const CustomTextInput = ({value, setValue, title, length}: TextInputProps) => {
     if (title === "task") {
         return (
             <TextInput
@@ -42,5 +42,3 @@ const CustomTextInput = ({value, setValue, title, length}: TextInputProps) => {
         </View>
     );
 };
-
-export default memo(CustomTextInput);

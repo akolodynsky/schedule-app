@@ -1,9 +1,10 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 
-import TaskCard from "@/src/presentation/components/TaskCard";
-import {formatDate} from "../../shared/utils";
-import CategoryCard from "@/src/presentation/components/CategoryCard";
+import TaskCard from "./TaskCard";
+import CategoryCard from "./CategoryCard";
+
+import { formatDate } from "@/src/shared/utils";
 
 
 interface TaskBlockCardProps {

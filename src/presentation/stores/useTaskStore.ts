@@ -1,5 +1,5 @@
 import { create } from 'zustand'
-import {deleteFromTaskStore, updateTaskStore} from "@/src/presentation/services/task/updateTaskStore";
+import { deleteFromTaskStore, updateTaskStore } from "@/src/presentation/services/task/updateTaskStore";
 
 
 interface TaskState {

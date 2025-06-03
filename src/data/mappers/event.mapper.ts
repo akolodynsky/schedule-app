@@ -1,5 +1,6 @@
-import { EventDto } from "@/src/data/dto/EventDto";
-import { Event } from "@/src/domain/entities/Event";
+import { Event } from "@/src/domain/entities";
+import { EventDto } from "@/src/data/dto";
+
 
 export const mapEventDtoToEvent = (dto: EventDto) => {
     return new Event({

@@ -1,4 +1,4 @@
-import {useCategoryStore} from "@/src/presentation/stores";
+import { useCategoryStore } from "@/src/presentation/stores";
 
 
 export const validateCategory = async () => {

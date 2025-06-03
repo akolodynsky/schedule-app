@@ -1,7 +1,8 @@
-import React, {memo} from 'react';
-import {Pressable, Text, View} from 'react-native';
-import {Calendar, DateData} from "react-native-calendars";
-import {formatDate} from "@/src/shared/utils";
+import React, { memo } from 'react';
+import { Pressable, Text, View } from 'react-native';
+import { Calendar, DateData } from "react-native-calendars";
+
+import { formatDate } from "@/src/shared/utils";
 
 
 interface DatePickerProps {
@@ -10,7 +11,7 @@ interface DatePickerProps {
     onClose: () => void
 }
 
-const DatePicker = memo(({date, setDate, onClose}: DatePickerProps) => {
+export const DatePicker = memo(({date, setDate, onClose}: DatePickerProps) => {
     return (
         <View>
             <Calendar
@@ -51,5 +52,3 @@ const DatePicker = memo(({date, setDate, onClose}: DatePickerProps) => {
         </View>
     );
 });
-
-export default DatePicker;

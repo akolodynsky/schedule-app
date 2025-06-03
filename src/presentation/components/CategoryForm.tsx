@@ -1,12 +1,11 @@
-import React, {memo} from 'react';
-import {View} from 'react-native';
-import {useShallow} from "zustand/react/shallow";
+import React, { memo } from 'react';
+import { View } from 'react-native';
+import { useShallow } from "zustand/react/shallow";
 
-import CustomTextInput from "@/src/presentation/components/ui/CustomTextInput";
-import ErrorModal from "@/src/presentation/components/ui/ErrorModal";
-import ModalInput from "@/src/presentation/components/ui/ModalInput";
-import ColorsModal from "@/src/presentation/components/ColorsModal";
-import {useCategoryStore} from "../stores";
+import { CustomTextInput, ErrorModal, ModalInput } from "./ui";
+import ColorsModal from "./ColorsModal";
+
+import { useCategoryStore } from "../stores";
 
 
 const CategoryForm = () => {

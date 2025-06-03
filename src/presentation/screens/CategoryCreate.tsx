@@ -1,12 +1,12 @@
 import React from 'react';
-import {router} from "expo-router";
-import {useShallow} from "zustand/react/shallow";
+import { router } from "expo-router";
+import { useShallow } from "zustand/react/shallow";
 
-import PageRouteButtons from "@/src/presentation/components/ui/PageRouteButtons";
-import PageHeader from "@/src/presentation/components/ui/PageHeader";
+import { PageRouteButtons, PageHeader } from "../components/ui";
 import CategoryForm from "../components/CategoryForm";
-import {useCategoryStore} from "../stores";
-import {createCategory, updateCategory} from "@/src/presentation/services/category";
+
+import { useCategoryStore } from "../stores";
+import { createCategory, updateCategory } from "../services/category";
 
 
 export default function CategoryCreate()   {

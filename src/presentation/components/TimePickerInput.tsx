@@ -1,11 +1,12 @@
-import React, {useRef, memo} from 'react';
-import {Text, View} from 'react-native';
-import {TimePickerModal} from "react-native-paper-dates";
-import {useShallow} from "zustand/react/shallow";
+import React, { useRef, memo } from 'react';
+import { Text, View } from 'react-native';
+import { TimePickerModal } from "react-native-paper-dates";
+import { DefaultTheme, PaperProvider } from 'react-native-paper';
+import { useShallow } from "zustand/react/shallow";
 
-import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
-import {useEventStore} from "../stores";
-import {DefaultTheme, PaperProvider} from 'react-native-paper';
+import { AnimatedComponent, AnimatedComponentRef} from "./ui";
+
+import { useEventStore } from "../stores";
 
 
 const TimePickerInput = memo(({text}: {text: string}) => {

@@ -1,8 +1,8 @@
 import React, {forwardRef} from "react";
 import {Image, Pressable, Text, View} from "react-native";
 
-import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
-import {icons} from "@/src/shared/constants/icons";
+import { AnimatedComponent, AnimatedComponentRef } from "./AnimatedComponent";
+import { icons } from "@/src/shared/constants/icons";
 
 
 interface WarnModalProps {

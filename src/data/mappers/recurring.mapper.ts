@@ -1,5 +1,6 @@
 import { RecurringOptions } from "@/src/domain/entities";
-import { RecurringDto } from "@/src/data/dto/RecurringDto";
+import { RecurringDto } from "@/src/data/dto";
+
 
 export const mapRecurringDtoToRecurring = (dto: RecurringDto) => {
     return new RecurringOptions({

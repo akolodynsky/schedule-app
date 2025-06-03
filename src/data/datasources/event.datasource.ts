@@ -1,5 +1,5 @@
 import * as SQLite from "expo-sqlite";
-import {EventCategoryAndStartDto, EventDto} from "@/src/data/dto/EventDto";
+import { EventCategoryAndStartDto, EventDto } from "@/src/data/dto";
 
 
 export class EventDatasource {
@@ -49,11 +49,10 @@ export class EventDatasource {
     };
 
     async getEventId(date: string, recurringId: string, isRecurring: number) {
-        const result = await this.db.getFirstAsync<{ id: string }>(
+        return await this.db.getFirstAsync<{ id: string }>(
             `SELECT id FROM events
              WHERE date = ? AND recurring_id = ?  AND is_recurring = ?`, [date, recurringId, isRecurring]
         );
-        return result ? result.id : null;
     };
 
     async getEventById(id: string) {
@@ -116,7 +115,7 @@ export class EventDatasource {
             await this.db.runAsync('DELETE FROM events WHERE recurring_id = ?', id);
         }
 
-        return rows.map(row => row.id);
+        return rows;
     };
 
     async deleteEventsByCategoryId(id: string) {

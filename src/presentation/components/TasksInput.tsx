@@ -1,11 +1,12 @@
-import React, {memo, useState} from 'react';
-import {Image, Keyboard, Text, TouchableOpacity, View} from 'react-native';
-import {useShallow} from "zustand/react/shallow";
+import React, { memo, useState } from 'react';
+import { Image, Keyboard, Text, TouchableOpacity, View } from 'react-native';
+import { useShallow } from "zustand/react/shallow";
 
-import CustomTextInput from "@/src/presentation/components/ui/CustomTextInput";
-import {useDateStore, useEventStore, useRecurringOptionsStore} from "../stores";
-import {icons} from "@/src/shared/constants/icons";
-import {generateUniqueId} from "../../shared/utils";
+import { CustomTextInput } from "./ui";
+
+import { useDateStore, useEventStore, useRecurringOptionsStore } from "../stores";
+import { icons } from "@/src/shared/constants";
+import { generateUniqueId } from "../../shared/utils";
 
 
 const TasksInput = () => {

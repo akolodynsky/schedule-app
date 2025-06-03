@@ -1,10 +1,11 @@
-import React, {memo, useEffect} from 'react';
-import {View} from 'react-native';
-import {useShallow} from "zustand/react/shallow";
+import React, { memo, useEffect } from 'react';
+import { View } from 'react-native';
+import { useShallow } from "zustand/react/shallow";
 
-import DatePickerInput from "@/src/presentation/components/DatePickerInput";
-import TimePickerInput from "@/src/presentation/components/TimePickerInput";
-import {useEventStore} from "../stores";
+import DatePickerInput from "./DatePickerInput";
+import TimePickerInput from "./TimePickerInput";
+
+import { useEventStore } from "../stores";
 
 
 const DateTimeInput = () => {

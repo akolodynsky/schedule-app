@@ -1,11 +1,12 @@
-import React, {useEffect} from 'react';
-import {Text, View} from 'react-native';
-import {useShallow} from "zustand/react/shallow";
+import React, { useEffect } from 'react';
+import { Text, View } from 'react-native';
+import { useShallow } from "zustand/react/shallow";
 
-import {IntervalSection, LimitDateSection} from "@/src/presentation/components/RepeatSections";
-import {DayButton, FrequencyButton} from "@/src/presentation/components/RepeatButtons";
-import {useDateStore, useRecurringOptionsStore} from "../stores";
-import {getDayIndex} from "@/src/shared/utils";
+import { IntervalSection, LimitDateSection } from "./RepeatSections";
+import { DayButton, FrequencyButton } from "./RepeatButtons";
+
+import { useDateStore, useRecurringOptionsStore } from "../stores";
+import { getDayIndex} from "@/src/shared/utils";
 
 
 type Frequency = 'once' | 'daily' | 'weekly' | 'monthly';

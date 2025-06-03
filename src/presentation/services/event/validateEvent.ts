@@ -1,6 +1,6 @@
-import {useDateStore, useEventStore} from "@/src/presentation/stores";
-import {checkTimeOverlap} from "@/src/shared/utils";
-import {container} from "@/src/shared/containers/container";
+import { useDateStore, useEventStore } from "@/src/presentation/stores";
+import { container } from "@/src/shared/containers/container";
+import  {checkTimeOverlap } from "@/src/shared/utils";
 
 
 export const validateEvent = async () => {

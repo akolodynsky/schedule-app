@@ -1,5 +1,5 @@
-import {container} from "@/src/shared/containers/container";
-import {loadCategories} from "./loadCategories";
+import { container } from "@/src/shared/containers/container";
+import { loadCategories } from "./loadCategories";
 
 
 export const removeCategory = async (id: string) => {

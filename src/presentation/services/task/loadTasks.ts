@@ -1,5 +1,5 @@
-import {useTaskStore} from "../../stores";
-import {container} from "@/src/shared/containers/container";
+import { useTaskStore } from "@/src/presentation/stores";
+import { container } from "@/src/shared/containers/container";
 
 
 export const loadTasks = async () => {

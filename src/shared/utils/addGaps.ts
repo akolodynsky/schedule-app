@@ -1,15 +1,15 @@
-import {generateUniqueId, timeToNumber} from "../../shared/utils";
-import { Event } from "@/src/domain/entities/Event";
+import { generateUniqueId } from "./generateUniqueId";
+import { timeToNumber } from "./timeCalculations";
 
 
-export const addGaps = (events: Event[]): (Event | IGap)[] => {
+export const addGaps = (events: IEvent[]): (IEvent | IGap)[] => {
     if (!events.length) return [{
         id: generateUniqueId("g"),
         start: "00:00",
         end: "24:00"
     }];
 
-    const eventsWithGaps: (Event | IGap)[] = [];
+    const eventsWithGaps: (IEvent | IGap)[] = [];
 
     const addGap = (start: string, end: string) =>
         eventsWithGaps.push({

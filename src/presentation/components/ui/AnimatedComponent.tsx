@@ -1,5 +1,5 @@
-import React, {forwardRef, ReactNode, useImperativeHandle, useRef, useState} from 'react';
-import {Animated, Modal, TouchableWithoutFeedback, View} from 'react-native';
+import React, { forwardRef, ReactNode, useImperativeHandle, useRef, useState } from 'react';
+import { Animated, Modal, TouchableWithoutFeedback, View } from 'react-native';
 
 
 export interface AnimatedComponentRef {
@@ -14,7 +14,7 @@ interface AnimatedComponentProps {
     horizontal?: boolean;
 }
 
-const AnimatedComponent = forwardRef<AnimatedComponentRef, AnimatedComponentProps>(({children, modalStyle, contentStyle, horizontal}, ref) => {
+export const AnimatedComponent = forwardRef<AnimatedComponentRef, AnimatedComponentProps>(({children, modalStyle, contentStyle, horizontal}, ref) => {
     const [showModal, setShowModal] = useState(false);
 
     const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -61,5 +61,3 @@ const AnimatedComponent = forwardRef<AnimatedComponentRef, AnimatedComponentProp
 
     );
 });
-
-export default AnimatedComponent;

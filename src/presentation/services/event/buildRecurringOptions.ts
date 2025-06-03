@@ -1,5 +1,5 @@
-import {generateUniqueId, getDayIndex} from "@/src/shared/utils";
-import {useDateStore, useRecurringOptionsStore} from "@/src/presentation/stores";
+import { useDateStore, useRecurringOptionsStore } from "@/src/presentation/stores";
+import { generateUniqueId, getDayIndex } from "@/src/shared/utils";
 
 
 export const buildRecurringOptions = (recurringId?: string): IRecurringOptions | null => {

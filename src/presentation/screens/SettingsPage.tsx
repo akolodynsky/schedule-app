@@ -1,10 +1,9 @@
 import React from 'react';
-import {Text, View} from "react-native";
-import {router} from "expo-router";
+import { Text, View } from "react-native";
+import { router } from "expo-router";
 
-import PageRouteButtons from "@/src/presentation/components/ui/PageRouteButtons";
-import PageHeader from "@/src/presentation/components/ui/PageHeader";
-import SettingsList from "@/src/presentation/components/SettingsList";
+import { PageRouteButtons, PageHeader } from "../components/ui";
+import SettingsList from "../components/SettingsList";
 
 
 export default function SettingsPage()  {

@@ -1,4 +1,4 @@
-import {useAnimatedStyle, useSharedValue, withSpring} from "react-native-reanimated";
+import { useAnimatedStyle, useSharedValue, withSpring } from "react-native-reanimated";
 
 
 export const useAnimatedScale = () => {

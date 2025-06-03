@@ -1,5 +1,5 @@
 import * as SQLite from "expo-sqlite";
-import { CategoryDto } from "@/src/data/dto/CategoryDto";
+import { CategoryDto } from "@/src/data/dto";
 
 
 export class CategoryDatasource {

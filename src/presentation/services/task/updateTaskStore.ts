@@ -1,4 +1,5 @@
-import {container} from "@/src/shared/containers/container";
+import { container } from "@/src/shared/containers/container";
+
 
 export const updateTaskStore = async (
     tasks: ITaskBlock[],

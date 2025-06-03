@@ -1,10 +1,10 @@
-import {router} from "expo-router";
+import { router } from "expo-router";
 
-import {useDateStore, useEventStore, useRecurringOptionsStore, useTaskStore} from "@/src/presentation/stores";
-import {loadEvents} from "./loadEvents";
-import {validateEvent} from "./validateEvent";
-import {container} from "@/src/shared/containers/container";
-import {buildRecurringOptions} from "@/src/presentation/services/event/buildRecurringOptions";
+import { useDateStore, useEventStore, useRecurringOptionsStore, useTaskStore } from "@/src/presentation/stores";
+import { container } from "@/src/shared/containers/container";
+import { loadEvents } from "./loadEvents";
+import { validateEvent } from "./validateEvent";
+import { buildRecurringOptions } from "./buildRecurringOptions";
 
 
 export const updateEvent = async (selectedEvent: IEvent) => {

@@ -1,7 +1,7 @@
 import React from 'react';
-import {Image, TouchableOpacity, View} from 'react-native';
+import { Image, TouchableOpacity, View } from 'react-native';
 
-import {icons} from "@/src/shared/constants/icons";
+import { icons } from "@/src/shared/constants";
 
 
 interface PageRouteButtonsProps {
@@ -11,7 +11,7 @@ interface PageRouteButtonsProps {
     selected?: boolean | null;
 }
 
-const PageRouteButtons = ({ handleAdd, handleBack, handleRemove, selected }: PageRouteButtonsProps) => {
+export const PageRouteButtons = ({ handleAdd, handleBack, handleRemove, selected }: PageRouteButtonsProps) => {
     const icon = selected ? icons.ok : icons.add;
 
     return (
@@ -35,5 +35,3 @@ const PageRouteButtons = ({ handleAdd, handleBack, handleRemove, selected }: Pag
         </View>
     );
 };
-
-export default PageRouteButtons;

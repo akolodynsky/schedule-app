@@ -1,13 +1,14 @@
-import React, {useEffect, useRef} from 'react';
-import {router} from "expo-router";
-import {BottomSheetMethods} from "@gorhom/bottom-sheet/lib/typescript/types";
-import BottomSheet, {BottomSheetView} from '@gorhom/bottom-sheet';
-import {useShallow} from "zustand/react/shallow";
+import React, { useEffect, useRef } from 'react';
+import { router } from "expo-router";
+import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
+import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
+import { useShallow } from "zustand/react/shallow";
 
 import EventBottomCard from "./EventBottomCard";
-import {useDateStore, useEventStore, useRecurringOptionsStore} from "../stores";
-import {removeEvent, updateEventState, updateRecurringState} from "../services/event";
-import {updateTask, updateTasksState, updateTaskState} from "@/src/presentation/services/task";
+
+import { useDateStore, useEventStore, useRecurringOptionsStore } from "../stores";
+import { removeEvent, updateEventState, updateRecurringState } from "../services/event";
+import { updateTask, updateTasksState, updateTaskState } from "../services/task";
 
 
 const EventBottomSheet = () => {

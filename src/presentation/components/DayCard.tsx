@@ -1,12 +1,12 @@
-import React, {memo} from 'react';
-import {Image, Pressable, Text, View} from 'react-native';
+import React, { memo } from 'react';
+import { Image, Pressable, Text, View } from 'react-native';
 import Animated from "react-native-reanimated";
 
-import {icons} from "@/src/shared/constants/icons";
-import {useAnimatedScale} from "../../shared/hooks";
+import { icons } from "@/src/shared/constants";
+import { useAnimatedScale } from "@/src/shared/hooks";
 
 
-interface DayCardProps extends Day {
+interface DayCardProps extends IDay {
     focused: boolean,
     setSelectedDate: (date: string) => void,
     setDate: (date: string) => void,

@@ -1,5 +1,5 @@
-import {useDateStore, useEventStore, useRecurringOptionsStore} from "@/src/presentation/stores";
-import {container} from "@/src/shared/containers/container";
+import { useDateStore, useEventStore, useRecurringOptionsStore } from "@/src/presentation/stores";
+import { container } from "@/src/shared/containers/container";
 
 
 export const updateEventState = (selectedEvent: IEvent) => {

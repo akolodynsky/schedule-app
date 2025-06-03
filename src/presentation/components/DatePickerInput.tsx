@@ -1,11 +1,11 @@
-import React, {memo, useRef} from 'react';
-import {Pressable, Text, View} from 'react-native';
-import {useShallow} from "zustand/react/shallow";
+import React, { memo, useRef } from 'react';
+import { Pressable, Text, View } from 'react-native';
+import { useShallow } from "zustand/react/shallow";
 
-import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
-import DatePicker from "@/src/presentation/components/ui/DatePicker";
-import {useDateStore} from "../stores";
-import {formatDate} from "../../shared/utils";
+import {AnimatedComponent, AnimatedComponentRef, DatePicker} from "./ui";
+
+import { useDateStore } from "../stores";
+import { formatDate } from "@/src/shared/utils";
 
 
 const DatePickerInput = () => {

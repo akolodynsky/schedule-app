@@ -4,7 +4,7 @@
     "slug": "santitime",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/shared/assets/images/logo-bg.png",
+    "icon": "./src/shared/assets/images/splash.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

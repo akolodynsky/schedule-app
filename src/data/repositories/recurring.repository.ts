@@ -1,7 +1,7 @@
-import {mapRecurringDtoToRecurring, mapRecurringToRecurringDto} from "@/src/data/mappers/recurring.mapper";
-import {RecurringRepository} from "@/src/domain/repositories/recurring.repository";
-import {RecurringDatasource} from "@/src/data/datasources/recurring.datasource";
-import {RecurringOptions} from "@/src/domain/entities";
+import { RecurringOptions } from "@/src/domain/entities";
+import { RecurringDatasource } from "@/src/data/datasources";
+import { RecurringRepository } from "@/src/domain/repositories";
+import { mapRecurringDtoToRecurring, mapRecurringToRecurringDto } from "@/src/data/mappers";
 
 
 export class RecurringRepositoryImpl implements RecurringRepository {
@@ -28,7 +28,8 @@ export class RecurringRepositoryImpl implements RecurringRepository {
     }
 
     async getExceptDays(id: string) {
-        return await this.datasource.getExceptDays(id);
+        const days = await this.datasource.getExceptDays(id);
+        return days && days.except_days;
     }
 
     async insertExceptDate(id: string, exceptDate: string) {

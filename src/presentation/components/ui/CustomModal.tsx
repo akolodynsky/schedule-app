@@ -1,7 +1,7 @@
-import React, {ReactNode} from 'react';
-import {Image, Pressable, ScrollView, Text, View} from 'react-native';
+import React, { ReactNode } from 'react';
+import { Image, Pressable, ScrollView, Text, View } from 'react-native';
 
-import {icons} from "@/src/shared/constants/icons";
+import { icons } from "@/src/shared/constants";
 
 
 interface CustomModalProps {
@@ -10,7 +10,7 @@ interface CustomModalProps {
     button?: () => void;
 }
 
-const CustomModal = ({children, title, button}: CustomModalProps) => {
+export const CustomModal = ({children, title, button}: CustomModalProps) => {
     return (
         <View className="w-[300px] max-h-[650px] px-5 py-8 bg-dark-200 rounded-[24px]">
             <View className="flex-row justify-between mb-8">
@@ -33,5 +33,3 @@ const CustomModal = ({children, title, button}: CustomModalProps) => {
         </View>
     );
 };
-
-export default CustomModal;

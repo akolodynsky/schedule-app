@@ -1,6 +1,6 @@
-import { Category } from "@/src/domain/entities/Category";
-import { CategoryDatasource } from "@/src/data/datasources/category.datasource";
-import { CategoryRepository } from "@/src/domain/repositories/category.repository";
+import { Category } from "@/src/domain/entities";
+import { CategoryDatasource } from "@/src/data/datasources";
+import { CategoryRepository } from "@/src/domain/repositories";
 
 
 export class CategoryRepositoryImpl implements CategoryRepository {

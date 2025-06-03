@@ -1,13 +1,13 @@
-import React, {useRef} from "react";
-import {Image, Pressable, Text, View} from "react-native";
+import React, { useRef } from "react";
+import { Image, Pressable, Text, View } from "react-native";
+import { useShallow } from "zustand/react/shallow";
 
-import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
-import DatePicker from "@/src/presentation/components/ui/DatePicker";
-import {icons} from "@/src/shared/constants/icons";
-import {formatDate} from "../../shared/utils";
-import {RepeatIntervalModal} from "@/src/presentation/components/RepeatIntervalModal";
-import {useRecurringOptionsStore} from "@/src/presentation/stores/useRecurringOptionsStore";
-import {useShallow} from "zustand/react/shallow";
+import { AnimatedComponent, AnimatedComponentRef, DatePicker } from "./ui";
+import { RepeatIntervalModal } from "./RepeatIntervalModal";
+
+import { useRecurringOptionsStore } from "../stores";
+import { icons } from "@/src/shared/constants/icons";
+import { formatDate } from "@/src/shared/utils";
 
 
 export const LimitDateSection = () => {

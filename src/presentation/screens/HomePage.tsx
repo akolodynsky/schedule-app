@@ -1,14 +1,15 @@
-import React, {useEffect} from "react";
-import {View, Image, ScrollView, Pressable} from 'react-native';
-import {router} from "expo-router";
-import {GestureHandlerRootView, GestureDetector} from "react-native-gesture-handler";
+import React from "react";
+import { View, Image, ScrollView, Pressable } from 'react-native';
+import { router } from "expo-router";
+import { GestureHandlerRootView, GestureDetector } from "react-native-gesture-handler";
 
-import {icons} from "@/src/shared/constants/icons";
-import {useLoadData, useGestureScroll} from "../../shared/hooks";
+import { SideMenuModal } from "../components/ui";
+import DayList from "../components/DayList";
 import EventList from "../components/EventList";
 import EventBottomSheet from "../components/EventBottomSheet";
-import DayList from "../components/DayList";
-import SideMenuModal from "@/src/presentation/components/ui/SideMenuModal";
+
+import { icons } from "@/src/shared/constants";
+import { useLoadData, useGestureScroll } from "@/src/shared/hooks";
 
 
 export default function HomePage() {

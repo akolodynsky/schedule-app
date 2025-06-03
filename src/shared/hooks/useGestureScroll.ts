@@ -1,8 +1,8 @@
-import {Gesture} from "react-native-gesture-handler";
-import {useShallow} from "zustand/react/shallow";
+import { Gesture } from "react-native-gesture-handler";
+import { runOnJS } from "react-native-reanimated";
+import { useShallow } from "zustand/react/shallow";
 
-import {useDateStore} from "../../presentation/stores";
-import {runOnJS} from "react-native-reanimated";
+import { useDateStore } from "@/src/presentation/stores";
 
 
 export const useGestureScroll = () => {

@@ -1,15 +1,14 @@
 import React, {memo} from 'react';
-import {KeyboardAvoidingView, Platform, ScrollView, View} from 'react-native';
-import {useShallow} from "zustand/react/shallow";
+import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { useShallow } from "zustand/react/shallow";
 
-import CustomTextInput from "@/src/presentation/components/ui/CustomTextInput";
-import DateTimeInput from "@/src/presentation/components/DateTimeInput";
-import TasksInput from "@/src/presentation/components/TasksInput";
-import ModalInput from "@/src/presentation/components/ui/ModalInput";
-import RepeatEventInput from "@/src/presentation/components/RepeatEventInput";
-import CategoriesModal from "@/src/presentation/components/CategoriesModal";
-import CategoryCard from "@/src/presentation/components/CategoryCard";
-import ErrorModal from "@/src/presentation/components/ui/ErrorModal";
+import { CustomTextInput, ModalInput, ErrorModal } from "./ui";
+import RepeatEventInput from "./RepeatEventInput";
+import CategoriesModal from "./CategoriesModal";
+import DateTimeInput from "./DateTimeInput";
+import CategoryCard from "./CategoryCard";
+import TasksInput from "./TasksInput";
+
 import {useEventStore} from "../stores";
 
 

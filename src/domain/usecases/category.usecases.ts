@@ -1,5 +1,5 @@
-import {generateUniqueId} from "@/src/shared/utils";
-import {CategoryRepository} from "@/src/domain/repositories/category.repository";
+import { CategoryRepository } from "@/src/domain/repositories";
+import { generateUniqueId } from "@/src/shared/utils";
 
 
 export class CategoryUseCases {

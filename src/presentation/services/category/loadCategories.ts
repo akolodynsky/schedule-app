@@ -1,5 +1,5 @@
-import {useCategoryStore} from "../../stores";
-import {container} from "@/src/shared/containers/container";
+import { useCategoryStore } from "@/src/presentation/stores";
+import { container } from "@/src/shared/containers/container";
 
 
 export const loadCategories = async () => {

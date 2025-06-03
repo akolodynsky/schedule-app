@@ -3,9 +3,10 @@ import {TouchableOpacity} from 'react-native';
 import {router} from "expo-router";
 import {useShallow} from "zustand/react/shallow";
 
-import CustomModal from "@/src/presentation/components/ui/CustomModal";
-import CategoryCard from "@/src/presentation/components/CategoryCard";
-import {useCategoryStore, useEventStore} from "../stores";
+import { CustomModal } from "./ui";
+import CategoryCard from "./CategoryCard";
+
+import { useCategoryStore, useEventStore } from "../stores";
 
 
 const CategoriesModal = memo(({onClose}: {onClose: () => void}) => {

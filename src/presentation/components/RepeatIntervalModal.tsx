@@ -1,5 +1,5 @@
-import React, {useEffect, useRef, useState} from "react";
-import {Pressable, Text, TextInput, View} from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Pressable, Text, TextInput, View } from "react-native";
 
 
 interface RepeatIntervalModal {

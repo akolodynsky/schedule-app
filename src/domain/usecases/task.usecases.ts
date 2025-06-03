@@ -1,4 +1,4 @@
-import {TaskRepository} from "@/src/domain/repositories/task.repository";
+import { TaskRepository } from "@/src/domain/repositories";
 
 
 export class TaskUseCases {

@@ -14,16 +14,16 @@ const formatDate = (date: Date): string => {
     return `${year}-${month}-${day}`;
 };
 
+
 export const generateWeeks = (date: Date) => {
-    console.log("list recalculated")
     const currentMonday = getMondayOfWeek(date);
-    const weeksArr: Day[][] = [];
+    const weeksArr: IDay[][] = [];
 
     for (let i = -3; i <= 3; i++) {
         const weekStart = new Date(currentMonday);
         weekStart.setDate(currentMonday.getDate() + i * 7);
 
-        const weekArr: Day[] = [];
+        const weekArr: IDay[] = [];
 
         for (let j = 0; j < 7; j++) {
             const currentDay = new Date(weekStart);

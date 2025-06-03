@@ -1,11 +1,12 @@
 import React from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
-import CategoryCard from "../components/CategoryCard";
-import TaskCard from "@/src/presentation/components/TaskCard";
-import {icons} from "../../shared/constants/icons";
-import {useEventStore} from "../stores";
-import {getDuration} from "../../shared/utils";
+import CategoryCard from "./CategoryCard";
+import TaskCard from "./TaskCard";
+
+import { useEventStore } from "../stores";
+import { icons } from "@/src/shared/constants";
+import {getDuration} from "@/src/shared/utils";
 
 
 interface EventBottomCardProps {

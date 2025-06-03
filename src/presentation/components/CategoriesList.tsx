@@ -1,14 +1,14 @@
-import React, {useRef} from 'react';
-import {Pressable, ScrollView} from 'react-native';
-import {useShallow} from "zustand/react/shallow";
-import {router} from "expo-router";
+import React, { useRef } from 'react';
+import { Pressable, ScrollView } from 'react-native';
+import { router } from "expo-router";
+import { useShallow } from "zustand/react/shallow";
 
-import {removeCategory, loadCategories, updateCategoryState} from "@/src/presentation/services/category";
-import {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
-import {WarnModal} from "@/src/presentation/components/ui/WarnModal";
-import {loadEvents} from "@/src/presentation/services/event";
+import { AnimatedComponentRef, WarnModal } from "./ui";
 import CategoryCard from "./CategoryCard";
-import {useCategoryStore, useDateStore, useTaskStore} from "../stores";
+
+import { useCategoryStore, useDateStore, useTaskStore } from "../stores";
+import { removeCategory, loadCategories, updateCategoryState } from "../services/category";
+import { loadEvents } from "../services/event";
 
 
 const CategoriesList = () => {

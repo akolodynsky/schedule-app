@@ -42,7 +42,7 @@ interface ITask {
     isCompleted: boolean;
 }
 
-type TaskBlockMap = Map<string, {
+type ITaskBlockMap = Map<string, {
     mainTasks: ITask[],
     eventTasks: Map<string, { category: ICategory, start: string, tasks: ITask[] }>
 }>;
@@ -58,7 +58,7 @@ interface ITaskBlock {
     }[];
 }
 
-interface Day {
+interface IDay {
     date: string,
     day: string,
 }

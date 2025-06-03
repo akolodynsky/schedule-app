@@ -1,12 +1,12 @@
-import React, {useRef} from 'react';
-import {Image, Pressable, View} from 'react-native';
+import React, { useRef } from 'react';
+import { Image, Pressable, View } from 'react-native';
 
-import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
+import {AnimatedComponent, AnimatedComponentRef} from "./AnimatedComponent";
 import SideMenu from "@/src/presentation/components/SideMenu";
-import {icons} from "@/src/shared/constants/icons";
+import { icons } from "@/src/shared/constants";
 
 
-const SideMenuModal = () => {
+export const SideMenuModal = () => {
     const modalRef = useRef<AnimatedComponentRef>(null);
 
     const handlePress = () => {
@@ -28,5 +28,3 @@ const SideMenuModal = () => {
 
     );
 };
-
-export default SideMenuModal;

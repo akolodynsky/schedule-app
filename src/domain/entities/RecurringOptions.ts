@@ -1,8 +1,6 @@
-export type Frequency = 'daily' | 'weekly' | 'monthly';
-
 export class RecurringOptions {
     public readonly id: string
-    public readonly frequency: Frequency
+    public readonly frequency: 'daily' | 'weekly' | 'monthly'
     public readonly interval: number
     public readonly weekDays: number[]
     public readonly monthDay: number | null

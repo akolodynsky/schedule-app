@@ -1,5 +1,5 @@
-import {useDateStore, useEventStore, useTaskStore} from "@/src/presentation/stores";
-import {container} from "@/src/shared/containers/container";
+import { useDateStore, useEventStore, useTaskStore } from "@/src/presentation/stores";
+import { container } from "@/src/shared/containers/container";
 
 
 export const updateTaskState = (selectedTask: ITask) => {

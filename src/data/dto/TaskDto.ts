@@ -1,4 +1,5 @@
-import {EventCategoryAndStartDto} from "@/src/data/dto/EventDto";
+import { EventCategoryAndStartDto } from "@/src/data/dto";
+
 
 export interface TaskDto {
     id: string;

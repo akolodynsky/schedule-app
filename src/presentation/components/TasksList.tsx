@@ -1,12 +1,13 @@
-import React, {useEffect, useRef} from 'react';
-import {View, FlatList, Text} from 'react-native';
-import {useShallow} from "zustand/react/shallow";
-
-import TaskBlockCard from "@/src/presentation/components/TaskBlockCard";
-import {useTaskStore} from "../stores";
-import {loadTasks, updateTask, updateTaskState} from "@/src/presentation/services/task";
+import React, { useEffect, useRef } from 'react';
+import { View, FlatList, Text } from 'react-native';
 import {router} from "expo-router";
-import {getEventById} from "@/src/presentation/services/event";
+import { useShallow } from "zustand/react/shallow";
+
+import TaskBlockCard from "./TaskBlockCard";
+
+import { useTaskStore } from "../stores";
+import { loadTasks, updateTask, updateTaskState } from "../services/task";
+import { getEventById } from "../services/event";
 
 
 const TasksList = () => {

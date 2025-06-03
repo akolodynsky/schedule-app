@@ -1,6 +1,6 @@
-import {loadEvents} from "./loadEvents";
-import {container} from "@/src/shared/containers/container";
-import {useDateStore, useTaskStore} from "@/src/presentation/stores";
+import { useDateStore, useTaskStore } from "@/src/presentation/stores";
+import { container } from "@/src/shared/containers/container";
+import { loadEvents } from "./loadEvents";
 
 
 export const removeEvent = async (id: string, date?: string) => {

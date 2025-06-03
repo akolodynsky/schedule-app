@@ -1,11 +1,10 @@
-import React, {memo} from 'react';
-import {Image, Text, TouchableOpacity, View} from 'react-native';
+import React, { memo } from 'react';
+import { Image, Text, TouchableOpacity, View } from 'react-native';
 
-import {icons} from "@/src/shared/constants/icons";
+import { icons } from "@/src/shared/constants";
 
 
 const CategoryCard = memo(({category, remove}: { category: ICategory, remove?: () => void}) => {
-
     return (
         <View className="self-start rounded-xl px-4 py-2 flex-row items-center" style={{backgroundColor: category.color}}>
             <Text className="font-inter_semibold text-light-100 text-[16px]">{category.name}</Text>

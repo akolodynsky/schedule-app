@@ -1,10 +1,11 @@
-import React, {memo} from 'react';
-import {TouchableOpacity, Text} from 'react-native';
-import {useShallow} from "zustand/react/shallow";
+import React, { memo } from 'react';
+import { TouchableOpacity, Text } from 'react-native';
+import { useShallow } from "zustand/react/shallow";
 
-import EventShortCard from "@/src/presentation/components/EventShortCard";
-import CustomModal from "@/src/presentation/components/ui/CustomModal";
-import {useEventStore} from "../stores";
+import EventShortCard from "./EventShortCard";
+import { CustomModal } from "./ui";
+
+import { useEventStore } from "../stores";
 
 
 const EventsModal = memo(({onClose}: {onClose: () => void}) => {

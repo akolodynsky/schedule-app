@@ -3,7 +3,7 @@ import {Text, View} from 'react-native';
 import Svg, { Rect, Circle, Defs, Mask } from 'react-native-svg';
 
 
-const PageHeader = ({ name }: {name: string}) => {
+export const PageHeader = ({ name }: {name: string}) => {
     return (
         <>
             <View className="rounded-bl-[72px] pt-12 bg-dark-100 pb-7 absolute z-10 w-full">
@@ -28,5 +28,3 @@ const PageHeader = ({ name }: {name: string}) => {
 
     );
 };
-
-export default PageHeader;

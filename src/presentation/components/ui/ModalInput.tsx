@@ -1,7 +1,7 @@
-import React, {memo, ReactNode, useRef} from 'react';
-import {Pressable, Text, View} from 'react-native';
+import React, { ReactNode, useRef } from 'react';
+import { Pressable, Text, View } from 'react-native';
 
-import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
+import { AnimatedComponent, AnimatedComponentRef } from "./AnimatedComponent";
 
 
 interface ModalInputProps {
@@ -12,7 +12,7 @@ interface ModalInputProps {
     placeholder?: string;
 }
 
-const ModalInput = ({children, title, renderContent, backgroundColor, placeholder}: ModalInputProps) => {
+export const ModalInput = ({children, title, renderContent, backgroundColor, placeholder}: ModalInputProps) => {
     const modalRef = useRef<AnimatedComponentRef>(null);
 
     const handleOpen = () => modalRef.current?.open();
@@ -38,5 +38,3 @@ const ModalInput = ({children, title, renderContent, backgroundColor, placeholde
 
     );
 };
-
-export default memo(ModalInput);

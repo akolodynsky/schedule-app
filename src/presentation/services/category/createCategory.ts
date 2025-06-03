@@ -1,7 +1,7 @@
-import {useCategoryStore, useEventStore} from "@/src/presentation/stores";
-import {validateCategory} from "./validateCategory";
-import {loadCategories} from "./loadCategories";
-import {container} from "@/src/shared/containers/container";
+import { useCategoryStore, useEventStore } from "@/src/presentation/stores";
+import { container } from "@/src/shared/containers/container";
+import { validateCategory } from "./validateCategory";
+import { loadCategories } from "./loadCategories";
 
 
 export const createCategory = async (handleBack: () => void) => {

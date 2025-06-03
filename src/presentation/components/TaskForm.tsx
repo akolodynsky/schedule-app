@@ -1,15 +1,14 @@
-import React, {memo, useEffect, useRef} from 'react';
-import {View} from 'react-native';
-import {useShallow} from "zustand/react/shallow";
+import React, { memo, useEffect, useRef } from 'react';
+import { View } from 'react-native';
+import { useShallow } from "zustand/react/shallow";
 
-import CustomTextInput from "@/src/presentation/components/ui/CustomTextInput";
-import DatePickerInput from "@/src/presentation/components/DatePickerInput";
-import EventShortCard from "@/src/presentation/components/EventShortCard";
-import ModalInput from "@/src/presentation/components/ui/ModalInput";
-import ErrorModal from "@/src/presentation/components/ui/ErrorModal";
-import EventsModal from "@/src/presentation/components/EventsModal";
-import {useDateStore, useEventStore, useTaskStore} from "../stores";
-import {loadEvents} from "../services/event";
+import { CustomTextInput, ModalInput, ErrorModal } from "./ui";
+import DatePickerInput from "./DatePickerInput";
+import EventShortCard from "./EventShortCard";
+import EventsModal from "./EventsModal";
+
+import { useDateStore, useEventStore, useTaskStore } from "../stores";
+import { loadEvents } from "../services/event";
 
 
 const TaskForm = () => {

@@ -1,5 +1,5 @@
 import * as SQLite from "expo-sqlite";
-import {TaskDto, TaskWithCategoryAndStartDto} from "@/src/data/dto/TaskDto";
+import { TaskDto, TaskWithCategoryAndStartDto } from "@/src/data/dto";
 
 
 export class TaskDatasource {
@@ -32,21 +32,17 @@ export class TaskDatasource {
     };
 
     async insertTask(dto: TaskDto) {
-        try {
-            await this.db.runAsync(
-                `INSERT INTO tasks (id, event_id, name, date, is_completed) 
-             VALUES (?, ?, ?, ?, ?)
-             ON CONFLICT(id) DO UPDATE SET
-                 event_id = excluded.event_id,
-                 name = excluded.name,
-                 is_completed = excluded.is_completed,
-                 date = excluded.date
-            `,
-                dto.id, dto.event_id, dto.name, dto.date, dto.is_completed
-            );
-        } catch (e) {
-            console.error(e);
-        }
+        await this.db.runAsync(
+            `INSERT INTO tasks (id, event_id, name, date, is_completed) 
+         VALUES (?, ?, ?, ?, ?)
+         ON CONFLICT(id) DO UPDATE SET
+             event_id = excluded.event_id,
+             name = excluded.name,
+             is_completed = excluded.is_completed,
+             date = excluded.date
+        `,
+            dto.id, dto.event_id, dto.name, dto.date, dto.is_completed
+        );
     };
 
     async editTask(dto: TaskDto) {

@@ -1,8 +1,9 @@
-import React, {memo} from 'react';
-import {router} from "expo-router";
-import {useShallow} from "zustand/react/shallow";
+import React, { memo } from 'react';
+import { router } from "expo-router";
+import { useShallow } from "zustand/react/shallow";
 
-import EventCard from "@/src/presentation/components/EventCard";
+import EventCard from "./EventCard";
+
 import {useEventStore} from "../stores";
 
 

@@ -1,9 +1,10 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, Image} from 'react-native';
+import { Text, View, TouchableOpacity, Image } from 'react-native';
 
-import CategoryCard from "@/src/presentation/components/CategoryCard";
-import {icons} from "@/src/shared/constants/icons";
-import {getDuration} from "../../shared/utils";
+import CategoryCard from "./CategoryCard";
+
+import { icons } from "@/src/shared/constants";
+import { getDuration } from "@/src/shared/utils";
 
 
 const EventShortCard = ({event, remove}: {event: IEvent, remove?: () => void}) => {

@@ -1,7 +1,7 @@
-import {useDateStore, useTaskStore} from "@/src/presentation/stores";
-import {generateUniqueId} from "@/src/shared/utils";
-import {validateTask} from "./validateTask";
-import {container} from "@/src/shared/containers/container";
+import { useDateStore, useTaskStore } from "@/src/presentation/stores";
+import { container } from "@/src/shared/containers/container";
+import { validateTask } from "./validateTask";
+import { generateUniqueId } from "@/src/shared/utils";
 
 
 export const createTask = async (handleBack: () => void, eventId?: string) => {

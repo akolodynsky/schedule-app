@@ -1,8 +1,7 @@
 import React from 'react';
-import {router} from "expo-router";
+import { router } from "expo-router";
 
-import PageRouteButtons from "@/src/presentation/components/ui/PageRouteButtons";
-import PageHeader from "@/src/presentation/components/ui/PageHeader";
+import { PageRouteButtons, PageHeader } from "../components/ui";
 import TasksList from "../components/TasksList";
 
 

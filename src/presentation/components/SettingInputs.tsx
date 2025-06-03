@@ -1,8 +1,8 @@
 import React, {ReactNode, useRef, useState} from 'react';
 import {Pressable, Text, View} from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox/lib";
-import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
-import CustomModal from "@/src/presentation/components/ui/CustomModal";
+
+import { AnimatedComponent, AnimatedComponentRef, CustomModal } from "./ui";
 
 
 export const SettingModal = ({title, options}: { title: string, options: string[]}) => {

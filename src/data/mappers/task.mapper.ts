@@ -1,5 +1,6 @@
-import { TaskDto } from "@/src/data/dto/TaskDto";
-import { Task } from "@/src/domain/entities/Task";
+import { Task } from "@/src/domain/entities";
+import { TaskDto } from "@/src/data/dto";
+
 
 export const mapTaskDtoToTask = (dto: TaskDto) => {
     return new Task({

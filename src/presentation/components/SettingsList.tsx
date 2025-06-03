@@ -1,11 +1,11 @@
-import React, {useRef} from 'react';
-import {View, Text, ScrollView} from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, ScrollView } from 'react-native';
 
-import {WarnModal} from "@/src/presentation/components/ui/WarnModal";
-import {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
-import {SettingModal, SettingInput, SettingCheck, SettingDual} from "@/src/presentation/components/SettingInputs";
-import {clearAllTables} from "@/src/data/datasources/db";
-import {blocks} from "@/src/shared/constants/settings";
+import { AnimatedComponentRef, WarnModal } from "./ui";
+import { SettingModal, SettingInput, SettingCheck, SettingDual } from "./SettingInputs";
+
+import { blocks } from "@/src/shared/constants";
+import { clearAllTables } from "@/src/data/datasources";
 
 
 const SettingsList = () => {

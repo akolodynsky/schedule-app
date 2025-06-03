@@ -1,14 +1,12 @@
-import React, {useRef} from 'react';
-import {router} from "expo-router";
-import {useShallow} from "zustand/react/shallow";
+import React, { useRef } from 'react';
+import { router } from "expo-router";
+import { useShallow } from "zustand/react/shallow";
 
-import PageRouteButtons from "../components/ui/PageRouteButtons";
-import PageHeader from "../components/ui/PageHeader";
+import { PageRouteButtons, PageHeader, AnimatedComponentRef, WarnModal } from "../components/ui";
 import EventForm from "../components/EventForm";
-import {useDateStore, useEventStore, useRecurringOptionsStore} from "../stores";
-import {createEvent, removeEvent, updateEvent} from "../services/event";
-import {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
-import {WarnModal} from "@/src/presentation/components/ui/WarnModal";
+
+import { useDateStore, useEventStore, useRecurringOptionsStore } from "../stores";
+import { createEvent, removeEvent, updateEvent } from "../services/event";
 
 
 export default function EventCreate()  {

@@ -1,11 +1,9 @@
-import { Category } from "./Category";
-
 export class Event {
     public readonly id: string;
     public readonly date: string;
     public readonly name: string | null;
     public readonly description: string | null;
-    public readonly category: Category;
+    public readonly category: ICategory;
     public readonly tasksCount: number;
     public readonly start: string;
     public readonly end: string;

@@ -1,11 +1,11 @@
 import React from 'react';
-import {router} from "expo-router";
-import {useShallow} from "zustand/react/shallow";
+import { router } from "expo-router";
+import { useShallow } from "zustand/react/shallow";
 
-import PageRouteButtons from "@/src/presentation/components/ui/PageRouteButtons";
-import PageHeader from "@/src/presentation/components/ui/PageHeader";
+import { PageRouteButtons, PageHeader } from "../components/ui";
 import CategoriesList from "../components/CategoriesList";
-import {useEventStore} from "@/src/presentation/stores";
+
+import { useEventStore } from "../stores";
 
 
 export default function CategoryPage()  {

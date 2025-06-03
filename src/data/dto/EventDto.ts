@@ -1,4 +1,5 @@
-import {CategoryFieldsDto} from "@/src/data/dto/CategoryDto";
+import { CategoryFieldsDto } from "@/src/data/dto";
+
 
 export interface EventDto {
     id: string;

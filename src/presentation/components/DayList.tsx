@@ -1,13 +1,13 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, FlatList, Pressable, Text, View} from 'react-native';
-import {useShallow} from "zustand/react/shallow";
+import React, { useEffect, useRef, useState } from 'react';
+import { Dimensions, FlatList, Pressable, Text, View } from 'react-native';
+import { useShallow } from "zustand/react/shallow";
 
-import AnimatedComponent, {AnimatedComponentRef} from "@/src/presentation/components/ui/AnimatedComponent";
-import DayCard from "@/src/presentation/components/DayCard";
-import DatePicker from "@/src/presentation/components/ui/DatePicker";
-import {useDayListActions} from "../../shared/hooks";
-import {generateWeeks} from "../../shared/utils";
-import {useDateStore} from "../stores";
+import { AnimatedComponent, AnimatedComponentRef, DatePicker } from "./ui";
+import DayCard from "./DayCard";
+
+import { useDateStore } from "../stores";
+import { useDayListActions } from "@/src/shared/hooks";
+import { generateWeeks } from "@/src/shared/utils";
 
 
 const { width } = Dimensions.get("window");
@@ -22,7 +22,7 @@ const DayList = () => {
         }))
     );
 
-    const [weeks, setWeeks] = useState<Day[][]>([]);
+    const [weeks, setWeeks] = useState<IDay[][]>([]);
     const [currentMonth, setCurrentMonth] = useState("");
 
     useEffect(() => {
@@ -45,7 +45,7 @@ const DayList = () => {
         setCurrentMonth
     });
 
-    const renderWeeks = ({ item, index }: {item: Day[], index: number}) => {
+    const renderWeeks = ({ item, index }: {item: IDay[], index: number}) => {
         return (
             <View className="flex-row justify-between px-1" style={{width: width - 36}} key={index}>
                 {item.map((day) => (

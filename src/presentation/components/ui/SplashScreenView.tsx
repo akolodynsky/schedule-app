@@ -1,10 +1,11 @@
 import React from 'react';
-import {StatusBar} from "expo-status-bar";
-import {View, Image, ImageBackground} from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { View, Image, ImageBackground } from 'react-native';
 
-import {images} from "@/src/shared/constants/images";
+import { images } from "@/src/shared/constants";
 
-const SplashScreenView = () => {
+
+export const SplashScreenView = () => {
     return (
         <View className="flex-1 justify-center items-center">
             <StatusBar hidden />
@@ -14,5 +15,3 @@ const SplashScreenView = () => {
         </View>
     );
 };
-
-export default SplashScreenView;

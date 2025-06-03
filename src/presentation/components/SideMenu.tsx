@@ -1,11 +1,10 @@
 import React from 'react';
-import {Pressable, Text, View, Image, TouchableOpacity, ImageSourcePropType} from 'react-native';
-import {Gesture, GestureDetector, GestureHandlerRootView} from "react-native-gesture-handler";
-import {runOnJS, useSharedValue} from "react-native-reanimated";
-import {router} from "expo-router";
+import { Pressable, Text, View, Image, TouchableOpacity, ImageSourcePropType } from 'react-native';
+import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
+import { runOnJS, useSharedValue } from "react-native-reanimated";
+import { router } from "expo-router";
 
-import {icons} from "@/src/shared/constants/icons";
-import {images} from "@/src/shared/constants/images";
+import { icons, images } from "@/src/shared/constants";
 
 
 const sideMenuButtons = [

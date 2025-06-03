@@ -1,14 +1,13 @@
-import React, {useRef} from 'react';
-import {router} from "expo-router";
-import {useShallow} from "zustand/react/shallow";
+import React, { useRef } from 'react';
+import { router } from "expo-router";
+import { useShallow } from "zustand/react/shallow";
 
-import {useDateStore, useEventStore, useTaskStore} from "../stores";
-import PageRouteButtons from "@/src/presentation/components/ui/PageRouteButtons";
-import PageHeader from "@/src/presentation/components/ui/PageHeader";
+import { PageRouteButtons, PageHeader } from "../components/ui";
 import TaskForm from "../components/TaskForm";
-import {createTask, removeTask, updateTask} from "@/src/presentation/services/task";
-import {loadEvents} from "@/src/presentation/services/event";
 
+import { useDateStore, useEventStore, useTaskStore } from "../stores";
+import { createTask, removeTask, updateTask } from "../services/task";
+import { loadEvents } from "../services/event";
 
 
 export default function TaskCreate()  {

@@ -1,7 +1,3 @@
-export function generateUniqueId (name: string): string {
-    return `${name}-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
-}
-
 export function formatDate (date: string) {
     const year = new Date(date).getFullYear();
     const showYear = year !== new Date().getFullYear();
@@ -13,6 +9,7 @@ export function formatDate (date: string) {
         ...(showYear && { year: "numeric"}),
     });
 }
+
 
 export function isCurrentTime (start: string, end: string): boolean {
     const startTime = timeToNumber(start);
@@ -32,6 +29,7 @@ export function timeToNumber (time: string, total = false): number {
 
     return hour + minute / 60;
 }
+
 
 export function getDuration (start: string, end: string) {
     const totalStartMinutes = timeToNumber(start, true);
@@ -71,6 +69,7 @@ export function checkTimeOverlap (newStart: string, newEnd: string, events: {sta
 
     return { isOverlap, maxEndTime };
 }
+
 
 export function getMonthAndYear (date: string)  {
     const options: Intl.DateTimeFormatOptions = {year: 'numeric', month: 'long'};

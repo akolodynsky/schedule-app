@@ -1,5 +1,5 @@
-import React, {memo, useState} from 'react';
-import {View} from 'react-native';
+import React, { memo, useState } from 'react';
+import { View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox/lib";
 
 

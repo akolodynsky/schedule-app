@@ -1,10 +1,11 @@
 import React from 'react';
-import {Text, View, Pressable} from 'react-native';
+import { Text, View, Pressable } from 'react-native';
 import Animated from "react-native-reanimated";
 
-import CategoryCard from "@/src/presentation/components/CategoryCard";
-import {getDuration, isCurrentTime} from "../../shared/utils";
-import {useAnimatedScale} from "../../shared/hooks";
+import CategoryCard from "./CategoryCard";
+
+import { getDuration, isCurrentTime } from "@/src/shared/utils";
+import { useAnimatedScale } from "@/src/shared/hooks";
 
 
 const EventCard = (props: (IEvent | IGap) & {first: number, handlePress: () => void}) => {

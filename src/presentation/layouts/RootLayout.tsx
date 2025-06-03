@@ -1,18 +1,19 @@
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
-import {Easing, StatusBar} from 'react-native';
+import { Easing, StatusBar } from 'react-native';
 import { createStackNavigator, CardStyleInterpolators, StackNavigationOptions } from '@react-navigation/stack';
 
-import SplashScreenView from "@/src/presentation/components/ui/SplashScreenView";
-import {useAppLoading} from "../../shared/hooks";
-import EventCreate from "@/src/presentation/screens/EventCreate";
-import TaskPage from "@/src/presentation/screens/TaskPage";
-import CategoryPage from "@/src/presentation/screens/CategoryPage";
-import TaskCreate from "@/src/presentation/screens/TaskCreate";
-import CategoryCreate from "@/src/presentation/screens/CategoryCreate";
-import HomePage from "@/src/presentation/screens/HomePage";
-import SettingsPage from "@/src/presentation/screens/SettingsPage";
+import { SplashScreenView } from "../components/ui";
+import EventCreate from "../screens/EventCreate";
+import TaskPage from "../screens/TaskPage";
+import CategoryPage from "../screens/CategoryPage";
+import TaskCreate from "../screens/TaskCreate";
+import CategoryCreate from "../screens/CategoryCreate";
+import HomePage from "../screens/HomePage";
+import SettingsPage from "../screens/SettingsPage";
+
+import { useAppLoading } from "@/src/shared/hooks";
 
 
 const Stack = createStackNavigator();

@@ -1,8 +1,7 @@
-import { Task } from "@/src/domain/entities/Task";
-import {TaskDatasource} from "@/src/data/datasources/task.datasource";
-import {TaskRepository} from "@/src/domain/repositories/task.repository";
-import {mapTaskDtoToTask, mapTaskToTaskDto} from "@/src/data/mappers/task.mapper";
-import {mapCategoryDtoToCategory} from "@/src/data/mappers/category.mapper";
+import { Task } from "@/src/domain/entities";
+import { TaskDatasource } from "@/src/data/datasources";
+import { TaskRepository } from "@/src/domain/repositories";
+import { mapTaskDtoToTask, mapTaskToTaskDto, mapCategoryDtoToCategory } from "@/src/data/mappers";
 
 
 export class TaskRepositoryImpl implements TaskRepository {
@@ -11,7 +10,7 @@ export class TaskRepositoryImpl implements TaskRepository {
     async getAll() {
         const dtos = await this.datasource.getTasks();
 
-        const blocksMap: TaskBlockMap = new Map();
+        const blocksMap: ITaskBlockMap = new Map();
 
         for (const dto of dtos) {
             const date = dto.date;

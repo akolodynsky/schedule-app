@@ -1,5 +1,5 @@
-import React, {useEffect, useRef} from 'react';
-import {Animated, Text, View} from 'react-native';
+import React, { useEffect, useRef } from 'react';
+import { Animated, Text, View } from 'react-native';
 
 
 interface ErrorModalProps {
@@ -7,7 +7,7 @@ interface ErrorModalProps {
     setError: (error: string) => void;
 }
 
-const ErrorModal = ({ error, setError }: ErrorModalProps) => {
+export const ErrorModal = ({ error, setError }: ErrorModalProps) => {
     const fadeAnim = useRef(new Animated.Value(0)).current;
     const translateY = useRef(new Animated.Value(-30)).current;
 
@@ -59,5 +59,3 @@ const ErrorModal = ({ error, setError }: ErrorModalProps) => {
         </View>
     );
 };
-
-export default ErrorModal;

@@ -1,5 +1,6 @@
-import {Category} from "@/src/domain/entities";
-import {CategoryFieldsDto} from "@/src/data/dto/CategoryDto";
+import { Category } from "@/src/domain/entities";
+import { CategoryFieldsDto } from "@/src/data/dto";
+
 
 export const mapCategoryDtoToCategory = (dto: CategoryFieldsDto) => {
     return new Category({

@@ -1,5 +1,5 @@
-import {useEventStore} from "../../stores";
-import {container} from "@/src/shared/containers/container";
+import { useEventStore } from "@/src/presentation/stores";
+import { container } from "@/src/shared/containers/container";
 
 
 export const loadEvents = async (date: string) => {
