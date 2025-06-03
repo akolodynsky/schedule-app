@@ -8,8 +8,8 @@ import { buildRecurringOptions } from "./buildRecurringOptions";
 
 
 export const updateEvent = async (selectedEvent: IEvent) => {
-    const {category, name, description, tasks, start, end, reset} = useEventStore.getState();
-    const {frequency, resetRecurring, disabled} = useRecurringOptionsStore.getState();
+    const {category, name, description, tasks, start, end} = useEventStore.getState();
+    const {frequency, disabled} = useRecurringOptionsStore.getState();
     const {selectedDate, date, setSelectedDate} = useDateStore.getState();
 
     if (await validateEvent()) return;
@@ -39,15 +39,16 @@ export const updateEvent = async (selectedEvent: IEvent) => {
 
 
     if (tasks.length > 0 && !(recurringId && !disabled)) {
-        tasks.map(async (task) => {
-            await container.taskUseCases.createTask(task.id, eventDate, task.name, task.isCompleted, eventId);
-        });
+        await Promise.all(tasks.map(task => {
+            container.taskUseCases.createTask(task.id, eventDate, task.name, task.isCompleted, eventId);
+        }))
+
+        await new Promise((res) => setTimeout(res, 50));
+
         useTaskStore.getState().setShouldReloadTasks(true);
     }
 
-    await loadEvents(selectedDate);
-    router.back();
     if (!recurringId || disabled) setSelectedDate(date);
-    resetRecurring();
-    reset();
+    await loadEvents(!recurringId || disabled ? date : selectedDate);
+    router.back();
 };

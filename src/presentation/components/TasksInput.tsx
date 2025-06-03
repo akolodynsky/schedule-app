@@ -7,6 +7,7 @@ import { CustomTextInput } from "./ui";
 import { useDateStore, useEventStore, useRecurringOptionsStore } from "../stores";
 import { icons } from "@/src/shared/constants";
 import { generateUniqueId } from "../../shared/utils";
+import {removeTask} from "@/src/presentation/services/task";
 
 
 const TasksInput = () => {
@@ -37,9 +38,10 @@ const TasksInput = () => {
         }
     }
 
-    const deleteTask = (id: string) => {
+    const deleteTask = async (id: string) => {
         const filteredTasks = tasks.filter((task) => task.id !== id);
         setTasks(filteredTasks);
+        await removeTask(id);
     }
 
     return (

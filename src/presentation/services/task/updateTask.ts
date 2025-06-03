@@ -1,6 +1,6 @@
 import { useDateStore, useTaskStore } from "@/src/presentation/stores";
 import { container } from "@/src/shared/containers/container";
-import {validateTask} from "./validateTask";
+import { validateTask } from "./validateTask";
 
 
 export const updateTask = async (id: string, eventId: string | undefined, handleBack?: () => void) => {

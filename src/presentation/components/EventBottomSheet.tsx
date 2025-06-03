@@ -32,9 +32,12 @@ const EventBottomSheet = () => {
 
     useEffect(() => {
         if (selectedEvent) {
-            bottomSheetRef.current?.snapToIndex(0)
             if (selectedEvent.tasksCount > 0) {
-                void updateTasksState(selectedEvent.id, selectedDate);
+                void updateTasksState(selectedEvent.id, selectedDate).then(() => {
+                    setTimeout(() => {
+                        bottomSheetRef.current?.snapToIndex(0)
+                    }, 0)
+                });
             }
         } else {
             bottomSheetRef.current?.close();

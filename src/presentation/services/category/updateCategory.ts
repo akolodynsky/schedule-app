@@ -1,10 +1,12 @@
+import { router } from "expo-router";
+
 import { useCategoryStore } from "@/src/presentation/stores";
 import { container } from "@/src/shared/containers/container";
 import { validateCategory } from "./validateCategory";
 import { loadCategories } from "./loadCategories";
 
 
-export const updateCategory = async (id: string, handleBack: () => void) => {
+export const updateCategory = async (id: string) => {
     const {name, color} = useCategoryStore.getState();
 
     if (await validateCategory()) return;
@@ -12,5 +14,5 @@ export const updateCategory = async (id: string, handleBack: () => void) => {
     await container.categoryUseCases.updateCategory(id, name, color);
     await loadCategories();
 
-    handleBack();
+    router.back();
 };

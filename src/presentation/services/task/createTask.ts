@@ -1,10 +1,12 @@
+import { router } from "expo-router";
+
 import { useDateStore, useTaskStore } from "@/src/presentation/stores";
 import { container } from "@/src/shared/containers/container";
 import { validateTask } from "./validateTask";
 import { generateUniqueId } from "@/src/shared/utils";
 
 
-export const createTask = async (handleBack: () => void, eventId?: string) => {
+export const createTask = async (eventId?: string) => {
     const {name, updateTaskBlock} = useTaskStore.getState();
     const {date} = useDateStore.getState();
 
@@ -14,5 +16,5 @@ export const createTask = async (handleBack: () => void, eventId?: string) => {
 
     await container.taskUseCases.createTask(id, date, name, false, eventId);
     await updateTaskBlock({id, date, name, isCompleted: false, eventId});
-    handleBack();
+    router.back();
 };

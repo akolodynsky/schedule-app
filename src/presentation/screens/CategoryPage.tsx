@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { router } from "expo-router";
+import { useFocusEffect } from "@react-navigation/core";
 import { useShallow } from "zustand/react/shallow";
 
 import { PageRouteButtons, PageHeader } from "../components/ui";
@@ -11,18 +12,17 @@ import { useEventStore } from "../stores";
 export default function CategoryPage()  {
     const setCategory = useEventStore(useShallow(state => state.setCategory));
 
-    const handleAddCategory = async () => {
-        router.push('/category');
-    };
-
-    const handleBack = () => {
-        setCategory(null);
-        router.back();
-    };
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                setCategory(null);
+            };
+        }, [])
+    );
 
     return (
         <>
-            <PageRouteButtons handleBack={handleBack} handleAdd={handleAddCategory} />
+            <PageRouteButtons handleBack={() => router.back()} handleAdd={() => router.push('/category')} />
 
             <PageHeader name={"Categories"} />
             <CategoriesList />

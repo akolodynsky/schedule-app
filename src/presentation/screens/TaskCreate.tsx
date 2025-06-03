@@ -1,6 +1,7 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { router } from "expo-router";
 import { useShallow } from "zustand/react/shallow";
+import { useFocusEffect } from "@react-navigation/core";
 
 import { PageRouteButtons, PageHeader } from "../components/ui";
 import TaskForm from "../components/TaskForm";
@@ -34,12 +35,12 @@ export default function TaskCreate()  {
 
     const handleAddTask = async () => {
         if (!selectedTask) {
-            await createTask(handleBack, selectedEvent?.id);
+            await createTask(selectedEvent?.id);
         } else {
             if (date !== prevDate.current || selectedEvent?.id !== prevEventId.current) {
                 await updateTaskBlock(selectedTask.id);
             }
-            await updateTask(selectedTask.id, selectedEvent?.id, handleBack);
+            await updateTask(selectedTask.id, selectedEvent?.id, router.back);
         }
         await loadEvents(date);
     };
@@ -48,21 +49,24 @@ export default function TaskCreate()  {
         if (selectedTask) {
             await removeTask(selectedTask.id);
             await loadEvents(date);
-            handleBack();
+            router.back();
         }
     }
 
-    const handleBack = () => {
-        setSelectedEvent(null);
-        router.back();
-        reset();
-    }
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                setSelectedEvent(null);
+                reset();
+            };
+        }, [])
+    );
 
     return (
         <>
             <PageRouteButtons
                 selected={!!selectedTask}
-                handleBack={handleBack}
+                handleBack={() => router.back()}
                 handleAdd={handleAddTask}
                 handleRemove={selectedTask && handleRemoveTask}
             />

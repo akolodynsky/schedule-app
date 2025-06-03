@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import { router } from "expo-router";
+import { useFocusEffect } from "@react-navigation/core";
 import { useShallow } from "zustand/react/shallow";
 
 import { PageRouteButtons, PageHeader } from "../components/ui";
@@ -19,18 +20,21 @@ export default function CategoryCreate()   {
 
     const handleAddCategory = async () => {
         selectedCategory
-            ? await updateCategory(selectedCategory.id, handleBack)
-            : await createCategory(handleBack);
+            ? await updateCategory(selectedCategory.id)
+            : await createCategory();
     };
 
-    const handleBack = () => {
-        router.back();
-        reset();
-    };
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                reset();
+            };
+        }, [])
+    );
 
     return (
         <>
-            <PageRouteButtons selected={selectedCategory && true} handleBack={handleBack} handleAdd={handleAddCategory}/>
+            <PageRouteButtons selected={selectedCategory && true} handleBack={() => router.back()} handleAdd={handleAddCategory}/>
 
             <PageHeader name={(selectedCategory ? "Update" : "Add") + " Category"} />
             <CategoryForm />

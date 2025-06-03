@@ -58,6 +58,7 @@ const TasksList = () => {
                     data={tasks}
                     keyExtractor={(item: ITaskBlock) => item.date}
                     contentContainerStyle={{paddingTop: 160}}
+                    className="bg-dark-200 px-4 flex-1"
                     showsVerticalScrollIndicator={false}
                     overScrollMode="never"
                     initialNumToRender={5}
@@ -71,7 +72,7 @@ const TasksList = () => {
                         />
                     )}
                 />
-              : <Text className="font-inter_medium text-light-300 self-center text-sm mt-8">
+              : <Text className="font-inter_medium text-light-300 self-center text-sm mt-44">
                     No tasks available...
                 </Text>
             }

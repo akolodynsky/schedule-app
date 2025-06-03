@@ -6,17 +6,13 @@ import TasksList from "../components/TasksList";
 
 
 export default function TaskPage()  {
-    const handleAddTask = () => {
-        router.push("/task");
-    };
-
-    const handleBack = () => {
-        router.back();
-    };
 
     return (
         <>
-            <PageRouteButtons handleBack={handleBack} handleAdd={handleAddTask} />
+            <PageRouteButtons
+                handleBack={() => router.back()}
+                handleAdd={() => router.push("/task")}
+            />
 
             <PageHeader name={"Tasks"} />
             <TasksList />

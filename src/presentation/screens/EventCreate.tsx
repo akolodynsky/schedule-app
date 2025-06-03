@@ -1,11 +1,12 @@
-import React, { useRef } from 'react';
+import React, { useCallback, useRef } from 'react';
 import { router } from "expo-router";
+import { useFocusEffect } from "@react-navigation/core";
 import { useShallow } from "zustand/react/shallow";
 
 import { PageRouteButtons, PageHeader, AnimatedComponentRef, WarnModal } from "../components/ui";
 import EventForm from "../components/EventForm";
 
-import { useDateStore, useEventStore, useRecurringOptionsStore } from "../stores";
+import { useEventStore, useRecurringOptionsStore } from "../stores";
 import { createEvent, removeEvent, updateEvent } from "../services/event";
 
 
@@ -17,13 +18,6 @@ export default function EventCreate()  {
         }))
     );
 
-    const {setDate, selectedDate} = useDateStore(
-        useShallow((state) => ({
-            setDate: state.setDate,
-            selectedDate: state.selectedDate,
-        }))
-    );
-
     const {disabled, resetRecurring} = useRecurringOptionsStore(
         useShallow((state) => ({
             disabled: state.disabled,
@@ -32,26 +26,26 @@ export default function EventCreate()  {
     );
 
     const handleAddEvent = async () => {
-        !selectedEvent
-            ? await createEvent()
-            : await updateEvent(selectedEvent);
+        selectedEvent
+            ? await updateEvent(selectedEvent)
+            : await createEvent()
     };
-
-    const warnModalRef = useRef<AnimatedComponentRef>(null);
 
     const handleRemoveRecurringEvents = async () => {
         if (selectedEvent?.recurringId) {
             await removeEvent(selectedEvent.recurringId);
-            handleBack();
+            router.back();
         }
     };
 
-    const handleBack = () => {
-        router.back();
-        setDate(selectedDate);
-        reset();
-        resetRecurring();
-    };
+    useFocusEffect(
+        useCallback(() => {
+            return () => {
+                reset();
+                resetRecurring();
+            };
+        }, [])
+    );
 
     const condition = selectedEvent && (selectedEvent?.recurringId && !disabled);
 
@@ -61,11 +55,13 @@ export default function EventCreate()  {
             ? "Update All Events"
             : "Update Event";
 
+    const warnModalRef = useRef<AnimatedComponentRef>(null);
+
     return (
         <>
             <PageRouteButtons
                 selected={!!selectedEvent}
-                handleBack={handleBack}
+                handleBack={() => router.back()}
                 handleAdd={handleAddEvent}
                 handleRemove={condition ? () => warnModalRef.current!.open() : null}
             />
