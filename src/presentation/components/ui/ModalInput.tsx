@@ -21,12 +21,12 @@ export const ModalInput = ({children, title, renderContent, backgroundColor, pla
     const bg = backgroundColor ? backgroundColor : "#1a1a24";
 
     return (
-        <View className="mb-6">
+        <View className="mb-5">
             <Text className="text-light-200 font-inter_medium mb-3">{title}</Text>
             <Pressable onPress={handleOpen}>
-                <View style={{backgroundColor: bg}} className="rounded-lg px-4 py-6">
+                <View style={{backgroundColor: bg}} className="rounded-lg px-4 py-[21px]">
                     {renderContent ?? (
-                        <Text className="font-inter_regular text-lg text-light-100">{placeholder}</Text>
+                        <Text className="font-inter_regular text-[14px] tracking-wide text-light-300">{placeholder}</Text>
                     )}
                 </View>
             </Pressable>

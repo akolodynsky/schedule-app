@@ -50,6 +50,11 @@ export const db = async () => {
             except_days TEXT
         );
     `);
+};
+
+
+export const loadDefaultCategories = async () => {
+    const db = await SQLite.openDatabaseAsync("santitime", { useNewConnection: true });
 
     const result = await db.getAllAsync<{ count: number }>(
         'SELECT COUNT(*) as count FROM categories',

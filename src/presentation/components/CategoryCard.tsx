@@ -18,3 +18,12 @@ const CategoryCard = memo(({category, remove}: { category: ICategory, remove?: (
 });
 
 export default CategoryCard;
+
+
+export const DefaultCard = () => {
+    return (
+        <View className="self-start rounded-xl px-4 py-2 flex-row items-center bg-primary">
+            <Text className="font-inter_semibold text-light-100 text-[16px]">Main Tasks</Text>
+        </View>
+    );
+};

@@ -1,3 +1,4 @@
+export * from "./AddButton";
 export * from "./AnimatedComponent";
 export * from "./CustomModal";
 export * from "./CustomTextInput";

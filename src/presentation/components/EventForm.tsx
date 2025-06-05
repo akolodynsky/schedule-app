@@ -1,5 +1,6 @@
 import React, {memo} from 'react';
-import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
+import { View } from 'react-native';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { useShallow } from "zustand/react/shallow";
 
 import { CustomTextInput, ModalInput, ErrorModal } from "./ui";
@@ -9,7 +10,7 @@ import DateTimeInput from "./DateTimeInput";
 import CategoryCard from "./CategoryCard";
 import TasksInput from "./TasksInput";
 
-import {useEventStore} from "../stores";
+import { useEventStore } from "../stores";
 
 
 const EventForm = () => {
@@ -30,39 +31,35 @@ const EventForm = () => {
         <>
             <ErrorModal error={error} setError={setError} />
 
-
-            <KeyboardAvoidingView
-                style={{ flex: 1 }}
-                behavior={Platform.OS === 'ios' ? 'padding' : "height"}
+            <KeyboardAwareScrollView
+                className="px-6 bg-dark-200"
+                contentContainerStyle={{ paddingTop: 150 }}
+                enableOnAndroid
+                overScrollMode="never"
+                keyboardShouldPersistTaps="handled"
             >
-                <ScrollView
-                    className="px-6 bg-dark-200"
-                    contentContainerStyle={{ paddingBottom: 40, paddingTop: 160 }}
-                    overScrollMode="never"
-                    keyboardShouldPersistTaps="handled"
+                <ModalInput
+                    title="Category"
+                    placeholder="Select a category"
+                    renderContent={category && (
+                        <View className="max-w-[90%]">
+                            <CategoryCard category={category} remove={() => {setCategory(null)}} />
+                        </View>
+                    )}
                 >
-                    <ModalInput
-                        title="Category"
-                        renderContent={category && (
-                            <View className="max-w-[90%]">
-                                <CategoryCard category={category} remove={() => {setCategory(null)}} />
-                            </View>
-                        )}
-                    >
-                        {({onClose}) => <CategoriesModal onClose={onClose} />}
-                    </ModalInput>
+                    {({onClose}) => <CategoriesModal onClose={ onClose } />}
+                </ModalInput>
 
-                    <CustomTextInput title={"Name"} value={name} setValue={setName} length={90} />
+                <CustomTextInput title={"Name"} value={name} setValue={setName} length={90} />
 
-                    <CustomTextInput title={"Description"} value={description} setValue={setDescription} length={450} />
+                <CustomTextInput title={"Description"} value={description} setValue={setDescription} length={450} />
 
-                    <TasksInput />
+                <TasksInput />
 
-                    <RepeatEventInput />
+                <RepeatEventInput />
 
-                    <DateTimeInput />
-                </ScrollView>
-            </KeyboardAvoidingView>
+                <DateTimeInput />
+            </KeyboardAwareScrollView>
         </>
     );
 };

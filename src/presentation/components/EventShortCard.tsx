@@ -9,7 +9,7 @@ import { getDuration } from "@/src/shared/utils";
 
 const EventShortCard = ({event, remove}: {event: IEvent, remove?: () => void}) => {
     return (
-        <View className={`w-full gap-2 rounded-[18px] border-2 px-3 ${remove ? "pt-2 pb-4 border-dark-200" : "p-3 pt-2 border-light-300"}`}>
+        <View className={`w-full gap-3 rounded-[18px] border-2 px-3 ${remove ? "pt-3 pb-5 border-dark-200" : "p-4 pt-3 border-light-300"}`}>
             <View className="flex-row items-center justify-between">
                 <View className="flex-row gap-1">
                     <Text className="font-inter_medium text-light-300 text-[12px]">{event.start} - {event.end}</Text>

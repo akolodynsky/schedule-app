@@ -7,13 +7,6 @@ const getMondayOfWeek = (date: Date) => {
     return monday;
 }
 
-const formatDate = (date: Date): string => {
-    const year = date.getFullYear();
-    const month = `${date.getMonth() + 1}`.padStart(2, '0');
-    const day = `${date.getDate()}`.padStart(2, '0');
-    return `${year}-${month}-${day}`;
-};
-
 
 export const generateWeeks = (date: Date) => {
     const currentMonday = getMondayOfWeek(date);
@@ -30,7 +23,7 @@ export const generateWeeks = (date: Date) => {
             currentDay.setDate(weekStart.getDate() + j);
             currentDay.setHours(0, 0, 0, 0);
             weekArr.push({
-                date: formatDate(currentDay),
+                date: currentDay.toLocaleDateString("sv-SE"),
                 day: currentDay.toLocaleDateString('en-US', {weekday: 'short'})
             });
         }

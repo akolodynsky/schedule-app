@@ -7,7 +7,7 @@ import { AnimatedComponentRef, WarnModal } from "./ui";
 import CategoryCard from "./CategoryCard";
 
 import { useCategoryStore, useDateStore, useTaskStore } from "../stores";
-import { removeCategory, loadCategories, updateCategoryState } from "../services/category";
+import { removeCategory, updateCategoryState } from "../services/category";
 import { loadEvents } from "../services/event";
 
 
@@ -25,7 +25,6 @@ const CategoriesList = () => {
         await removeCategory(categoryIdRef.current);
         await loadEvents(selectedDate);
         setShouldReloadTasks(true);
-        await loadCategories();
         categoryIdRef.current = null;
     };
 

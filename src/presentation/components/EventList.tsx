@@ -1,10 +1,11 @@
 import React, { memo } from 'react';
+import { View } from "react-native";
 import { router } from "expo-router";
 import { useShallow } from "zustand/react/shallow";
 
 import EventCard from "./EventCard";
 
-import {useEventStore} from "../stores";
+import { useEventStore } from "../stores";
 
 
 const EventList = () => {
@@ -28,7 +29,8 @@ const EventList = () => {
     };
 
     return (
-            <>
+        <View className="bg-dark-100 flex-1" collapsable={false}>
+            <View className="py-10 px-6 flex-1 bg-dark-200 rounded-tr-[76px]" collapsable={false}>
                 {events.map((event, index) => (
                     <EventCard
                         key={event.id}
@@ -37,8 +39,9 @@ const EventList = () => {
                         handlePress={() => handlePress(event)}
                     />
                 ))}
-            </>
-        )
+            </View>
+        </View>
+    )
 };
 
 export default memo(EventList);

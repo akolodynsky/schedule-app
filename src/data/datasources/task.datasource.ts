@@ -36,9 +36,6 @@ export class TaskDatasource {
             `INSERT INTO tasks (id, event_id, name, date, is_completed) 
          VALUES (?, ?, ?, ?, ?)
          ON CONFLICT(id) DO UPDATE SET
-             event_id = excluded.event_id,
-             name = excluded.name,
-             is_completed = excluded.is_completed,
              date = excluded.date
         `,
             dto.id, dto.event_id, dto.name, dto.date, dto.is_completed

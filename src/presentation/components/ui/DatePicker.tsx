@@ -12,6 +12,8 @@ interface DatePickerProps {
 }
 
 export const DatePicker = memo(({date, setDate, onClose}: DatePickerProps) => {
+    const currentDate = new Date().toLocaleDateString("sv-SE");
+
     return (
         <View>
             <Calendar
@@ -29,8 +31,8 @@ export const DatePicker = memo(({date, setDate, onClose}: DatePickerProps) => {
                     onClose()
                 }}
                 markedDates={{
-                    [date]: {selected: true, selectedColor: '#6f4bf7'},
-                    [new Date().toISOString().split("T")[0]]: {marked: true, selected: true, selectedColor: 'rgba(111,75,247,0.3)'}
+                    [currentDate]: {marked: true, selected: true, selectedColor: 'rgba(111,75,247,0.3)'},
+                    [date]: {selected: true, selectedColor: '#6f4bf7'}
                 }}
                 theme={{
                     backgroundColor: "#1a1a24",

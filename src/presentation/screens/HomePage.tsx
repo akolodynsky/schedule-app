@@ -1,20 +1,16 @@
 import React from "react";
-import { View, Image, ScrollView, Pressable } from 'react-native';
-import { router } from "expo-router";
+import { ScrollView } from 'react-native';
 import { GestureHandlerRootView, GestureDetector } from "react-native-gesture-handler";
 
-import { SideMenuModal } from "../components/ui";
+import { AddButton, SideMenuModal } from "../components/ui";
 import DayList from "../components/DayList";
 import EventList from "../components/EventList";
 import EventBottomSheet from "../components/EventBottomSheet";
 
-import { icons } from "@/src/shared/constants";
-import { useLoadData, useGestureScroll } from "@/src/shared/hooks";
+import { useGestureScroll } from "@/src/shared/hooks";
 
 
 export default function HomePage() {
-    useLoadData();
-
     const { panGesture } = useGestureScroll();
 
     return (
@@ -32,25 +28,14 @@ export default function HomePage() {
                     <DayList />
 
                     <GestureDetector gesture={panGesture}>
-                        <View className="bg-dark-100 flex-1">
-                            <View className="py-10 px-6 flex-1 bg-dark-200 rounded-tr-[76px]">
-                                <EventList />
-                            </View>
-                        </View>
+                        <EventList />
                     </GestureDetector>
                 </ScrollView>
             </GestureHandlerRootView>
 
-                <EventBottomSheet />
+            <EventBottomSheet />
 
-
-
-            <Pressable
-                onPress={() => router.push("/create")}
-                className="absolute bottom-8 right-8 z-10 bg-primary rounded-full p-3"
-            >
-                <Image source={icons.add} className="size-12" />
-            </Pressable>
+            <AddButton />
         </>
     );
 }

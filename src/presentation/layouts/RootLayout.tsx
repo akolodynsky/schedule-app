@@ -1,6 +1,7 @@
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
+import React from "react";
 import { Easing, StatusBar } from 'react-native';
 import { createStackNavigator, CardStyleInterpolators, StackNavigationOptions } from '@react-navigation/stack';
 
@@ -22,6 +23,7 @@ export default function RootLayout() {
     const appLoaded = useAppLoading();
 
     if (!appLoaded) return <SplashScreenView />;
+
 
     const config = {
         animation: 'timing' as const,

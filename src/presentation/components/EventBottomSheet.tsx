@@ -38,6 +38,8 @@ const EventBottomSheet = () => {
                         bottomSheetRef.current?.snapToIndex(0)
                     }, 0)
                 });
+            } else {
+                bottomSheetRef.current?.snapToIndex(0)
             }
         } else {
             bottomSheetRef.current?.close();

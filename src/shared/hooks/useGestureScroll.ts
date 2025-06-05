@@ -3,6 +3,7 @@ import { runOnJS } from "react-native-reanimated";
 import { useShallow } from "zustand/react/shallow";
 
 import { useDateStore } from "@/src/presentation/stores";
+import { loadEvents } from "@/src/presentation/services/event";
 
 
 export const useGestureScroll = () => {
@@ -20,10 +21,11 @@ export const useGestureScroll = () => {
         return newDate.toISOString().split('T')[0];
     }
 
-    const handleSwipe = (direction: 'next' | 'prev') => {
+    const handleSwipe = async (direction: 'next' | 'prev') => {
         const newDate = changeDate(selectedDate, direction);
         setSelectedDate(newDate);
         setDate(newDate);
+        await loadEvents(newDate);
     };
 
     const scrollGesture = Gesture.Native();

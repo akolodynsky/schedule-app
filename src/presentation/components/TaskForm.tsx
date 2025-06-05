@@ -5,6 +5,7 @@ import { useShallow } from "zustand/react/shallow";
 import { CustomTextInput, ModalInput, ErrorModal } from "./ui";
 import DatePickerInput from "./DatePickerInput";
 import EventShortCard from "./EventShortCard";
+import { DefaultCard } from "./CategoryCard";
 import EventsModal from "./EventsModal";
 
 import { useDateStore, useEventStore, useTaskStore } from "../stores";
@@ -57,10 +58,10 @@ const TaskForm = () => {
 
                 <ModalInput
                     title="Events"
-                    placeholder="Main Task"
-                    renderContent={selectedEvent && (
-                        <EventShortCard event={selectedEvent} remove={() => setSelectedEvent(null)} />
-                    )}
+                    renderContent={selectedEvent
+                        ? <EventShortCard event={selectedEvent} remove={() => setSelectedEvent(null)} />
+                        : <DefaultCard />
+                    }
                 >
                     {({onClose}) => <EventsModal onClose={onClose} />}
                 </ModalInput>
