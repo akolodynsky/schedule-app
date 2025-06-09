@@ -15,20 +15,16 @@ const EventBottomSheet = () => {
     const bottomSheetRef = useRef<BottomSheetMethods>(null);
 
     const { selectedEvent, setSelectedEvent, setTasks } = useEventStore(
-        useShallow((state) => ({
-            selectedEvent: state.selectedEvent,
-            setSelectedEvent: state.setSelectedEvent,
-            setTasks: state.setTasks
+        useShallow((s) => ({
+            selectedEvent: s.selectedEvent,
+            setSelectedEvent: s.setSelectedEvent,
+            setTasks: s.setTasks
         }))
     );
 
-    const selectedDate = useDateStore(
-        useShallow(state => state.selectedDate)
-    );
+    const selectedDate = useDateStore(s => s.selectedDate);
+    const setDisabled = useRecurringOptionsStore(s => s.setDisabled);
 
-    const setDisabled = useRecurringOptionsStore(
-        useShallow(state => state.setDisabled)
-    );
 
     useEffect(() => {
         if (selectedEvent) {
@@ -95,8 +91,8 @@ const EventBottomSheet = () => {
             index={-1}
             snapPoints={["50%", "65%", "80%"]}
             enablePanDownToClose
-            backgroundStyle={{backgroundColor: '#1a1a24', borderRadius: 30}}
-            handleIndicatorStyle={{backgroundColor: '#efeff9'}}
+            backgroundStyle={{ backgroundColor: '#1a1a24', borderRadius: 30 }}
+            handleIndicatorStyle={{ backgroundColor: '#efeff9' }}
             onChange={(index) => handleChange(index)}
         >
             <BottomSheetView className="flex-1 px-6 gap-3 pb-16">

@@ -8,13 +8,13 @@ import { icons, images } from "@/src/shared/constants";
 
 
 const sideMenuButtons = [
-    {text: "Categories", icon: icons.categories, route: () => router.push("/categories")},
-    {text: "Tasks", icon: icons.tasks, route: () => router.push("/tasks")},
-    {text: "Settings", icon: icons.settings, route: () => router.push("/settings")},
+    { text: "Categories", icon: icons.categories, route: () => router.push("/categories") },
+    { text: "Tasks", icon: icons.tasks, route: () => router.push("/tasks") },
+    { text: "Settings", icon: icons.settings, route: () => router.push("/settings") },
 ];
 
 
-const SideMenu = ({onClose}: {onClose: () => void}) => {
+const SideMenu = ({ onClose }: { onClose: () => void }) => {
     const translationX = useSharedValue(0);
 
     const panGesture = Gesture.Pan()
@@ -28,24 +28,24 @@ const SideMenu = ({onClose}: {onClose: () => void}) => {
         });
 
     return (
-        <View className="flex-row w-full h-full">
+        <View className="flex-row w-full h-full" collapsable={false}>
             <Pressable className="flex-1" onPress={onClose} />
 
-            <GestureHandlerRootView style={{flex: 2}}>
+            <GestureHandlerRootView style={{flex: 1.5}}>
                 <GestureDetector gesture={panGesture}>
-                    <View className="h-full px-5 py-14 bg-dark-100 rounded-bl-[48px] rounded-tl-[48px]">
+                    <View className="h-full px-5 py-14 bg-dark-100 rounded-bl-[48px] rounded-tl-[48px] gap-6">
                         <View className="items-center justify-between flex-row">
-                            <View>
-                                <Text className="font-inter_bold text-[24px] tracking-wide text-light-100">SantiTime</Text>
-                                <Text className="font-inter_medium text-[14px] text-light-300">Plan your day</Text>
+                            <View className="bg-primary p-2.5 rounded-2xl">
+                                <Image source={images.icon} className="size-9" />
                             </View>
 
-                            <View className="bg-primary p-2.5 rounded-2xl">
-                                <Image source={images.icon} className="size-10" />
+                            <View className="items-end">
+                                <Text className="font-inter_bold text-[23px] tracking-wider text-light-100">SantiTime</Text>
+                                <Text className="font-inter_medium text-[12px] tracking-wide text-light-300">Plan your day</Text>
                             </View>
                         </View>
 
-                        <View className="gap-3 mt-9">
+                        <View className="gap-3">
                             {sideMenuButtons.map(({text, icon, route}) => (
                                 <SideMenuButton key={text} text={text} icon={icon} router={route} onClose={onClose} />
                             ))}

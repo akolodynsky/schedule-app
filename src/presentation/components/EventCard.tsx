@@ -8,10 +8,10 @@ import { getDuration, isCurrentTime } from "@/src/shared/utils";
 import { useAnimatedScale } from "@/src/shared/hooks";
 
 
-const EventCard = (props: (IEvent | IGap) & {first: number, handlePress: () => void}) => {
+const EventCard = (props: (IEvent | IGap) & { first: number, handlePress: () => void }) => {
     const { start, end, first, handlePress } = props;
 
-    const {animatedStyle, handlePressOut, handlePressIn} = useAnimatedScale();
+    const { animatedStyle, handlePressOut, handlePressIn } = useAnimatedScale();
 
     const duration = start && end && getDuration(start, end);
     const firstEvent = first === 0;

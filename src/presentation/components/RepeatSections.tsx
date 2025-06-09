@@ -13,10 +13,10 @@ import { formatDate } from "@/src/shared/utils";
 export const LimitDateSection = () => {
     const dateModalRef = useRef<AnimatedComponentRef>(null);
 
-    const { endRepeat, setEndRepeat} = useRecurringOptionsStore(
-        useShallow((state) => ({
-            endRepeat: state.endRepeat,
-            setEndRepeat: state.setEndRepeat,
+    const { endRepeat, setEndRepeat } = useRecurringOptionsStore(
+        useShallow((s) => ({
+            endRepeat: s.endRepeat,
+            setEndRepeat: s.setEndRepeat,
         }))
     );
 
@@ -48,10 +48,10 @@ export const IntervalSection = () => {
     const intervalModalRef = useRef<AnimatedComponentRef>(null);
 
     const { frequency, interval, setInterval} = useRecurringOptionsStore(
-        useShallow((state) => ({
-            frequency: state.frequency,
-            interval: state.interval,
-            setInterval: state.setInterval,
+        useShallow((s) => ({
+            frequency: s.frequency,
+            interval: s.interval,
+            setInterval: s.setInterval,
         }))
     );
 

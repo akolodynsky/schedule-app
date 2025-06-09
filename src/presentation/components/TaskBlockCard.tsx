@@ -13,7 +13,7 @@ interface TaskBlockCardProps {
     taskUpdate: (task: ITask, id?: string) => void;
 }
 
-const TaskBlockCard = ({taskBlock, taskCheck, taskUpdate}: TaskBlockCardProps) => {
+const TaskBlockCard = ({ taskBlock, taskCheck, taskUpdate }: TaskBlockCardProps) => {
     const currentDate = new Date().toLocaleDateString("sv-SE");
     const date = taskBlock.date === currentDate ? "Today" : formatDate(taskBlock.date)
 
@@ -26,44 +26,24 @@ const TaskBlockCard = ({taskBlock, taskCheck, taskUpdate}: TaskBlockCardProps) =
 
                 <View className="gap-4">
                     {taskBlock.mainTasks.length > 0 && (
-                        <View>
-                            <View className="max-w-[75%] z-10 self-end mr-6 mb-[-11px]">
-                                <DefaultCard />
-                            </View>
-
-                            <View className="bg-dark-200 gap-3 py-5 px-4 rounded-3xl">
-                                {taskBlock.mainTasks.map((task) => (
-                                    <TaskCard
-                                        key={task.id}
-                                        task={task}
-                                        check={() => taskCheck(task)}
-                                        longPress={() => taskUpdate(task)}
-                                    />
-                                ))}
-                            </View>
-                        </View>
+                        <TaskGroup
+                            tasks={taskBlock.mainTasks}
+                            header={<DefaultCard />}
+                            check={taskCheck}
+                            update={taskUpdate}
+                        />
                     )}
 
                     {taskBlock.eventTasks.map((event) => (
                         event.tasks.length > 0 && (
-                            <View key={event.id}>
-                                <View className="max-w-[75%] z-10 self-end mr-6 mb-[-11px]">
-                                    <CategoryCard category={event.category} />
-                                </View>
-
-                                {event.tasks.length > 0 && (
-                                    <View className="bg-dark-200 gap-3 py-5 px-4 rounded-3xl">
-                                        {event.tasks.map((task: ITask) => (
-                                            <TaskCard
-                                                key={task.id}
-                                                task={task}
-                                                check={() => taskCheck(task)}
-                                                longPress={() => taskUpdate(task, event.id)}
-                                            />
-                                        ))}
-                                    </View>
-                                )}
-                            </View>
+                            <TaskGroup
+                                key={event.id}
+                                tasks={taskBlock.mainTasks}
+                                header={<CategoryCard category={event.category} />}
+                                check={taskCheck}
+                                update={taskUpdate}
+                                eventId={event.id}
+                            />
                         )))}
                 </View>
             </View>
@@ -71,3 +51,29 @@ const TaskBlockCard = ({taskBlock, taskCheck, taskUpdate}: TaskBlockCardProps) =
 };
 
 export default TaskBlockCard;
+
+
+
+interface TaskGroupProps {
+    tasks: ITask[];
+    header: React.ReactNode;
+    check: (task: ITask) => Promise<void>;
+    update: (task: ITask, id?: string) => void;
+    eventId?: string;
+}
+
+const TaskGroup = ({ tasks, header, check, update, eventId }: TaskGroupProps) => (
+    <View>
+        <View className="max-w-[75%] z-10 self-end mr-6 mb-[-11px]">{header}</View>
+        <View className="bg-dark-200 gap-3 py-5 px-4 rounded-3xl">
+            {tasks.map((task) => (
+                <TaskCard
+                    key={task.id}
+                    task={task}
+                    check={() => check(task)}
+                    longPress={() => update(task, eventId)}
+                />
+            ))}
+        </View>
+    </View>
+);

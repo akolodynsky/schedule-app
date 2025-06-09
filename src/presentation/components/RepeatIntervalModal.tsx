@@ -8,7 +8,7 @@ interface RepeatIntervalModal {
     onClose: () => void
 }
 
-export const RepeatIntervalModal = ({interval, setInterval, onClose}: RepeatIntervalModal) => {
+export const RepeatIntervalModal = ({ interval, setInterval, onClose }: RepeatIntervalModal) => {
     const [value, setValue] = useState(interval.toString());
 
     const inputRef = useRef<TextInput>(null);

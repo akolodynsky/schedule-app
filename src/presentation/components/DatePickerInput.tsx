@@ -10,9 +10,9 @@ import { formatDate } from "@/src/shared/utils";
 
 const DatePickerInput = () => {
     const { date, setDate } = useDateStore(
-        useShallow(state => ({
-            date: state.date,
-            setDate: state.setDate,
+        useShallow(s => ({
+            date: s.date,
+            setDate: s.setDate,
         }))
     );
 

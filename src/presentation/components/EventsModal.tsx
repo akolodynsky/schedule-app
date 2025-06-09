@@ -8,18 +8,18 @@ import { CustomModal } from "./ui";
 import { useEventStore } from "../stores";
 
 
-const EventsModal = memo(({onClose}: {onClose: () => void}) => {
+const EventsModal = memo(({ onClose }: { onClose: () => void }) => {
     const { events, setSelectedEvent } = useEventStore(
-        useShallow(state => ({
-            events: state.events,
-            setSelectedEvent: state.setSelectedEvent,
+        useShallow(s => ({
+            events: s.events,
+            setSelectedEvent: s.setSelectedEvent,
         }))
     );
 
-    const selectCategory = (event: IEvent) => {
+    const selectEvent = (event: IEvent) => {
         setSelectedEvent(event);
         onClose();
-    }
+    };
 
     const filteredEvents: IEvent[] = events.filter((e): e is IEvent => !e.id.startsWith("g"))
 
@@ -27,7 +27,7 @@ const EventsModal = memo(({onClose}: {onClose: () => void}) => {
         <CustomModal title="Events">
             {filteredEvents.length > 0
                 ? filteredEvents.map((event) => (
-                    <TouchableOpacity key={event.id} onPress={() => selectCategory(event)}>
+                    <TouchableOpacity key={event.id} onPress={() => selectEvent(event)}>
                         <EventShortCard event={event} />
                     </TouchableOpacity>
                 ))
@@ -37,4 +37,4 @@ const EventsModal = memo(({onClose}: {onClose: () => void}) => {
     );
 });
 
-export default EventsModal;
+export default memo(EventsModal);

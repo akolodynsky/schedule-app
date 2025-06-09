@@ -1,7 +1,6 @@
-import React, { useRef } from 'react';
+import React, { memo, useRef } from 'react';
 import { Pressable, ScrollView } from 'react-native';
 import { router } from "expo-router";
-import { useShallow } from "zustand/react/shallow";
 
 import { AnimatedComponentRef, WarnModal } from "./ui";
 import CategoryCard from "./CategoryCard";
@@ -12,9 +11,9 @@ import { loadEvents } from "../services/event";
 
 
 const CategoriesList = () => {
-    const categories = useCategoryStore(useShallow(state => state.categories));
-    const selectedDate = useDateStore(useShallow(state => state.selectedDate));
-    const setShouldReloadTasks = useTaskStore(useShallow(state => state.setShouldReloadTasks));
+    const categories = useCategoryStore((s => s.categories));
+    const selectedDate = useDateStore((s => s.selectedDate));
+    const setShouldReloadTasks = useTaskStore((s => s.setShouldReloadTasks));
 
     const warnModalRef = useRef<AnimatedComponentRef>(null);
     const categoryIdRef = useRef<string | null>(null);
@@ -45,26 +44,32 @@ const CategoriesList = () => {
                 overScrollMode="never"
             >
                 {categories.map((category) => (
-                    <Pressable
+                    <CategoriesListItem
                         key={category.id}
-                        className="self-start max-w-[91%]"
-                        onPress={() => {
-                            updateCategoryState(category);
-                            router.push("/category");
+                        category={category}
+                        onRemove={() => {
+                            categoryIdRef.current = category.id;
+                            warnModalRef.current?.open()
                         }}
-                    >
-                        <CategoryCard
-                            category={category}
-                            remove={() => {
-                                categoryIdRef.current = category.id;
-                                warnModalRef.current?.open()
-                            }}
-                        />
-                    </Pressable>
+                    />
                 ))}
             </ScrollView>
         </>
     );
 };
 
-export default CategoriesList;
+export default memo(CategoriesList);
+
+
+const CategoriesListItem = memo(({ category, onRemove }: { category: ICategory; onRemove: () => void }) => (
+    <Pressable
+        key={category.id}
+        className="self-start max-w-[91%]"
+        onPress={() => {
+            updateCategoryState(category);
+            router.push("/category");
+        }}
+    >
+        <CategoryCard category={category} remove={onRemove} />
+    </Pressable>
+));

@@ -10,11 +10,11 @@ import { useEventStore } from "../stores";
 
 const EventList = () => {
     const { events, setSelectedEvent, setStart, setEnd } = useEventStore(
-        useShallow((state) => ({
-            events: state.events,
-            setSelectedEvent: state.setSelectedEvent,
-            setStart: state.setStart,
-            setEnd: state.setEnd,
+        useShallow((s) => ({
+            events: s.events,
+            setSelectedEvent: s.setSelectedEvent,
+            setStart: s.setStart,
+            setEnd: s.setEnd,
         }))
     );
 

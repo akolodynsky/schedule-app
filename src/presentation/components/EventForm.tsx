@@ -1,9 +1,8 @@
-import React, {memo} from 'react';
-import { View } from 'react-native';
+import React, { memo } from 'react';
+import { View } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
-import { useShallow } from "zustand/react/shallow";
 
-import { CustomTextInput, ModalInput, ErrorModal } from "./ui";
+import { CustomTextInput, ErrorModal, ModalInput } from "./ui";
 import RepeatEventInput from "./RepeatEventInput";
 import CategoriesModal from "./CategoriesModal";
 import DateTimeInput from "./DateTimeInput";
@@ -14,22 +13,9 @@ import { useEventStore } from "../stores";
 
 
 const EventForm = () => {
-    const { name, description, setName, setDescription, category, setCategory, error, setError } = useEventStore(
-        useShallow((state) => ({
-            name: state.name,
-            description: state.description,
-            setName: state.setName,
-            setDescription: state.setDescription,
-            category: state.category,
-            setCategory: state.setCategory,
-            error: state.error,
-            setError: state.setError,
-        }))
-    );
-
     return (
         <>
-            <ErrorModal error={error} setError={setError} />
+            <ErrorSection />
 
             <KeyboardAwareScrollView
                 className="px-6 bg-dark-200"
@@ -38,21 +24,11 @@ const EventForm = () => {
                 overScrollMode="never"
                 keyboardShouldPersistTaps="handled"
             >
-                <ModalInput
-                    title="Category"
-                    placeholder="Select a category"
-                    renderContent={category && (
-                        <View className="max-w-[90%]">
-                            <CategoryCard category={category} remove={() => {setCategory(null)}} />
-                        </View>
-                    )}
-                >
-                    {({onClose}) => <CategoriesModal onClose={ onClose } />}
-                </ModalInput>
+                <CategorySection />
 
-                <CustomTextInput title={"Name"} value={name} setValue={setName} length={90} />
+                <NameInput />
 
-                <CustomTextInput title={"Description"} value={description} setValue={setDescription} length={450} />
+                <DescriptionInput />
 
                 <TasksInput />
 
@@ -65,3 +41,48 @@ const EventForm = () => {
 };
 
 export default memo(EventForm);
+
+
+
+const ErrorSection = () => {
+    const error = useEventStore((s) => s.error);
+    const setError = useEventStore((s) => s.setError);
+
+    return <ErrorModal error={error} setError={setError} />;
+};
+
+
+const NameInput = () => {
+    const name = useEventStore((s) => s.name);
+    const setName = useEventStore((s) => s.setName);
+
+    return <CustomTextInput title="Name" value={name} setValue={setName} length={90} />;
+};
+
+
+const DescriptionInput = () => {
+    const description = useEventStore((s) => s.description);
+    const setDescription = useEventStore((s) => s.setDescription);
+
+    return <CustomTextInput title={"Description"} value={description} setValue={setDescription} length={450} />;
+};
+
+
+const CategorySection = () => {
+    const category = useEventStore((s) => s.category);
+    const setCategory = useEventStore((s) => s.setCategory);
+
+    return (
+        <ModalInput
+            title="Category"
+            placeholder="Select a category"
+            renderContent={category && (
+                <View className="max-w-[90%]">
+                    <CategoryCard category={category} remove={() => {setCategory(null)}} />
+                </View>
+            )}
+        >
+            {({onClose}) => <CategoriesModal onClose={ onClose } />}
+        </ModalInput>
+    )
+};

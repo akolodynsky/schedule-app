@@ -13,29 +13,21 @@ import { loadEvents } from "../services/event";
 
 
 const TaskForm = () => {
-    const { name, setName, error, setError } = useTaskStore(
-        useShallow((state) => ({
-            name: state.name,
-            setName: state.setName,
-            error: state.error,
-            setError: state.setError,
-        }))
-    );
-
     const { events, selectedEvent, setSelectedEvent } = useEventStore(
-        useShallow(state => ({
-            events: state.events,
-            selectedEvent: state.selectedEvent,
-            setSelectedEvent: state.setSelectedEvent,
+        useShallow(s => ({
+            events: s.events,
+            selectedEvent: s.selectedEvent,
+            setSelectedEvent: s.setSelectedEvent,
         }))
     );
 
     const { date, setSelectedDate } = useDateStore(
-        useShallow((state) => ({
-            date: state.date,
-            setSelectedDate: state.setSelectedDate,
+        useShallow((s) => ({
+            date: s.date,
+            setSelectedDate: s.setSelectedDate,
         }))
     );
+
 
     const prevDateRef = useRef(date);
 
@@ -51,13 +43,13 @@ const TaskForm = () => {
 
     return (
         <>
-            <ErrorModal error={error} setError={setError} />
+            <ErrorSection />
 
             <View className="flex-1 pt-44 px-6 bg-dark-200">
-                <CustomTextInput title={"Name"} value={name} setValue={setName} length={450} />
+                <NameInput />
 
                 <ModalInput
-                    title="Events"
+                    title="Event"
                     renderContent={selectedEvent
                         ? <EventShortCard event={selectedEvent} remove={() => setSelectedEvent(null)} />
                         : <DefaultCard />
@@ -67,7 +59,6 @@ const TaskForm = () => {
                 </ModalInput>
 
                 <DatePickerInput />
-
             </View>
         </>
 
@@ -75,3 +66,20 @@ const TaskForm = () => {
 };
 
 export default memo(TaskForm);
+
+
+
+const ErrorSection = () => {
+    const error = useTaskStore((s) => s.error);
+    const setError = useTaskStore((s) => s.setError);
+
+    return <ErrorModal error={error} setError={setError} />;
+};
+
+
+const NameInput = () => {
+    const name = useTaskStore((s) => s.name);
+    const setName = useTaskStore((s) => s.setName);
+
+    return <CustomTextInput title="Name" value={name} setValue={setName} length={450} />;
+};

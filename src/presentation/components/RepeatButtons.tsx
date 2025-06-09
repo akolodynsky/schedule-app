@@ -2,37 +2,43 @@ import React from "react";
 import { Pressable, Text, View } from "react-native";
 import { useShallow } from "zustand/react/shallow";
 
+import { Frequency } from "./RepeatEventInput";
 import { useRecurringOptionsStore } from "../stores";
 
 
-export const FrequencyButton = ({option}: {option: "once" | "daily" | "weekly" | "monthly"}) => {
-    const { frequency, setFrequency} = useRecurringOptionsStore(
-        useShallow((state) => ({
-            frequency: state.frequency,
-            setFrequency: state.setFrequency,
+interface FrequencyButtonProps {
+    option: Frequency;
+}
+
+export const FrequencyButton = ({ option }: FrequencyButtonProps) => {
+    const { frequency, setFrequency } = useRecurringOptionsStore(
+        useShallow((s) => ({
+            frequency: s.frequency,
+            setFrequency: s.setFrequency,
         }))
     );
+
+    const isActive = frequency === option;
+    const label = option.slice(0, 1).toUpperCase() + option.slice(1);
 
     return (
         <Pressable
             className="flex-1"
             onPress={() => setFrequency(option)}
         >
-            <View className={`rounded-2xl py-4 items-center ${frequency === option ? "bg-primary" : "bg-dark-200"}`}>
-                <Text className={`font-inter_regular text-lg ${frequency === option ? "text-light-100" : "text-light-300"}`}>
-                    {option.slice(0, 1).toUpperCase() + option.slice(1)}
-                </Text>
+            <View className={`rounded-2xl py-4 items-center ${isActive ? "bg-primary" : "bg-dark-200"}`}>
+                <Text className={`font-inter_regular text-lg ${isActive ? "text-light-100" : "text-light-300"}`}>{label}</Text>
             </View>
         </Pressable>
     )
 };
 
 
-export const DayButton = ({day, index}: {day: string, index: number}) => {
-    const { weekDays, setWeekDays} = useRecurringOptionsStore(
-        useShallow((state) => ({
-            weekDays: state.weekDays,
-            setWeekDays: state.setWeekDays,
+export const DayButton = ({ day, index }: { day: string, index: number }) => {
+    const { weekDays, setWeekDays } = useRecurringOptionsStore(
+        useShallow((s) => ({
+            weekDays: s.weekDays,
+            setWeekDays: s.setWeekDays,
         }))
     );
 

@@ -7,7 +7,8 @@ import { icons } from "@/src/shared/constants";
 import { getDuration } from "@/src/shared/utils";
 
 
-const EventShortCard = ({event, remove}: {event: IEvent, remove?: () => void}) => {
+const EventShortCard = ({ event, remove }: { event: IEvent, remove?: () => void }) => {
+
     return (
         <View className={`w-full gap-3 rounded-[18px] border-2 px-3 ${remove ? "pt-3 pb-5 border-dark-200" : "p-4 pt-3 border-light-300"}`}>
             <View className="flex-row items-center justify-between">

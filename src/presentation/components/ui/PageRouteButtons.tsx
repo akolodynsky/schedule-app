@@ -20,7 +20,7 @@ export const PageRouteButtons = ({ handleAdd, handleBack, handleRemove, selected
                 <Image source={icons.back} className="size-11" />
             </TouchableOpacity>
 
-            <View className="flex-row gap-8">
+            <View className="flex-row gap-6">
                 {(handleRemove && selected) && (
                     <TouchableOpacity onPress={handleRemove}>
                         <Image source={icons.trash} className={selected ? "size-8" : "size-11"} />

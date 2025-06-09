@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 import Animated from "react-native-reanimated";
 
@@ -13,16 +13,16 @@ interface DayCardProps extends IDay {
     setDate: (date: string) => void,
 }
 
-const DayCard = ({day, date, focused, setSelectedDate, setDate}: DayCardProps) => {
+const DayCard = ({ day, date, focused, setSelectedDate, setDate }: DayCardProps) => {
     const isToday = date === new Date().toLocaleDateString("sv-SE");
 
-    const {animatedStyle, handlePressOut, handlePressIn} = useAnimatedScale();
+    const { animatedStyle, handlePressOut, handlePressIn } = useAnimatedScale();
 
     const handlePress = async () => {
         setSelectedDate(date);
         setDate(date);
         await loadEvents(date);
-    }
+    };
 
     const bg = focused ? 'bg-primary' : !focused && isToday ? 'bg-light_bg' : 'bg-dark-200';
     const dateText = !focused && !isToday && 'mb-1';
@@ -55,4 +55,4 @@ const DayCard = ({day, date, focused, setSelectedDate, setDate}: DayCardProps) =
     );
 };
 
-export default DayCard;
+export default memo(DayCard);

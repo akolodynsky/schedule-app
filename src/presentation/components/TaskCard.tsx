@@ -3,7 +3,13 @@ import { View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox/lib";
 
 
-const TaskCard = memo(({task, check, longPress}: { task: ITask, check: () => Promise<void>, longPress: () => void}) => {
+interface TaskCardProps {
+    task: ITask;
+    check: () => Promise<void>;
+    longPress: () => void;
+}
+
+const TaskCard = memo(({ task, check, longPress }: TaskCardProps) => {
     const [checked, setChecked] = useState(task.isCompleted);
 
     const handleCheck = async () => {
@@ -12,7 +18,7 @@ const TaskCard = memo(({task, check, longPress}: { task: ITask, check: () => Pro
         setTimeout(() => {
             check();
         }, 300);
-    }
+    };
 
     return (
         <View className="flex-row items-start">
@@ -20,7 +26,7 @@ const TaskCard = memo(({task, check, longPress}: { task: ITask, check: () => Pro
                 size={16}
                 fillColor="#6f4bf7"
                 innerIconStyle={{ borderWidth: 2 }}
-                textStyle={{fontFamily: "Inter-Medium", fontSize: 16, lineHeight: 22, color: "#efeff9"}}
+                textStyle={{ fontFamily: "Inter-Medium", fontSize: 16, lineHeight: 22, color: "#efeff9" }}
                 text={task.name}
                 isChecked={checked}
                 useBuiltInState={false}

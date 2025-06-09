@@ -15,15 +15,16 @@ const { width } = Dimensions.get("window");
 const DayList = () => {
 
     const { selectedDate, setSelectedDate, setDate } = useDateStore(
-        useShallow((state) => ({
-            selectedDate: state.selectedDate,
-            setSelectedDate: state.setSelectedDate,
-            setDate: state.setDate,
+        useShallow((s) => ({
+            selectedDate: s.selectedDate,
+            setSelectedDate: s.setSelectedDate,
+            setDate: s.setDate,
         }))
     );
 
     const [weeks, setWeeks] = useState<IDay[][]>([]);
     const [currentMonth, setCurrentMonth] = useState("");
+
 
     useEffect(() => {
         if (!selectedDate) return;
@@ -39,13 +40,13 @@ const DayList = () => {
         }
     }, [selectedDate]);
 
-    const {handleEndReached, handleViewableItemsChanged, flatListRef, scrollToIndex, handleStartReached} = useDayListActions({
+    const { handleEndReached, handleViewableItemsChanged, flatListRef, scrollToIndex, handleStartReached } = useDayListActions({
         weeks,
         setWeeks,
         setCurrentMonth
     });
 
-    const renderWeeks = ({ item, index }: {item: IDay[], index: number}) => {
+    const renderWeeks = ({ item, index }: { item: IDay[], index: number }) => {
         return (
             <View className="flex-row justify-between px-1" style={{width: width - 36}} key={index}>
                 {item.map((day) => (

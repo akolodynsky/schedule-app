@@ -9,26 +9,22 @@ import { useDateStore, useRecurringOptionsStore } from "../stores";
 import { getDayIndex} from "@/src/shared/utils";
 
 
-type Frequency = 'once' | 'daily' | 'weekly' | 'monthly';
+export type Frequency = 'once' | 'daily' | 'weekly' | 'monthly';
 const options: Frequency[] = ['once', 'daily', 'weekly', 'monthly'];
 const days = ["Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"];
 
 
 const RepeatEventInput = () => {
-    const { date } = useDateStore(
-        useShallow(state => ({
-            date: state.date,
-        }))
-    );
+    const date = useDateStore(s => s.date);
 
     const { frequency, endRepeat, setEndRepeat, weekDays, setWeekDays, disabled } = useRecurringOptionsStore(
-        useShallow((state) => ({
-            frequency: state.frequency,
-            endRepeat: state.endRepeat,
-            setEndRepeat: state.setEndRepeat,
-            weekDays: state.weekDays,
-            setWeekDays: state.setWeekDays,
-            disabled: state.disabled
+        useShallow((s) => ({
+            frequency: s.frequency,
+            endRepeat: s.endRepeat,
+            setEndRepeat: s.setEndRepeat,
+            weekDays: s.weekDays,
+            setWeekDays: s.setWeekDays,
+            disabled: s.disabled
         }))
     );
 
@@ -64,8 +60,8 @@ const RepeatEventInput = () => {
 
                     {frequency !== "once" && (
                         <View className="flex-row justify-between gap-3">
-                            <LimitDateSection/>
-                            <IntervalSection/>
+                            <LimitDateSection />
+                            <IntervalSection />
                         </View>
                     )}
                 </View>

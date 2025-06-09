@@ -1,7 +1,6 @@
-import React, {memo} from 'react';
-import {TouchableOpacity} from 'react-native';
-import {router} from "expo-router";
-import {useShallow} from "zustand/react/shallow";
+import React, { memo } from 'react';
+import { TouchableOpacity } from 'react-native';
+import { router } from "expo-router";
 
 import { CustomModal } from "./ui";
 import CategoryCard from "./CategoryCard";
@@ -9,10 +8,9 @@ import CategoryCard from "./CategoryCard";
 import { useCategoryStore, useEventStore } from "../stores";
 
 
-const CategoriesModal = memo(({onClose}: {onClose: () => void}) => {
-    const setCategory = useEventStore(useShallow(state => state.setCategory));
-
-    const categories = useCategoryStore(useShallow(state =>  state.categories));
+const CategoriesModal = ({ onClose }: { onClose: () => void }) => {
+    const setCategory = useEventStore(s => s.setCategory);
+    const categories = useCategoryStore(s =>  s.categories);
 
     const selectCategory = (category: ICategory) => {
         setCategory(category);
@@ -33,6 +31,6 @@ const CategoriesModal = memo(({onClose}: {onClose: () => void}) => {
             ))}
         </CustomModal>
     );
-});
+};
 
-export default CategoriesModal;
+export default memo(CategoriesModal);

@@ -1,4 +1,4 @@
-import React, { useRef, memo } from 'react';
+import React, {useRef, memo, useEffect} from 'react';
 import { Text, View } from 'react-native';
 import { TimePickerModal } from "react-native-paper-dates";
 import { DefaultTheme, PaperProvider } from 'react-native-paper';
@@ -9,15 +9,16 @@ import { AnimatedComponent, AnimatedComponentRef} from "./ui";
 import { useEventStore } from "../stores";
 
 
-const TimePickerInput = memo(({text}: {text: string}) => {
+const TimePickerInput = ({ text }: { text: string }) => {
     const { start, setStart, end, setEnd } = useEventStore(
-        useShallow((state) => ({
-            start: state.start,
-            end: state.end,
-            setStart: state.setStart,
-            setEnd: state.setEnd
+        useShallow((s) => ({
+            start: s.start,
+            end: s.end,
+            setStart: s.setStart,
+            setEnd: s.setEnd
         }))
     );
+
 
     const time = text === "Start" ? start : end;
     const setTime = text === "Start" ? setStart : setEnd;
@@ -28,7 +29,14 @@ const TimePickerInput = memo(({text}: {text: string}) => {
         const formattedTime = `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
         setTime(formattedTime);
         modalRef.current?.close();
-    }
+    };
+
+    useEffect(() => {
+        if (start > end) {
+            setEnd(start);
+        }
+    }, [start, end]);
+
 
     const theme = {
         ...DefaultTheme,
@@ -40,7 +48,7 @@ const TimePickerInput = memo(({text}: {text: string}) => {
             backdrop: 'rgba(0,0,0, .5)',
             onSurfaceVariant: '#6b6f85',
         },
-    }
+    };
 
     return (
         <View>
@@ -64,6 +72,6 @@ const TimePickerInput = memo(({text}: {text: string}) => {
             </AnimatedComponent>
         </View>
     );
-});
+};
 
-export default TimePickerInput;
+export default memo(TimePickerInput);

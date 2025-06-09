@@ -11,11 +11,11 @@ import { getEventById } from "../services/event";
 
 
 const TasksList = () => {
-    const {tasks, shouldTasksReload, setShouldTasksReload} = useTaskStore(useShallow(
-        state => ({
-            tasks: state.tasks,
-            shouldTasksReload: state.shouldReloadTasks,
-            setShouldTasksReload: state.setShouldReloadTasks
+    const { tasks, shouldTasksReload, setShouldTasksReload } = useTaskStore(
+        useShallow(s => ({
+            tasks: s.tasks,
+            shouldTasksReload: s.shouldReloadTasks,
+            setShouldTasksReload: s.setShouldReloadTasks
         }))
     );
 

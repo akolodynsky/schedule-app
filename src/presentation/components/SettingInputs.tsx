@@ -5,7 +5,7 @@ import BouncyCheckbox from "react-native-bouncy-checkbox/lib";
 import { AnimatedComponent, AnimatedComponentRef, CustomModal } from "./ui";
 
 
-export const SettingModal = ({title, options}: { title: string, options: string[]}) => {
+export const SettingModal = ({ title, options }: { title: string, options: string[] }) => {
     const [selectedOption, setSelectedOption] = useState(options[0]);
     const modalRef = useRef<AnimatedComponentRef>(null);
 
@@ -44,7 +44,7 @@ export const SettingModal = ({title, options}: { title: string, options: string[
 };
 
 
-export const SettingCheck = ({title}: { title: string}) => {
+export const SettingCheck = ({ title }: { title: string}) => {
     const [checked, setChecked] = useState(false);
 
     return (
@@ -63,7 +63,7 @@ export const SettingCheck = ({title}: { title: string}) => {
 };
 
 
-export const SettingDual = ({title, options}: { title: string, options: string[]}) => {
+export const SettingDual = ({ title, options }: { title: string, options: string[] }) => {
     const [selectedOption, setSelectedOption] = useState(options[0]);
 
     return (
@@ -84,7 +84,7 @@ export const SettingDual = ({title, options}: { title: string, options: string[]
 };
 
 
-export const SettingInput = ({title, children, press, small}: { title: string, children?: ReactNode, press?: () => void, small?: boolean}) => {
+export const SettingInput = ({ title, children, press, small }: { title: string, children?: ReactNode, press?: () => void, small?: boolean }) => {
     const size = small ? "py-3" : "py-6";
 
     return (

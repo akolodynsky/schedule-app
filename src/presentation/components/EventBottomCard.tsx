@@ -7,6 +7,7 @@ import TaskCard from "./TaskCard";
 import { useEventStore } from "../stores";
 import { icons } from "@/src/shared/constants";
 import {getDuration} from "@/src/shared/utils";
+import {useShallow} from "zustand/react/shallow";
 
 
 interface EventBottomCardProps {
@@ -18,11 +19,16 @@ interface EventBottomCardProps {
 }
 
 const EventBottomCard = ({ update, remove, checkTask, updateTask, updateRecurring }: EventBottomCardProps) => {
-    const { selectedEvent, tasks } = useEventStore();
+    const { selectedEvent, tasks } = useEventStore(
+        useShallow((state) => ({
+            selectedEvent: state.selectedEvent,
+            tasks: state.tasks
+        }))
+    );
 
     if (!selectedEvent) return null;
 
-    const {id, category, description, name, start, end, recurringId, isRecurring} = selectedEvent;
+    const { id, category, description, name, start, end, recurringId, isRecurring } = selectedEvent;
 
     return (
         <>
