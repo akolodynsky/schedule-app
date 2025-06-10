@@ -4,7 +4,7 @@ import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-g
 import { runOnJS, useSharedValue } from "react-native-reanimated";
 import { router } from "expo-router";
 
-import { icons, images } from "@/src/shared/constants";
+import { icons } from "@/src/shared/constants";
 
 
 const sideMenuButtons = [
@@ -33,20 +33,17 @@ const SideMenu = ({ onClose }: { onClose: () => void }) => {
 
             <GestureHandlerRootView style={{flex: 1.5}}>
                 <GestureDetector gesture={panGesture}>
-                    <View className="h-full px-5 py-14 bg-dark-100 rounded-bl-[48px] rounded-tl-[48px] gap-6">
-                        <View className="items-center justify-between flex-row">
-                            <View className="bg-primary p-2.5 rounded-2xl">
-                                <Image source={images.icon} className="size-9" />
-                            </View>
+                    <View className="h-full px-5 py-14 bg-dark-100 rounded-bl-[48px] rounded-tl-[48px] gap-8">
+                        <View className="items-center flex-row justify-between pr-1 pt-1">
+                            <Text className="font-inter_bold text-2xl tracking-widest text-light-100">Menu</Text>
 
-                            <View className="items-end">
-                                <Text className="font-inter_bold text-[23px] tracking-wider text-light-100">SantiTime</Text>
-                                <Text className="font-inter_medium text-[12px] tracking-wide text-light-300">Plan your day</Text>
-                            </View>
+                            <TouchableOpacity onPress={onClose}>
+                                <Image source={icons.plus} className="size-7 rotate-45" tintColor="#efeff9" />
+                            </TouchableOpacity>
                         </View>
 
                         <View className="gap-3">
-                            {sideMenuButtons.map(({text, icon, route}) => (
+                            {sideMenuButtons.map(({ text, icon, route }) => (
                                 <SideMenuButton key={text} text={text} icon={icon} router={route} onClose={onClose} />
                             ))}
                         </View>
@@ -68,7 +65,7 @@ interface SideMenuButtonProps {
     onClose: () => void
 }
 
-const SideMenuButton = ({text, icon, router, onClose}: SideMenuButtonProps) => {
+const SideMenuButton = ({ text, icon, router, onClose }: SideMenuButtonProps) => {
     return (
         <TouchableOpacity
             onPress={() => {

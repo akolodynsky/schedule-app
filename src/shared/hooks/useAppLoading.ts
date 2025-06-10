@@ -11,7 +11,7 @@ import { loadTasks } from "@/src/presentation/services/task";
 export const useAppLoading = () => {
     const [appLoaded, setAppLoaded] = useState(false);
 
-    const selectedDate = useDateStore(state => state.selectedDate);
+    const selectedDate = useDateStore(s => s.selectedDate);
 
     useEffect(() => {
         async function prepare() {
