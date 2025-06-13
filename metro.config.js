@@ -5,4 +5,4 @@ const config = getDefaultConfig(__dirname)
 
 config.resolver.assetExts.push('wasm');
 
-module.exports = withNativeWind(config, { input: './app/globals.css' })
+module.exports = withNativeWind(config, { input: './app/global.css' })

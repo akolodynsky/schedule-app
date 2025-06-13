@@ -1,6 +1,18 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  mode: 'jit',
+  purge: {
+    enabled: process.env.NODE_ENV === 'production',
+  },
+  content: [
+    "./App.{js, jsx, ts, tsx}",
+    "./app/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./src/presentation/components/**/*.{js,jsx,ts,tsx}",
+    "./src/presentation/components/ui/**/*.{js,jsx,ts,tsx}",
+    "./src/presentation/screens/**/*.{js,jsx,ts,tsx}",
+    "./node_modules/nativewind/dist/**/*.{js,ts}",
+  ],
   presets: [require("nativewind/preset")],
   theme: {
     extend: {
