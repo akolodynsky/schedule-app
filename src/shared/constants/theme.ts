@@ -9,8 +9,8 @@ export const colors = {
 };
 
 export const fonts = {
-    inter_regular: ['Inter-Regular'],
-    inter_medium: ['Inter-Medium'],
-    inter_semibold: ['Inter-SemiBold'],
-    inter_bold: ['Inter-Bold'],
+    inter_regular: 'Inter-Regular',
+    inter_medium: 'Inter-Medium',
+    inter_semibold: 'Inter-SemiBold',
+    inter_bold: 'Inter-Bold',
 };

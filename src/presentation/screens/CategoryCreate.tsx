@@ -36,7 +36,7 @@ export default function CategoryCreate()   {
         <>
             <PageRouteButtons selected={selectedCategory && true} handleBack={() => router.back()} handleAdd={handleAddCategory}/>
 
-            <PageHeader name={(selectedCategory ? "Update" : "Add") + " Category"} />
+            <PageHeader text={(selectedCategory ? "Update" : "Add") + " Category"} />
             <CategoryForm />
         </>
     );

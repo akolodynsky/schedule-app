@@ -29,5 +29,5 @@ export const blocks: Block[] = [
         settings: [
             {type: "button", title: "Reset All Settings"},
             {type: "button", title: "Clear database"}]
-    },
+    }
 ]

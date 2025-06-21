@@ -1,12 +1,14 @@
-import React, {useRef, memo, useEffect} from 'react';
-import { Text, View } from 'react-native';
+import React, { useRef, memo, useEffect } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { TimePickerModal } from "react-native-paper-dates";
 import { DefaultTheme, PaperProvider } from 'react-native-paper';
 import { useShallow } from "zustand/react/shallow";
+import { moderateScale } from "react-native-size-matters";
 
-import { AnimatedComponent, AnimatedComponentRef} from "./ui";
+import { AnimatedComponent, AnimatedComponentRef } from "./ui";
 
 import { useEventStore } from "../stores";
+import { colors, fonts } from "@/src/shared/constants";
 
 
 const TimePickerInput = ({ text }: { text: string }) => {
@@ -42,22 +44,19 @@ const TimePickerInput = ({ text }: { text: string }) => {
         ...DefaultTheme,
         colors: {
             ...DefaultTheme.colors,
-            primary: '#6f4bf7',
-            accent: '#6f4bf7',
-            surface: '#242333',
+            primary: colors.primary,
+            accent: colors.primary,
+            surface: colors.dark_200,
             backdrop: 'rgba(0,0,0, .5)',
-            onSurfaceVariant: '#6b6f85',
+            onSurfaceVariant: colors.light_300
         },
     };
 
     return (
-        <View>
-            <Text className="text-light-200 font-inter_medium mb-3 self-center">{text}</Text>
-            <Text onPress={() => modalRef.current?.open()}
-                  className="bg-dark-100 rounded-lg px-4 py-6 font-inter_regular text-lg text-light-100">
-                {time}
-            </Text>
-            <AnimatedComponent ref={modalRef} contentStyle="flex-1">
+        <View style={{ flex: 1 }}>
+            <Text style={styles.title}>{text}</Text>
+            <Text onPress={() => modalRef.current?.open()} style={styles.textInput}>{time}</Text>
+            <AnimatedComponent ref={modalRef} contentStyle={{ flex: 1 }}>
                 <PaperProvider theme={theme}>
                     <TimePickerModal
                         visible
@@ -75,3 +74,23 @@ const TimePickerInput = ({ text }: { text: string }) => {
 };
 
 export default memo(TimePickerInput);
+
+
+
+const styles = StyleSheet.create({
+    title: {
+        color: colors.light_200,
+        fontFamily: fonts.inter_medium,
+        marginBottom: moderateScale(10),
+        alignSelf: 'center'
+    },
+    textInput: {
+        backgroundColor: colors.dark_100,
+        borderRadius: moderateScale(6),
+        textAlign: 'center',
+        paddingVertical: moderateScale(20),
+        color: colors.light_100,
+        fontFamily: fonts.inter_regular,
+        fontSize: moderateScale(15)
+    }
+});

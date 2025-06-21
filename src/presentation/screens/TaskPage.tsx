@@ -14,7 +14,7 @@ export default function TaskPage()  {
                 handleAdd={() => router.push("/task")}
             />
 
-            <PageHeader name={"Tasks"} />
+            <PageHeader text={"Tasks"} />
             <TasksList />
         </>
     );

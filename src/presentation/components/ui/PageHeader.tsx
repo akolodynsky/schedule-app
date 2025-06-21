@@ -1,18 +1,20 @@
 import React from 'react';
-import {Text, View} from 'react-native';
+import { Text, View } from 'react-native';
 import Svg, { Rect, Circle, Defs, Mask } from 'react-native-svg';
 
+import { PageHeaderStyles } from "./styles";
 
-export const PageHeader = ({ name }: {name: string}) => {
+
+export const PageHeader = ({ text }: { text: string }) => {
     return (
         <>
-            <View className="rounded-bl-[72px] pt-[56px] bg-dark-100 pb-[26px] absolute z-10 w-full">
-                <View className="mt-7 items-center">
-                    <Text className="text-light-100 font-inter_bold text-3xl">{name}</Text>
+            <View style={PageHeaderStyles.container}>
+                <View style={PageHeaderStyles.textContainer}>
+                    <Text style={PageHeaderStyles.text}>{text}</Text>
                 </View>
             </View>
 
-            <View className="absolute top-[132px] right-0 w-[66px] h-[66px] z-10">
+            <View style={PageHeaderStyles.svgContainer}>
                 <Svg width="68" height="68">
                     <Defs>
                         <Mask id="mask">

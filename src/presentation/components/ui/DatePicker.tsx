@@ -3,6 +3,9 @@ import { Pressable, Text, View } from 'react-native';
 import { Calendar, DateData } from "react-native-calendars";
 
 import { formatDate } from "@/src/shared/utils";
+import { colors } from "@/src/shared/constants";
+
+import { DatePickerStyles } from "./styles";
 
 
 interface DatePickerProps {
@@ -11,45 +14,39 @@ interface DatePickerProps {
     onClose: () => void
 }
 
-export const DatePicker = memo(({date, setDate, onClose}: DatePickerProps) => {
+export const DatePicker = memo(({ date, setDate, onClose }: DatePickerProps) => {
     const currentDate = new Date().toLocaleDateString("sv-SE");
 
     return (
         <View>
             <Calendar
                 firstDay={1}
-                style={{
-                    borderRadius: 24,
-                    height: 420,
-                    width: 340,
-                    paddingLeft: 20,
-                    paddingRight: 20,
-                    paddingTop: 10
-                }}
+                style={DatePickerStyles.container}
                 onDayPress={(date: DateData) => {
                     setDate(date.dateString)
                     onClose()
                 }}
                 markedDates={{
-                    [currentDate]: {marked: true, selected: true, selectedColor: 'rgba(111,75,247,0.3)'},
-                    [date]: {selected: true, selectedColor: '#6f4bf7'}
+                    [currentDate]: {marked: true, selected: true, selectedColor: colors.light_bg},
+                    [date]: {selected: true, selectedColor: colors.primary}
                 }}
                 theme={{
-                    backgroundColor: "#1a1a24",
-                    calendarBackground: "#242333",
-                    textSectionTitleColor: "#efeff9",
-                    dayTextColor: "#efeff9",
-                    monthTextColor: "#efeff9",
-                    textDisabledColor: "#6b6f85",
-                    arrowColor: "#6f4bf7"
+                    backgroundColor: colors.dark_100,
+                    calendarBackground: colors.dark_200,
+                    textSectionTitleColor: colors.light_100,
+                    dayTextColor: colors.light_100,
+                    monthTextColor: colors.light_100,
+                    textDisabledColor: colors.light_300,
+                    arrowColor: colors.primary
                 }}
                 renderHeader={(date: string) => {
-                    return <Text className="text-light-100 font-inter_medium text-[15px]">{formatDate(date)}</Text>;
+                    return <Text style={DatePickerStyles.header}>{formatDate(date)}</Text>;
                 }}
+                enableSwipeMonths={true}
             />
 
-            <Pressable onPress={onClose} className="mt-[-20px] bg-primary px-4 py-2 rounded-b-3xl">
-                <Text className="text-light-100 font-inter_semibold text-center text-lg">Cancel</Text>
+            <Pressable onPress={onClose} style={DatePickerStyles.button}>
+                <Text style={DatePickerStyles.buttonText}>Cancel</Text>
             </Pressable>
         </View>
     );

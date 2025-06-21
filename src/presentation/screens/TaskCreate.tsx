@@ -71,7 +71,7 @@ export default function TaskCreate()  {
                 handleRemove={selectedTask && handleRemoveTask}
             />
 
-            <PageHeader name={(selectedTask ? "Update" : "Add") + " Task"} />
+            <PageHeader text={(selectedTask ? "Update" : "Add") + " Task"} />
             <TaskForm />
         </>
     );

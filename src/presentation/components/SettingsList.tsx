@@ -1,11 +1,12 @@
 import React, { useRef } from 'react';
-import { View, Text, ScrollView } from 'react-native';
+import {View, Text, StyleSheet, ScrollView} from 'react-native';
 
 import { AnimatedComponentRef, WarnModal } from "./ui";
 import { SettingModal, SettingInput, SettingCheck, SettingDual } from "./SettingInputs";
 
-import { blocks } from "@/src/shared/constants";
+import { blocks, colors, fonts } from "@/src/shared/constants";
 import { clearAllTables } from "@/src/data/datasources";
+import {moderateScale} from "react-native-size-matters";
 
 
 const SettingsList = () => {
@@ -30,16 +31,15 @@ const SettingsList = () => {
                 onClose={() => warnModalRef.current?.close()}
             />
 
-
             <ScrollView
-                className="flex-1 px-6 bg-dark-200"
-                contentContainerStyle={{ paddingBottom: 40, paddingTop: 160, gap: 20 }}
+                style={styles.container}
+                contentContainerStyle={styles.contentContainer}
                 overScrollMode="never"
             >
                 {blocks.map((block) => (
                     <View key={block.type}>
-                        <Text className="font-inter_semibold text-light-300 text-[13px] ml-6 mb-3 z-10">{block.type}</Text>
-                        <View className="gap-3">
+                        <Text style={styles.title}>{block.type}</Text>
+                        <View style={styles.inputsContainer}>
                             {block.settings.map((setting) => {
                                 switch (setting.type) {
                                     case "modal":
@@ -62,3 +62,26 @@ const SettingsList = () => {
 };
 
 export default SettingsList;
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingHorizontal: moderateScale(22),
+        backgroundColor: colors.dark_200
+    },
+    contentContainer: {
+        paddingBottom: moderateScale(30),
+        paddingTop: moderateScale(148),
+        gap: moderateScale(18)
+    },
+    inputsContainer: { gap: moderateScale(10) },
+    title: {
+        fontFamily: fonts.inter_semibold,
+        fontSize: moderateScale(12),
+        color: colors.light_300,
+        marginLeft: moderateScale(20),
+        marginBottom: moderateScale(10)
+    }
+});

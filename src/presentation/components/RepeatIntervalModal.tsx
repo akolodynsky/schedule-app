@@ -1,5 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Pressable, Text, TextInput, View } from "react-native";
+import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
+import { moderateScale, scale } from "react-native-size-matters";
+
+import { colors, fonts } from "@/src/shared/constants";
 
 
 interface RepeatIntervalModal {
@@ -21,12 +24,17 @@ export const RepeatIntervalModal = ({ interval, setInterval, onClose }: RepeatIn
         return () => clearTimeout(timeout);
     }, []);
 
-    return (
-        <View className="bg-dark-100 gap-7 px-6 py-5 rounded-[24px] items-center justify-center">
-            <View className="flex-row items-center gap-7">
-                <Text className="font-inter_regular text-xl text-light-100">Select Interval:</Text>
+    const handleSubmit = () => {
+        if (value && value !== "0") setInterval(parseInt(value))
+        onClose();
+    }
 
-                <View className="border-2 border-primary rounded-lg px-3 items-center w-16">
+    return (
+        <View style={styles.container}>
+            <View style={styles.contentContainer}>
+                <Text style={styles.text}>Select Interval:</Text>
+
+                <View style={styles.inputContainer}>
                     <TextInput
                         ref={inputRef}
                         value={value}
@@ -35,26 +43,64 @@ export const RepeatIntervalModal = ({ interval, setInterval, onClose }: RepeatIn
                             setValue(numbers);
                         }}
                         keyboardType="numeric"
-                        className="text-light-100 text-xl font-inter_regular"
-                        cursorColor="#6f4bf7"
-                        selectionColor="rgba(111,75,247,0.2)"
+                        style={styles.text}
+                        cursorColor={colors.primary}
+                        selectionColor={colors.light_bg}
                         maxLength={2}
+                        onSubmitEditing={handleSubmit}
                     />
                 </View>
             </View>
 
-            <View className="flex-row self-end gap-5 items-center">
+            <View style={styles.buttonsContainer}>
                 <Pressable onPress={() => onClose()}>
-                    <Text className="font-inter_medium text-[14px] text-primary">Cancel</Text>
+                    <Text style={[styles.buttonText, { fontSize: moderateScale(13) }]}>Cancel</Text>
                 </Pressable>
 
-                <Pressable onPress={() => {
-                    if (value && value !== "0") setInterval(parseInt(value))
-                    onClose();
-                }}>
-                    <Text className="font-inter_medium text-[15px] text-primary">OK</Text>
+                <Pressable onPress={handleSubmit}>
+                    <Text style={[styles.buttonText, { fontSize: moderateScale(14) }]}>OK</Text>
                 </Pressable>
             </View>
         </View>
     )
 };
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: colors.dark_100,
+        gap: moderateScale(26),
+        paddingHorizontal: moderateScale(22),
+        paddingVertical: moderateScale(18),
+        borderRadius: moderateScale(22),
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
+    contentContainer: {
+        flexDirection: 'row',
+        gap: moderateScale(26),
+        alignItems: 'center',
+    },
+    text: {
+        fontFamily: fonts.inter_regular,
+        color: colors.light_100,
+        fontSize: moderateScale(18)
+    },
+    inputContainer: {
+        borderWidth: moderateScale(2),
+        borderColor: colors.primary,
+        borderRadius: moderateScale(6),
+        paddingHorizontal: moderateScale(10),
+        width: scale(50),
+        height: scale(44),
+        alignItems: 'center'
+    },
+    buttonsContainer: {
+        flexDirection: 'row',
+        alignItems: 'flex-end',
+        alignSelf: 'flex-end',
+        gap: moderateScale(18)
+    },
+    buttonText: { fontFamily: fonts.inter_medium, color: colors.primary },
+});

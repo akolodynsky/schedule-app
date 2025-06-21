@@ -4,30 +4,32 @@
     "slug": "santitime",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./src/shared/assets/images/logo.png",
+    "icon": "./src/shared/assets/images/logo-bg.png",
     "scheme": "myapp",
-    "userInterfaceStyle": "automatic",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "userInterfaceStyle": "dark"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "",
-        "backgroundColor": "#ffffff"
+        "foregroundImage": "./src/shared/assets/images/logo-bg.png"
       },
-      "package": "com.a.kolodynsky.santitime"
-    },
-    "web": {
-      "bundler": "metro",
-      "output": "static",
-      "favicon": ""
+      "package": "com.a.kolodynsky.santitime",
+      "userInterfaceStyle": "dark"
     },
     "plugins": [
       "expo-router",
       "expo-sqlite",
       "expo-font",
-      "expo-web-browser"
+      [
+        "expo-splash-screen",
+        {
+          "image": "./src/shared/assets/images/splash.png",
+          "backgroundColor": "#1a1a24"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

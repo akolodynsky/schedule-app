@@ -25,7 +25,7 @@ const CategoriesModal = ({ onClose }: { onClose: () => void }) => {
     return (
         <CustomModal title="Category" button={createCategory}>
             {categories.map((category) => (
-                <TouchableOpacity className="self-start" key={category.id} onPress={() => selectCategory(category)}>
+                <TouchableOpacity style={{ alignSelf: 'flex-start' }} key={category.id} onPress={() => selectCategory(category)}>
                     <CategoryCard category={category} />
                 </TouchableOpacity>
             ))}

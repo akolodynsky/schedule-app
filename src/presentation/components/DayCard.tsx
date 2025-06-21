@@ -1,9 +1,10 @@
 import React, { memo } from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated from "react-native-reanimated";
+import { moderateScale } from "react-native-size-matters";
 
 import { loadEvents } from "@/src/presentation/services/event";
-import { icons } from "@/src/shared/constants";
+import { colors, fonts, icons } from "@/src/shared/constants";
 import { useAnimatedScale } from "@/src/shared/hooks";
 
 
@@ -24,10 +25,8 @@ const DayCard = ({ day, date, focused, setSelectedDate, setDate }: DayCardProps)
         await loadEvents(date);
     };
 
-    const bg = focused ? 'bg-primary' : !focused && isToday ? 'bg-light_bg' : 'bg-dark-200';
-    const dateText = !focused && !isToday && 'mb-1';
-    const dayText = focused || isToday ? 'text-sm text-light-100' : 'text-xs text-light-200';
-    const dotColor = isToday ? "#efeff9" : "transparent";
+    const bg = focused ? colors.primary : !focused && isToday ? colors.light_bg : colors.dark_200;
+    const dotColor = isToday ? colors.light_100 : "transparent";
 
     return (
         <Pressable
@@ -35,24 +34,55 @@ const DayCard = ({ day, date, focused, setSelectedDate, setDate }: DayCardProps)
             onPressIn={handlePressIn}
             onPressOut={handlePressOut}
         >
-            <Animated.View
-                style={animatedStyle}
-                className={`items-center justify-between w-[44px] pt-3 pb-2 rounded-2xl ${bg}`}
-            >
-                <View className="items-center">
-                    <Text className={`font-inter_bold text-xl text-light-100 ${dateText}`}>
+            <Animated.View style={[animatedStyle, styles.container, { backgroundColor: bg }]}>
+                <View style={styles.contentContainer}>
+                    <Text style={[styles.date, (!focused && !isToday) && { marginBottom: moderateScale(2) }]}>
                         {date.split("-")[2]}
                     </Text>
 
-                    <Text className={`font-inter_regular ${dayText}`}>
+                    <Text style={[focused || isToday ? styles.dayBig : styles.daySmall]}>
                         {day}
                     </Text>
                 </View>
 
-                <Image source={icons.dot} className="mt-2" tintColor={dotColor} />
+                <Image source={icons.dot} style={styles.image} tintColor={dotColor} />
             </Animated.View>
         </Pressable>
     );
 };
 
 export default memo(DayCard);
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        alignItems: "center",
+        justifyContent: "space-between",
+        width: moderateScale(42),
+        paddingTop: moderateScale(10),
+        paddingBottom: moderateScale(6),
+        borderRadius: moderateScale(12)
+    },
+    contentContainer: {
+        alignItems: "center"
+    },
+    date: {
+        color: colors.light_100,
+        fontFamily: fonts.inter_bold,
+        fontSize: moderateScale(17),
+    },
+    dayBig: {
+        color: colors.light_100,
+        fontFamily: fonts.inter_medium,
+        fontSize: moderateScale(10),
+    },
+    daySmall: {
+        color: colors.light_200,
+        fontFamily: fonts.inter_regular,
+        fontSize: moderateScale(9),
+    },
+    image: {
+        marginTop: moderateScale(5)
+    }
+});

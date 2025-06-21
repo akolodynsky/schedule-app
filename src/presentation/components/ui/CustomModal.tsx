@@ -3,6 +3,8 @@ import { Image, Pressable, ScrollView, Text, View } from 'react-native';
 
 import { icons } from "@/src/shared/constants";
 
+import { CustomModalStyles } from "./styles";
+
 
 interface CustomModalProps {
     title: string;
@@ -10,15 +12,15 @@ interface CustomModalProps {
     button?: () => void;
 }
 
-export const CustomModal = ({children, title, button}: CustomModalProps) => {
+export const CustomModal = ({ children, title, button }: CustomModalProps) => {
     return (
-        <View className="w-[300px] max-h-[650px] px-5 py-8 bg-dark-200 rounded-[24px]">
-            <View className="flex-row justify-between mb-8">
-                <Text className="font-inter_semibold text-2xl text-light-100">{title}</Text>
+        <View style={CustomModalStyles.container}>
+            <View style={CustomModalStyles.header}>
+                <Text style={CustomModalStyles.title}>{title}</Text>
 
                 {button && (
                     <Pressable onPress={button}>
-                        <Image source={icons.add} className="size-9" />
+                        <Image source={icons.add} style={CustomModalStyles.image} />
                     </Pressable>
                 )}
             </View>

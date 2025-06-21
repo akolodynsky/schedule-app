@@ -1,11 +1,11 @@
 import 'react-native-gesture-handler';
 import 'react-native-reanimated';
 
-import React from "react";
-import { Easing, StatusBar } from 'react-native';
+import React, { useCallback } from "react";
+import { Easing, StatusBar, View } from 'react-native';
 import { createStackNavigator, CardStyleInterpolators, StackNavigationOptions } from '@react-navigation/stack';
+import * as SplashScreen from 'expo-splash-screen';
 
-import { SplashScreenView } from "../components/ui";
 import EventCreate from "../screens/EventCreate";
 import TaskPage from "../screens/TaskPage";
 import CategoryPage from "../screens/CategoryPage";
@@ -15,6 +15,7 @@ import HomePage from "../screens/HomePage";
 import SettingsPage from "../screens/SettingsPage";
 
 import { useAppLoading } from "@/src/shared/hooks";
+import { colors } from "@/src/shared/constants";
 
 
 const Stack = createStackNavigator();
@@ -22,8 +23,13 @@ const Stack = createStackNavigator();
 export default function RootLayout() {
     const appLoaded = useAppLoading();
 
-    if (!appLoaded) return <SplashScreenView />;
+    const onLayoutRootView = useCallback(async () => {
+        if (appLoaded) {
+            await SplashScreen.hideAsync();
+        }
+    }, [appLoaded]);
 
+    if (!appLoaded) return null;
 
     const config = {
         animation: 'timing' as const,
@@ -41,7 +47,7 @@ export default function RootLayout() {
     const rightOptions = {
         cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
         detachPreviousScreen: false,
-        cardStyle: { backgroundColor: "#1a1a24" },
+        cardStyle: { backgroundColor: colors.dark_100 },
         transitionSpec: {
             open: config,
             close: config,
@@ -49,8 +55,8 @@ export default function RootLayout() {
     };
 
     return (
-        <>
-            <StatusBar backgroundColor="transparent" translucent />
+        <View onLayout={onLayoutRootView} style={{ flex: 1 }}>
+            <StatusBar backgroundColor="transparent" translucent barStyle="light-content" />
             <Stack.Navigator screenOptions={{ headerShown: false }}>
                 <Stack.Screen name="home" component={HomePage} options={defaultOptions} />
                 <Stack.Screen name="categories" component={CategoryPage} options={defaultOptions} />
@@ -60,6 +66,6 @@ export default function RootLayout() {
                 <Stack.Screen name="category" component={CategoryCreate} options={rightOptions}/>
                 <Stack.Screen name="task" component={TaskCreate} options={rightOptions}/>
             </Stack.Navigator>
-        </>
+        </View>
     );
 };

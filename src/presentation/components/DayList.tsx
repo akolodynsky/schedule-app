@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Dimensions, FlatList, Pressable, Text, View } from 'react-native';
+import { Dimensions, FlatList, Pressable, StyleSheet, Text, View } from 'react-native';
 import { useShallow } from "zustand/react/shallow";
+import { moderateScale } from "react-native-size-matters";
 
 import { AnimatedComponent, AnimatedComponentRef, DatePicker } from "./ui";
 import DayCard from "./DayCard";
@@ -8,6 +9,7 @@ import DayCard from "./DayCard";
 import { useDateStore } from "../stores";
 import { useDayListActions } from "@/src/shared/hooks";
 import { generateWeeks } from "@/src/shared/utils";
+import { colors, fonts } from "@/src/shared/constants";
 
 
 const { width } = Dimensions.get("window");
@@ -48,7 +50,7 @@ const DayList = () => {
 
     const renderWeeks = ({ item, index }: { item: IDay[], index: number }) => {
         return (
-            <View className="flex-row justify-between px-1" style={{width: width - 36}} key={index}>
+            <View style={[styles.weekContainer, { width: width - 36 }]} key={index}>
                 {item.map((day) => (
                     <DayCard
                         key={day.date}
@@ -65,19 +67,19 @@ const DayList = () => {
     const modalRef = useRef<AnimatedComponentRef>(null);
 
     return (
-        <View className="rounded-bl-[76px] pt-16 bg-dark-100 pb-16">
-            <View className="mb-9 px-5">
-                <Pressable className="self-start" onPress={() => modalRef.current?.open()}>
-                    <Text className="text-light-100 font-inter_semibold text-2xl">{currentMonth}</Text>
+        <View style={styles.container}>
+            <View style={styles.monthContainer}>
+                <Pressable style={styles.button} onPress={() => modalRef.current?.open()}>
+                    <Text style={styles.buttonText}>{currentMonth}</Text>
                 </Pressable>
 
-                <AnimatedComponent ref={modalRef} modalStyle="justify-center items-center">
+                <AnimatedComponent ref={modalRef} modalStyle={{ justifyContent: "center", alignItems: "center" }}>
                     <DatePicker date={selectedDate} setDate={setSelectedDate} onClose={() => modalRef.current?.close()} />
                 </AnimatedComponent>
             </View>
 
             {weeks.length > 2 && (
-                <View className="px-5">
+                <View style={styles.listContainer}>
                     <FlatList
                         ref={flatListRef}
                         data={weeks}
@@ -108,9 +110,38 @@ const DayList = () => {
                     />
                 </View>
             )}
-
         </View>
     );
 };
 
 export default DayList;
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        borderBottomLeftRadius: moderateScale(70),
+        paddingVertical: moderateScale(56),
+        backgroundColor: colors.dark_100
+    },
+    listContainer: {
+        paddingHorizontal: moderateScale(17)
+    },
+    weekContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        paddingHorizontal: moderateScale(5)
+    },
+    monthContainer: {
+        paddingBottom: moderateScale(32),
+        paddingHorizontal: moderateScale(20)
+    },
+    button: {
+        alignSelf: 'flex-start'
+    },
+    buttonText: {
+        color: colors.light_100,
+        fontFamily: fonts.inter_semibold,
+        fontSize: moderateScale(20)
+    },
+});

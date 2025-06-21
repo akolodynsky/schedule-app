@@ -1,11 +1,13 @@
 import React, { memo } from 'react';
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { router } from "expo-router";
 import { useShallow } from "zustand/react/shallow";
+import { moderateScale } from "react-native-size-matters";
 
 import EventCard from "./EventCard";
 
 import { useEventStore } from "../stores";
+import { colors } from "@/src/shared/constants";
 
 
 const EventList = () => {
@@ -29,8 +31,8 @@ const EventList = () => {
     };
 
     return (
-        <View className="bg-dark-100 flex-1" collapsable={false}>
-            <View className="py-10 px-6 flex-1 bg-dark-200 rounded-tr-[76px]" collapsable={false}>
+        <View style={styles.backgroundContainer} collapsable={false}>
+            <View style={styles.container} collapsable={false}>
                 {events.map((event, index) => (
                     <EventCard
                         key={event.id}
@@ -45,3 +47,16 @@ const EventList = () => {
 };
 
 export default memo(EventList);
+
+
+
+const styles = StyleSheet.create({
+    backgroundContainer: { backgroundColor: colors.dark_100, flex: 1 },
+    container: {
+        flex: 1,
+        borderTopRightRadius: moderateScale(70),
+        backgroundColor: colors.dark_200,
+        paddingHorizontal: moderateScale(20),
+        paddingVertical: moderateScale(34)
+    }
+});

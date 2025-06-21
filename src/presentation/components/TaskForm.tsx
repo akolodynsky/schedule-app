@@ -1,6 +1,7 @@
 import React, { memo, useEffect, useRef } from 'react';
-import { View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { useShallow } from "zustand/react/shallow";
+import { moderateScale } from "react-native-size-matters";
 
 import { CustomTextInput, ModalInput, ErrorModal } from "./ui";
 import DatePickerInput from "./DatePickerInput";
@@ -10,6 +11,7 @@ import EventsModal from "./EventsModal";
 
 import { useDateStore, useEventStore, useTaskStore } from "../stores";
 import { loadEvents } from "../services/event";
+import { colors } from "@/src/shared/constants";
 
 
 const TaskForm = () => {
@@ -45,7 +47,11 @@ const TaskForm = () => {
         <>
             <ErrorSection />
 
-            <View className="flex-1 pt-44 px-6 bg-dark-200">
+            <ScrollView
+                style={styles.container}
+                contentContainerStyle={styles.contentContainer}
+                overScrollMode="never"
+            >
                 <NameInput />
 
                 <ModalInput
@@ -58,8 +64,8 @@ const TaskForm = () => {
                     {({onClose}) => <EventsModal onClose={onClose} />}
                 </ModalInput>
 
-                <DatePickerInput />
-            </View>
+                <DatePickerInput align='left' />
+            </ScrollView>
         </>
 
     );
@@ -83,3 +89,17 @@ const NameInput = () => {
 
     return <CustomTextInput title="Name" value={name} setValue={setName} length={450} />;
 };
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingHorizontal: moderateScale(22),
+        backgroundColor: colors.dark_200
+    },
+    contentContainer: {
+        paddingBottom: moderateScale(30),
+        paddingTop: moderateScale(148),
+        gap: moderateScale(18)
+    }
+});

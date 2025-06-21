@@ -1,6 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { Animated, Text, View } from 'react-native';
 
+import { ErrorModalStyles } from "./styles";
+
 
 interface ErrorModalProps {
     error: string;
@@ -49,12 +51,9 @@ export const ErrorModal = ({ error, setError }: ErrorModalProps) => {
     if (!error) return null;
 
     return (
-        <View pointerEvents="none" style={{top: 60}} className="absolute left-0 right-0 items-center z-50">
-            <Animated.View
-                className="bg-primary px-8 py-4 rounded-full elevation-md"
-                style={[{opacity: fadeAnim, transform: [{ translateY }]}]}
-            >
-                <Text className="font-inter_medium text-light-100 text-xl">{error}</Text>
+        <View pointerEvents="none" style={ErrorModalStyles.modal}>
+            <Animated.View style={[ErrorModalStyles.container, { opacity: fadeAnim, transform: [{ translateY }]}]}>
+                <Text style={ErrorModalStyles.text}>{error}</Text>
             </Animated.View>
         </View>
     );

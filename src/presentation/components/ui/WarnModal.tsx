@@ -1,8 +1,11 @@
-import React, {forwardRef} from "react";
-import {Image, Pressable, Text, View} from "react-native";
+import React, { forwardRef } from "react";
+import { Image, Pressable, Text, View } from "react-native";
 
 import { AnimatedComponent, AnimatedComponentRef } from "./AnimatedComponent";
-import { icons } from "@/src/shared/constants/icons";
+
+import { icons, colors } from "@/src/shared/constants";
+
+import { WarnModalStyles } from "./styles";
 
 
 interface WarnModalProps {
@@ -14,28 +17,28 @@ interface WarnModalProps {
 }
 
 export const WarnModal = forwardRef<AnimatedComponentRef, WarnModalProps>(
-    ({title, text, buttonText, onSubmit, onClose}, ref) => {
+    ({ title, text, buttonText, onSubmit, onClose }, ref) => {
 
     return (
-        <AnimatedComponent ref={ref} modalStyle="justify-center items-center">
-            <View className="bg-dark-100 gap-8 px-2 py-9 rounded-[24px] items-center justify-center">
-                <View className="gap-4 items-center justify-center">
-                    <Text className="font-inter_bold text-[22px] text-light-100">{title}</Text>
+        <AnimatedComponent ref={ref} modalStyle={{ justifyContent: "center", alignItems: "center" }}>
+            <View style={WarnModalStyles.container}>
+                <View style={WarnModalStyles.contentContainer}>
+                    <Text style={WarnModalStyles.title}>{title}</Text>
 
-                    <Image source={icons.warning} className="size-20"/>
+                    <Image source={icons.warning} style={WarnModalStyles.image}/>
 
-                    <View className="w-[90%]">
-                        <Text className="font-inter_regular text-[15px] text-light-100">{text}</Text>
+                    <View style={WarnModalStyles.textContainer}>
+                        <Text style={WarnModalStyles.text}>{text}</Text>
                     </View>
                 </View>
 
-                <View className="flex-row gap-5 items-center">
-                    <Pressable onPress={() => onClose()} className="self-start rounded-xl px-6 py-2 flex-row items-center bg-light-300">
-                        <Text className="font-inter_semibold text-light-100 text-[16px]">Cancel</Text>
+                <View style={WarnModalStyles.buttonContainer}>
+                    <Pressable onPress={() => onClose()} style={[WarnModalStyles.button, { backgroundColor: colors.light_300 }]}>
+                        <Text style={WarnModalStyles.buttonText}>Cancel</Text>
                     </Pressable>
 
-                    <Pressable onPress={() => {onSubmit(); onClose()}} className="rounded-xl px-6 py-2 flex-row items-center bg-primary">
-                        <Text className="font-inter_semibold text-light-100 text-[16px]">{buttonText}</Text>
+                    <Pressable onPress={() => {onSubmit(); onClose()}} style={[WarnModalStyles.button, { backgroundColor: colors.primary }]}>
+                        <Text style={WarnModalStyles.buttonText}>{buttonText}</Text>
                     </Pressable>
                 </View>
             </View>

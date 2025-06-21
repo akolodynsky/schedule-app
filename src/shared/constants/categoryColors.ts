@@ -1,4 +1,4 @@
-export const colors = [
+export const categoryColors = [
     { name: 'Deep Red', shades: ['#ef4444', '#dc2626', '#7f1d1d'] },
     { name: 'Red', shades: ['#f87171', '#ef4444', '#b91c1c'] },
     { name: 'Orange Red', shades: ['#fb923c', '#f97316', '#c2410c'] },

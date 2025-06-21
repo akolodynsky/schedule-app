@@ -1,13 +1,14 @@
 import React from 'react';
-import { Image, Text, TouchableOpacity, View } from 'react-native';
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useShallow } from "zustand/react/shallow";
+import { moderateScale, scale } from "react-native-size-matters";
 
 import CategoryCard from "./CategoryCard";
 import TaskCard from "./TaskCard";
 
 import { useEventStore } from "../stores";
-import { icons } from "@/src/shared/constants";
-import {getDuration} from "@/src/shared/utils";
-import {useShallow} from "zustand/react/shallow";
+import { colors, fonts, icons } from "@/src/shared/constants";
+import { getDuration } from "@/src/shared/utils";
 
 
 interface EventBottomCardProps {
@@ -32,43 +33,42 @@ const EventBottomCard = ({ update, remove, checkTask, updateTask, updateRecurrin
 
     return (
         <>
-            <View className="flex-row justify-between items-center mb-6">
-                <View className="flex-row items-center gap-2">
-                    <Text className="font-inter_medium text-light-300 text-[15px]">{start} - {end}</Text>
+            <View style={styles.headerContainer}>
+                <View style={styles.timeContainer}>
+                    <Text style={[styles.timeText, { fontSize: moderateScale(14) }]}>{start} - {end}</Text>
 
-                    <Text className="font-inter_medium text-light-300 text-[14px]">({getDuration(start, end)})</Text>
+                    <Text style={[styles.timeText, { fontSize: moderateScale(13) }]}>({getDuration(start, end)})</Text>
                 </View>
 
-                <View className="flex-row gap-4">
+                <View style={styles.buttonsContainer}>
                     {updateRecurring && (
                         <TouchableOpacity onPress={updateRecurring}>
-                            <Image source={icons.edit} className="size-7" />
+                            <Image source={icons.edit} style={styles.buttonImage} />
                         </TouchableOpacity>
                     )}
 
                     <TouchableOpacity onPress={update}>
-                        <Image source={icons.pencil} className="size-7" />
+                        <Image source={icons.pencil} style={styles.buttonImage} />
                     </TouchableOpacity>
 
                     <TouchableOpacity onPress={() => remove(id, recurringId!, isRecurring)}>
-                        <Image source={icons.trash} className="size-7" />
+                        <Image source={icons.trash} style={styles.buttonImage} />
                     </TouchableOpacity>
                 </View>
             </View>
 
-            <View className="gap-3 flex-1">
-                <View className={`bg-dark-200 w-full px-4 py-5 rounded-[28px] gap-3 ${(!name && !description) && "self-start"}`}>
-                    <View className="flex-row flex-wrap-reverse gap-3 justify-between items-center">
-                        {name && <Text className="font-inter_bold text-light-100 text-[19px]">{name}</Text>}
+            <View style={styles.contentContainer}>
+                <View style={[styles.infoContainer, (!name && !description) && { alignSelf: 'flex-start' }]}>
+                    <View style={styles.titleContainer}>
+                        {name && <Text style={styles.nameText}>{name}</Text>}
 
                         <CategoryCard category={category} />
                     </View>
-                    {description &&
-                        <Text className="font-inter_medium text-light-200 text-lg">{description}</Text>}
+                    {description && <Text style={styles.descText}>{description}</Text>}
                 </View>
 
                 {tasks && tasks.length > 0 &&
-                    <View className="bg-dark-200 px-4 py-4 rounded-[28px] gap-2">
+                    <View style={styles.tasksContainer}>
                         {tasks.map((task) => (
                             <TaskCard
                                 key={task.id}
@@ -84,3 +84,56 @@ const EventBottomCard = ({ update, remove, checkTask, updateTask, updateRecurrin
 };
 
 export default EventBottomCard;
+
+
+
+const styles = StyleSheet.create({
+    headerContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginBottom: moderateScale(16)
+    },
+    timeContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: moderateScale(6)
+    },
+    buttonsContainer: { flexDirection: 'row', gap: moderateScale(14) },
+    timeText: { color: colors.light_300, fontFamily: fonts.inter_medium },
+    buttonImage: { width: scale(22), height: scale(22) },
+    contentContainer: { flex: 1, gap: moderateScale(10) },
+    infoContainer: {
+        backgroundColor: colors.dark_200,
+        paddingHorizontal: moderateScale(14),
+        paddingVertical: moderateScale(16),
+        gap: moderateScale(10),
+        borderRadius: moderateScale(26),
+        width: '100%'
+    },
+    titleContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap-reverse',
+        gap: moderateScale(10),
+        justifyContent: 'space-between',
+        alignItems: 'center'
+    },
+    nameText: {
+        color: colors.light_100,
+        fontFamily: fonts.inter_bold,
+        fontSize: moderateScale(18)
+    },
+    descText: {
+        color: colors.light_200,
+        fontFamily: fonts.inter_medium,
+        fontSize: moderateScale(15),
+        lineHeight: moderateScale(22)
+    },
+    tasksContainer: {
+        backgroundColor: colors.dark_200,
+        paddingHorizontal: moderateScale(14),
+        paddingVertical: moderateScale(14),
+        gap: moderateScale(6),
+        borderRadius: moderateScale(26)
+    }
+});

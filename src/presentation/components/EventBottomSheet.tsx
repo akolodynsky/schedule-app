@@ -1,14 +1,17 @@
 import React, { useEffect, useRef } from 'react';
+import { StyleSheet } from "react-native";
 import { router } from "expo-router";
 import { BottomSheetMethods } from "@gorhom/bottom-sheet/lib/typescript/types";
 import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import { useShallow } from "zustand/react/shallow";
+import { moderateScale } from "react-native-size-matters";
 
 import EventBottomCard from "./EventBottomCard";
 
 import { useDateStore, useEventStore, useRecurringOptionsStore } from "../stores";
 import { removeEvent, updateEventState, updateRecurringState } from "../services/event";
 import { updateTask, updateTasksState, updateTaskState } from "../services/task";
+import { colors } from "@/src/shared/constants";
 
 
 const EventBottomSheet = () => {
@@ -91,11 +94,11 @@ const EventBottomSheet = () => {
             index={-1}
             snapPoints={["50%", "65%", "80%"]}
             enablePanDownToClose
-            backgroundStyle={{ backgroundColor: '#1a1a24', borderRadius: 30 }}
-            handleIndicatorStyle={{ backgroundColor: '#efeff9' }}
+            backgroundStyle={styles.backgroundStyle}
+            handleIndicatorStyle={styles.handleIndicatorStyle}
             onChange={(index) => handleChange(index)}
         >
-            <BottomSheetView className="flex-1 px-6 gap-3 pb-16">
+            <BottomSheetView style={styles.container}>
                 <EventBottomCard
                     update={handleUpdateEvent}
                     remove={handleRemoveEvent}
@@ -109,3 +112,21 @@ const EventBottomSheet = () => {
 };
 
 export default EventBottomSheet;
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingHorizontal: moderateScale(22),
+        gap: moderateScale(10),
+        paddingBottom: moderateScale(62)
+    },
+    backgroundStyle: {
+        backgroundColor: colors.dark_100,
+        borderRadius: moderateScale(30)
+    },
+    handleIndicatorStyle: {
+        backgroundColor: colors.light_100
+    }
+});

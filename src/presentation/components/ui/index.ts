@@ -8,5 +8,5 @@ export * from "./ModalInput";
 export * from "./PageHeader";
 export * from "./PageRouteButtons";
 export * from "./SideMenuModal";
-export * from "./SplashScreenView";
+export * from "./WarnMessage";
 export * from "./WarnModal";

@@ -1,6 +1,9 @@
 import React, { memo, useState } from 'react';
-import { View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox/lib";
+
+import { colors, fonts } from "@/src/shared/constants";
+import {moderateScale} from "react-native-size-matters";
 
 
 interface TaskCardProps {
@@ -21,12 +24,12 @@ const TaskCard = memo(({ task, check, longPress }: TaskCardProps) => {
     };
 
     return (
-        <View className="flex-row items-start">
+        <View style={styles.container}>
             <BouncyCheckbox
-                size={16}
-                fillColor="#6f4bf7"
-                innerIconStyle={{ borderWidth: 2 }}
-                textStyle={{ fontFamily: "Inter-Medium", fontSize: 16, lineHeight: 22, color: "#efeff9" }}
+                size={moderateScale(16)}
+                fillColor={colors.primary}
+                innerIconStyle={{ borderWidth: moderateScale(2) }}
+                textStyle={styles.text}
                 text={task.name}
                 isChecked={checked}
                 useBuiltInState={false}
@@ -39,3 +42,18 @@ const TaskCard = memo(({ task, check, longPress }: TaskCardProps) => {
 });
 
 export default TaskCard;
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        alignItems: 'flex-start'
+    },
+    text: {
+        fontFamily: fonts.inter_medium,
+        fontSize: moderateScale(15),
+        lineHeight: moderateScale(20),
+        color: colors.light_100
+    }
+});

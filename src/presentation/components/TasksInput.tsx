@@ -1,13 +1,14 @@
 import React, { memo, useState } from 'react';
-import { Image, Keyboard, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Keyboard, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { useShallow } from "zustand/react/shallow";
+import { moderateScale, scale } from "react-native-size-matters";
 
 import { CustomTextInput } from "./ui";
 
 import { useDateStore, useEventStore, useRecurringOptionsStore } from "../stores";
 import { removeTask } from "../services/task";
-import { icons } from "@/src/shared/constants";
+import { colors, fonts, icons } from "@/src/shared/constants";
 import { generateUniqueId } from "@/src/shared/utils";
-import {useShallow} from "zustand/react/shallow";
 
 
 const TasksInput = () => {
@@ -47,20 +48,20 @@ const TasksInput = () => {
 
     return (
         !(selectedEvent?.recurringId && !disabled) &&
-        <View className="mb-6">
-            <Text className="text-light-200 font-inter_medium mb-3">Tasks</Text>
+        <View>
+            <Text style={styles.title}>Tasks</Text>
 
-            <View className="bg-dark-100 rounded-lg px-4 pt-3 pb-1">
-                <View className="flex-row justify-between items-center mb-2">
+            <View style={styles.inputContainer}>
+                <View style={styles.fieldContainer}>
                     <CustomTextInput title={"task"} value={task} setValue={setTask} length={450} />
 
                     <TouchableOpacity onPress={addTask}>
-                        <Image source={icons.add} className="size-8" />
+                        <Image source={icons.add} style={styles.addImage} />
                     </TouchableOpacity>
                 </View>
 
                 {tasks.length > 0 && (
-                    <View className="gap-2 mb-3">
+                    <View style={styles.tasksContainer}>
                         {tasks.map((task) => (
                             <TaskItem key={task.id} task={task} onDelete={deleteTask} />
                         ))}
@@ -77,22 +78,81 @@ export default memo(TasksInput);
 
 const TaskItem = ({ task, onDelete }: { task: ITask, onDelete: (id: string) => void}) => {
     return (
-        <View className="flex-row items-center justify-between" key={task.id}>
-            <View className="mr-1 h-full">
-                <Text className="font-inter_bold text-xl text-light-100">-</Text>
+        <View style={styles.taskContainer} key={task.id}>
+            <View style={styles.arrowContainer}>
+                <Text style={styles.arrowText}>-</Text>
             </View>
 
-            <View className="w-[87%]">
-                <Text className="font-inter_regular text-[16px] text-light-100">
+            <View style={styles.textContainer}>
+                <Text style={styles.taskText}>
                     {task.name}
                 </Text>
             </View>
 
-            <View className="flex-1 items-end pr-[1px]">
+            <View style={styles.removeContainer}>
                 <TouchableOpacity onPress={() => onDelete(task.id)}>
-                    <Image source={icons.del} className="size-7" tintColor="#ef4444" />
+                    <Image source={icons.del} style={styles.removeImage} />
                 </TouchableOpacity>
             </View>
         </View>
     );
 };
+
+
+
+const styles = StyleSheet.create({
+    title: {
+        fontFamily: fonts.inter_medium,
+        color: colors.light_200,
+        marginBottom: moderateScale(10)
+    },
+    inputContainer: {
+        backgroundColor: colors.dark_100,
+        borderRadius: moderateScale(6),
+        paddingHorizontal: moderateScale(12),
+        paddingTop: moderateScale(11),
+        paddingBottom: moderateScale(5)
+    },
+    fieldContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: moderateScale(6)
+    },
+    tasksContainer: {
+        gap: moderateScale(4),
+        marginBottom: moderateScale(8)
+    },
+    addImage: { width: scale(28), height: scale(28) },
+    taskContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between'
+    },
+    arrowContainer: {
+        marginRight: moderateScale(5),
+        height: '100%',
+    },
+    arrowText: {
+        fontFamily: fonts.inter_bold,
+        color: colors.light_100,
+        fontSize: moderateScale(16)
+    },
+    textContainer: {
+        width: '86%',
+    },
+    taskText: {
+        fontFamily: fonts.inter_regular,
+        color: colors.light_100,
+        fontSize: moderateScale(14)
+    },
+    removeContainer: {
+        flex: 1,
+        alignItems: 'center'
+    },
+    removeImage: {
+        width: scale(22),
+        height: scale(22),
+        tintColor: '#ef4444'
+    }
+});

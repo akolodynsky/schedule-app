@@ -1,6 +1,7 @@
 import React, { memo } from 'react';
-import { View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { moderateScale } from "react-native-size-matters";
 
 import { CustomTextInput, ErrorModal, ModalInput } from "./ui";
 import RepeatEventInput from "./RepeatEventInput";
@@ -10,6 +11,7 @@ import CategoryCard from "./CategoryCard";
 import TasksInput from "./TasksInput";
 
 import { useEventStore } from "../stores";
+import { colors } from "@/src/shared/constants";
 
 
 const EventForm = () => {
@@ -18,8 +20,7 @@ const EventForm = () => {
             <ErrorSection />
 
             <KeyboardAwareScrollView
-                className="px-6 bg-dark-200"
-                contentContainerStyle={{ paddingTop: 150 }}
+                contentContainerStyle={styles.container}
                 enableOnAndroid
                 overScrollMode="never"
                 keyboardShouldPersistTaps="handled"
@@ -77,7 +78,7 @@ const CategorySection = () => {
             title="Category"
             placeholder="Select a category"
             renderContent={category && (
-                <View className="max-w-[90%]">
+                <View style={styles.categoryContainer}>
                     <CategoryCard category={category} remove={() => {setCategory(null)}} />
                 </View>
             )}
@@ -86,3 +87,16 @@ const CategorySection = () => {
         </ModalInput>
     )
 };
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        paddingTop: moderateScale(140),
+        paddingBottom: moderateScale(20),
+        paddingHorizontal: moderateScale(22),
+        backgroundColor: colors.dark_200,
+        gap: moderateScale(16)
+    },
+    categoryContainer: { maxWidth: '90%' }
+});

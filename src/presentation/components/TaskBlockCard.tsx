@@ -1,10 +1,12 @@
 import React from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
+import { moderateScale } from "react-native-size-matters";
 
 import TaskCard from "./TaskCard";
 import CategoryCard, { DefaultCard } from "./CategoryCard";
 
 import { formatDate } from "@/src/shared/utils";
+import { colors, fonts } from "@/src/shared/constants";
 
 
 interface TaskBlockCardProps {
@@ -18,13 +20,13 @@ const TaskBlockCard = ({ taskBlock, taskCheck, taskUpdate }: TaskBlockCardProps)
     const date = taskBlock.date === currentDate ? "Today" : formatDate(taskBlock.date)
 
     return (
-        taskBlock.mainTasks.length > 0 ||  taskBlock.eventTasks.length > 0) && (
-            <View key={taskBlock.date} className="bg-dark-100 rounded-3xl px-5 py-5 mb-6">
-                <View className="mb-[-8px]">
-                    <Text className="font-inter_semibold text-light-300 text-lg">{date}</Text>
+        taskBlock.mainTasks.length > 0 || taskBlock.eventTasks.length > 0) && (
+            <View key={taskBlock.date} style={styles.container}>
+                <View style={styles.titleContainer}>
+                    <Text style={styles.title}>{date}</Text>
                 </View>
 
-                <View className="gap-4">
+                <View style={styles.contentContainer}>
                     {taskBlock.mainTasks.length > 0 && (
                         <TaskGroup
                             tasks={taskBlock.mainTasks}
@@ -38,7 +40,7 @@ const TaskBlockCard = ({ taskBlock, taskCheck, taskUpdate }: TaskBlockCardProps)
                         event.tasks.length > 0 && (
                             <TaskGroup
                                 key={event.id}
-                                tasks={taskBlock.mainTasks}
+                                tasks={event.tasks}
                                 header={<CategoryCard category={event.category} />}
                                 check={taskCheck}
                                 update={taskUpdate}
@@ -64,8 +66,8 @@ interface TaskGroupProps {
 
 const TaskGroup = ({ tasks, header, check, update, eventId }: TaskGroupProps) => (
     <View>
-        <View className="max-w-[75%] z-10 self-end mr-6 mb-[-11px]">{header}</View>
-        <View className="bg-dark-200 gap-3 py-5 px-4 rounded-3xl">
+        <View style={styles.headerContainer}>{header}</View>
+        <View style={styles.tasksContainer}>
             {tasks.map((task) => (
                 <TaskCard
                     key={task.id}
@@ -77,3 +79,35 @@ const TaskGroup = ({ tasks, header, check, update, eventId }: TaskGroupProps) =>
         </View>
     </View>
 );
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        backgroundColor: colors.dark_100,
+        borderRadius: moderateScale(20),
+        padding: moderateScale(17),
+        marginBottom: moderateScale(22)
+    },
+    titleContainer: { marginBottom: moderateScale(-8) },
+    contentContainer: { gap: moderateScale(14) },
+    title: {
+        fontFamily: fonts.inter_semibold,
+        fontSize: moderateScale(15),
+        color: colors.light_300
+    },
+    headerContainer: {
+        maxWidth: '75%',
+        zIndex: 10,
+        alignSelf: 'flex-end',
+        marginRight: moderateScale(22),
+        marginBottom: moderateScale(-11)
+    },
+    tasksContainer: {
+        backgroundColor: colors.dark_200,
+        gap: moderateScale(10),
+        paddingHorizontal: moderateScale(14),
+        paddingVertical: moderateScale(16),
+        borderRadius: moderateScale(20)
+    }
+});

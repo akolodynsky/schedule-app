@@ -52,7 +52,7 @@ export default function EventCreate()  {
     const header = !selectedEvent
         ? "Add Event"
         : condition
-            ? "Update All Events"
+            ? "Update Block"
             : "Update Event";
 
     const warnModalRef = useRef<AnimatedComponentRef>(null);
@@ -75,7 +75,7 @@ export default function EventCreate()  {
                 onClose={() => warnModalRef.current?.close()}
             />
 
-            <PageHeader name={header} />
+            <PageHeader text={header} />
             <EventForm />
         </>
     );

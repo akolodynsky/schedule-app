@@ -1,6 +1,7 @@
 import React, { memo, useRef } from 'react';
-import { Pressable, ScrollView } from 'react-native';
+import { Pressable, ScrollView, StyleSheet } from 'react-native';
 import { router } from "expo-router";
+import { moderateScale } from "react-native-size-matters";
 
 import { AnimatedComponentRef, WarnModal } from "./ui";
 import CategoryCard from "./CategoryCard";
@@ -8,6 +9,7 @@ import CategoryCard from "./CategoryCard";
 import { useCategoryStore, useDateStore, useTaskStore } from "../stores";
 import { removeCategory, updateCategoryState } from "../services/category";
 import { loadEvents } from "../services/event";
+import { colors } from '@/src/shared/constants'
 
 
 const CategoriesList = () => {
@@ -39,8 +41,8 @@ const CategoriesList = () => {
             />
 
             <ScrollView
-                className="flex-1 px-6 bg-dark-200"
-                contentContainerStyle={{ paddingBottom: 40, paddingTop: 160, gap: 20 }}
+                style={styles.container}
+                contentContainerStyle={styles.contentContainer}
                 overScrollMode="never"
             >
                 {categories.map((category) => (
@@ -64,7 +66,7 @@ export default memo(CategoriesList);
 const CategoriesListItem = memo(({ category, onRemove }: { category: ICategory; onRemove: () => void }) => (
     <Pressable
         key={category.id}
-        className="self-start max-w-[91%]"
+        style={styles.button}
         onPress={() => {
             updateCategoryState(category);
             router.push("/category");
@@ -73,3 +75,19 @@ const CategoriesListItem = memo(({ category, onRemove }: { category: ICategory; 
         <CategoryCard category={category} remove={onRemove} />
     </Pressable>
 ));
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingHorizontal: moderateScale(22),
+        backgroundColor: colors.dark_200
+    },
+    contentContainer: {
+        paddingBottom: moderateScale(30),
+        paddingTop: moderateScale(148),
+        gap: moderateScale(18)
+    },
+    button: { alignSelf: 'flex-start', maxWidth: '91%' }
+});

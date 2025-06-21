@@ -4,14 +4,16 @@ import { router } from "expo-router";
 
 import { icons } from "@/src/shared/constants";
 
+import { AddButtonStyles } from "./styles";
+
 
 export const AddButton = () => {
     return (
         <Pressable
             onPress={() => router.push("/create")}
-            className="absolute bottom-8 right-8 z-10 bg-primary rounded-full p-3"
+            style={AddButtonStyles.button}
         >
-            <Image source={icons.add} className="size-12" />
+            <Image source={icons.add} style={AddButtonStyles.image} />
         </Pressable>
     );
 };

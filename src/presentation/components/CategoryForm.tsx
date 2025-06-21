@@ -1,10 +1,13 @@
 import React, { memo } from 'react';
-import { View } from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import { moderateScale } from "react-native-size-matters";
 
 import { CustomTextInput, ErrorModal, ModalInput } from "./ui";
 import ColorsModal from "./ColorsModal";
 
 import { useCategoryStore } from "../stores";
+import { colors } from "@/src/shared/constants";
+
 
 
 const CategoryForm = () => {
@@ -12,15 +15,19 @@ const CategoryForm = () => {
         <>
             <ErrorSection />
 
-            <View className="flex-1 flex-row gap-x-4 pt-44 px-6 bg-dark-200">
-                <View className="flex-[0.7]">
+            <ScrollView
+                style={styles.container}
+                contentContainerStyle={styles.contentContainer}
+                overScrollMode="never"
+            >
+                <View style={{ flex: 0.7 }}>
                     <NameInput />
                 </View>
 
-                <View className="flex-[0.3]">
+                <View style={{ flex: 0.3 }}>
                     <ColorInput />
                 </View>
-            </View>
+            </ScrollView>
         </>
 
     );
@@ -58,4 +65,20 @@ const ColorInput = () => {
         </ModalInput>
     );
 };
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        paddingHorizontal: moderateScale(22),
+        backgroundColor: colors.dark_200
+    },
+    contentContainer: {
+        flexDirection: 'row',
+        columnGap: moderateScale(14),
+        paddingTop: moderateScale(148),
+        paddingBottom: moderateScale(30)
+    },
+});
 

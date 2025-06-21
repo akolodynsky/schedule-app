@@ -3,6 +3,10 @@ import { Pressable, Text, View } from 'react-native';
 
 import { AnimatedComponent, AnimatedComponentRef } from "./AnimatedComponent";
 
+import { colors } from "@/src/shared/constants";
+
+import { ModalInputStyles } from "./styles";
+
 
 interface ModalInputProps {
     title: string;
@@ -12,29 +16,29 @@ interface ModalInputProps {
     placeholder?: string;
 }
 
-export const ModalInput = ({children, title, renderContent, backgroundColor, placeholder}: ModalInputProps) => {
+export const ModalInput = ({ children, title, renderContent, backgroundColor, placeholder }: ModalInputProps) => {
     const modalRef = useRef<AnimatedComponentRef>(null);
 
     const handleOpen = () => modalRef.current?.open();
     const handleClose = () => modalRef.current?.close();
 
-    const bg = backgroundColor ? backgroundColor : "#1a1a24";
+    const bg = backgroundColor ? backgroundColor : colors.dark_100;
 
     return (
-        <View className="mb-5">
-            <Text className="text-light-200 font-inter_medium mb-3">{title}</Text>
+        <View>
+            <Text style={ModalInputStyles.title}>{title}</Text>
             <Pressable onPress={handleOpen}>
-                <View style={{backgroundColor: bg}} className="rounded-lg px-4 pt-[21px] pb-[20px]">
-                    {renderContent ?? (
-                        <Text className="font-inter_regular text-[14px] text-light-300">{placeholder}</Text>
-                    )}
+                <View style={[ModalInputStyles.input, { backgroundColor: bg }]}>
+                    {renderContent ?? <Text style={ModalInputStyles.placeholder}>{placeholder}</Text>}
                 </View>
             </Pressable>
 
-            <AnimatedComponent ref={modalRef} modalStyle="items-center justify-center">
+            <AnimatedComponent ref={modalRef} modalStyle={{ justifyContent: "center", alignItems: "center" }}>
                 {children({onClose: handleClose})}
             </AnimatedComponent>
         </View>
-
     );
 };
+
+
+

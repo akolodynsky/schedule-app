@@ -1,10 +1,11 @@
 import React from 'react';
-import { Pressable, Text, View, Image, TouchableOpacity, ImageSourcePropType } from 'react-native';
+import { Pressable, Text, View, Image, TouchableOpacity, ImageSourcePropType, StyleSheet } from 'react-native';
 import { Gesture, GestureDetector, GestureHandlerRootView } from "react-native-gesture-handler";
 import { runOnJS, useSharedValue } from "react-native-reanimated";
 import { router } from "expo-router";
+import { moderateScale, scale } from "react-native-size-matters";
 
-import { icons } from "@/src/shared/constants";
+import { colors, fonts, icons } from "@/src/shared/constants";
 
 
 const sideMenuButtons = [
@@ -28,21 +29,21 @@ const SideMenu = ({ onClose }: { onClose: () => void }) => {
         });
 
     return (
-        <View className="flex-row w-full h-full" collapsable={false}>
-            <Pressable className="flex-1" onPress={onClose} />
+        <View style={styles.container} collapsable={false}>
+            <Pressable style={styles.backButtonContainer} onPress={onClose} />
 
-            <GestureHandlerRootView style={{flex: 1.5}}>
+            <GestureHandlerRootView style={styles.sideMenuContainer}>
                 <GestureDetector gesture={panGesture}>
-                    <View className="h-full px-5 py-14 bg-dark-100 rounded-bl-[48px] rounded-tl-[48px] gap-8">
-                        <View className="items-center flex-row justify-between pr-1 pt-1">
-                            <Text className="font-inter_bold text-2xl tracking-widest text-light-100">Menu</Text>
+                    <View style={styles.contentContainer}>
+                        <View style={styles.headerContainer}>
+                            <Text style={styles.title}>Menu</Text>
 
                             <TouchableOpacity onPress={onClose}>
-                                <Image source={icons.plus} className="size-7 rotate-45" tintColor="#efeff9" />
+                                <Image source={icons.plus} style={styles.backImage} />
                             </TouchableOpacity>
                         </View>
 
-                        <View className="gap-3">
+                        <View style={styles.buttonsContainer}>
                             {sideMenuButtons.map(({ text, icon, route }) => (
                                 <SideMenuButton key={text} text={text} icon={icon} router={route} onClose={onClose} />
                             ))}
@@ -72,10 +73,66 @@ const SideMenuButton = ({ text, icon, router, onClose }: SideMenuButtonProps) =>
                 router();
                 onClose();
             }}
-            className="bg-dark-200 p-4 rounded-2xl flex-row items-center"
+            style={styles.buttonContainer}
         >
-            <Image source={icon} className="size-5 mr-2" />
-            <Text className="font-inter_medium text-lg text-light-100">{text}</Text>
+            <Image source={icon} style={styles.buttonImage} />
+            <Text style={styles.buttonText}>{text}</Text>
         </TouchableOpacity>
     )
 };
+
+
+
+const styles = StyleSheet.create({
+    container: {
+        flexDirection: 'row',
+        width: '100%',
+        height: '100%'
+    },
+    backButtonContainer: { flex: 1 },
+    buttonsContainer: { gap: moderateScale(10) },
+    sideMenuContainer: { flex: 1.6 },
+    contentContainer: {
+        height: '100%',
+        paddingHorizontal: moderateScale(18),
+        paddingVertical: moderateScale(50),
+        backgroundColor: colors.dark_100,
+        borderBottomLeftRadius: moderateScale(48),
+        borderTopLeftRadius: moderateScale(48),
+        gap: moderateScale(28)
+    },
+    headerContainer: {
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        flexDirection: 'row'
+    },
+    title: {
+        fontFamily: fonts.inter_bold,
+        fontSize: moderateScale(19),
+        color: colors.light_100,
+        letterSpacing: 1
+    },
+    backImage: {
+        width: scale(24),
+        height: scale(24),
+        tintColor: colors.light_100,
+        transform: [{ rotate: '45deg' }]
+    },
+    buttonContainer: {
+        alignItems: 'center',
+        flexDirection: 'row',
+        backgroundColor: colors.dark_200,
+        borderRadius: moderateScale(12),
+        padding: moderateScale(13)
+    },
+    buttonText: {
+        fontFamily: fonts.inter_medium,
+        fontSize: moderateScale(15),
+        color: colors.light_100
+    },
+    buttonImage: {
+        width: scale(16),
+        height: scale(16),
+        marginRight: moderateScale(8)
+    },
+});

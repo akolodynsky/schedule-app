@@ -1,6 +1,9 @@
 import React from 'react';
 import { Text, TextInput, View } from 'react-native';
 
+import { CustomTextInputStyles } from "./styles";
+import { colors } from '@/src/shared/constants';
+
 
 interface TextInputProps {
     title: string;
@@ -9,17 +12,17 @@ interface TextInputProps {
     length?: number;
 }
 
-export const CustomTextInput = ({value, setValue, title, length}: TextInputProps) => {
+export const CustomTextInput = ({ value, setValue, title, length }: TextInputProps) => {
     if (title === "task") {
         return (
             <TextInput
                 maxLength={length}
                 placeholder="Type a task"
                 multiline
-                cursorColor="#6f4bf7"
-                selectionColor="rgba(111,75,247,0.3)"
-                placeholderTextColor="#6b6f85"
-                className="font-inter_regular text-light-100 w-[85%]"
+                cursorColor={colors.primary}
+                selectionColor={colors.light_bg}
+                placeholderTextColor={colors.light_300}
+                style={CustomTextInputStyles.taskInput}
                 value={value}
                 onChangeText={(text) => setValue(text)}
             />
@@ -27,16 +30,16 @@ export const CustomTextInput = ({value, setValue, title, length}: TextInputProps
     }
 
     return (
-        <View className="mb-5">
-            <Text className="text-light-200 font-inter_medium mb-3">{title}</Text>
+        <View>
+            <Text style={CustomTextInputStyles.title}>{title}</Text>
             <TextInput
                 maxLength={length}
                 placeholder={`Type a ${title.toLowerCase()}`}
                 multiline
-                cursorColor="#6f4bf7"
-                selectionColor="rgba(111,75,247,0.3)"
-                placeholderTextColor="#6b6f85"
-                className="bg-dark-100 rounded-lg px-4 py-6 font-inter_regular text-light-100"
+                cursorColor={colors.primary}
+                selectionColor={colors.light_bg}
+                placeholderTextColor={colors.light_300}
+                style={CustomTextInputStyles.input}
                 value={value}
                 onChangeText={(text) => setValue(text)}
             />

@@ -8,6 +8,7 @@ import EventList from "../components/EventList";
 import EventBottomSheet from "../components/EventBottomSheet";
 
 import { useGestureScroll } from "@/src/shared/hooks";
+import { colors } from '@/src/shared/constants';
 
 
 export default function HomePage() {
@@ -15,10 +16,9 @@ export default function HomePage() {
 
     return (
         <>
-            <GestureHandlerRootView style={{ flex: 1 }}>
+            <GestureHandlerRootView style={{ flex: 1, backgroundColor: colors.dark_200 }}>
                 <ScrollView
                     showsVerticalScrollIndicator={false}
-                    className="bg-dark-200"
                     contentContainerStyle={{ flexGrow: 1 }}
                     scrollEventThrottle={16}
                     overScrollMode="never"

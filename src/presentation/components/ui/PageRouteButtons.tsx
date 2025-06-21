@@ -3,6 +3,8 @@ import { Image, TouchableOpacity, View } from 'react-native';
 
 import { icons } from "@/src/shared/constants";
 
+import { PageRouteButtonsStyles } from "./styles";
+
 
 interface PageRouteButtonsProps {
     handleAdd?: () => Promise<void> | void;
@@ -15,20 +17,20 @@ export const PageRouteButtons = ({ handleAdd, handleBack, handleRemove, selected
     const icon = selected ? icons.ok : icons.add;
 
     return (
-        <View className="absolute z-20 top-12 w-full px-6 flex-row justify-between items-center">
+        <View style={PageRouteButtonsStyles.container}>
             <TouchableOpacity onPress={handleBack}>
-                <Image source={icons.back} className="size-11" />
+                <Image source={icons.back} style={PageRouteButtonsStyles.bigImage} />
             </TouchableOpacity>
 
-            <View className="flex-row gap-6">
+            <View  style={PageRouteButtonsStyles.rightContainer}>
                 {(handleRemove && selected) && (
                     <TouchableOpacity onPress={handleRemove}>
-                        <Image source={icons.trash} className={selected ? "size-8" : "size-11"} />
+                        <Image source={icons.trash} style={selected ? PageRouteButtonsStyles.smallImage : PageRouteButtonsStyles.bigImage} />
                     </TouchableOpacity>
                 )}
                 {handleAdd && (
                     <TouchableOpacity onPress={handleAdd}>
-                        <Image source={icon} className={selected ? "size-8" : "size-11"} />
+                        <Image source={icon} style={selected ? PageRouteButtonsStyles.smallImage : PageRouteButtonsStyles.bigImage} />
                     </TouchableOpacity>
                 )}
             </View>

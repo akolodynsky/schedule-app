@@ -1,9 +1,12 @@
 import React, { useRef } from 'react';
 import { Image, Pressable, View } from 'react-native';
 
-import {AnimatedComponent, AnimatedComponentRef} from "./AnimatedComponent";
-import SideMenu from "@/src/presentation/components/SideMenu";
+import { AnimatedComponent, AnimatedComponentRef } from "./AnimatedComponent";
+import SideMenu from "../SideMenu";
+
 import { icons } from "@/src/shared/constants";
+
+import { SideMenuModalStyles } from "./styles";
 
 
 export const SideMenuModal = () => {
@@ -15,12 +18,12 @@ export const SideMenuModal = () => {
 
     return (
         <>
-            <Pressable className="absolute top-[58px] right-5 z-10" onPress={handlePress}>
-                <Image source={icons.menu} className="size-6 mr-1.5" tintColor='#efeff9' />
+            <Pressable style={SideMenuModalStyles.buttonContainer} onPress={handlePress}>
+                <Image source={icons.menu} style={SideMenuModalStyles.buttonImage} />
             </Pressable>
 
-            <View className="absolute">
-                <AnimatedComponent ref={modalRef} horizontal contentStyle="items-end">
+            <View style={SideMenuModalStyles.container}>
+                <AnimatedComponent ref={modalRef} horizontal contentStyle={{ alignItems: "flex-end" }}>
                     <SideMenu onClose={() => modalRef.current?.close()} />
                 </AnimatedComponent>
             </View>

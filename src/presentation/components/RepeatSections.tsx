@@ -1,12 +1,13 @@
 import React, { useRef } from "react";
-import { Image, Pressable, Text, View } from "react-native";
+import { Image, Pressable, StyleSheet, Text, View } from "react-native";
 import { useShallow } from "zustand/react/shallow";
+import { moderateScale, scale } from "react-native-size-matters";
 
 import { AnimatedComponent, AnimatedComponentRef, DatePicker } from "./ui";
 import { RepeatIntervalModal } from "./RepeatIntervalModal";
 
 import { useRecurringOptionsStore } from "../stores";
-import { icons } from "@/src/shared/constants/icons";
+import { icons, colors, fonts } from "@/src/shared/constants";
 import { formatDate } from "@/src/shared/utils";
 
 
@@ -21,17 +22,17 @@ export const LimitDateSection = () => {
     );
 
     return (
-        <View className="flex-1">
-            <Text className="text-light-200 font-inter_medium mb-2">Limit</Text>
+        <View style={styles.container}>
+            <Text style={[styles.title, { marginBottom: moderateScale(8) }]}>Limit</Text>
             <Pressable
-                className="bg-dark-200 p-3 rounded-3xl items-center justify-center"
+                style={styles.cardContainer}
                 onPress={() => dateModalRef.current?.open()}
             >
-                <Text className="font-inter_medium text-[15px] text-light-100">
+                <Text style={styles.cardText} numberOfLines={1}>
                     {endRepeat ? formatDate(endRepeat) : "No Limit"}
                 </Text>
 
-                <AnimatedComponent ref={dateModalRef} modalStyle="justify-center items-center">
+                <AnimatedComponent ref={dateModalRef} modalStyle={{ justifyContent: "center", alignItems: "center" }}>
                     <DatePicker
                         date={endRepeat!}
                         setDate={setEndRepeat}
@@ -67,24 +68,24 @@ export const IntervalSection = () => {
     }
 
     return (
-        <View className="flex-1">
-            <View className="flex-row justify-between mb-2 items-center">
-                <Text className="text-light-200 font-inter_medium">Interval</Text>
+        <View style={styles.container}>
+            <View  style={styles.headerContainer}>
+                <Text style={styles.title}>Interval</Text>
 
-                <View className="flex-row gap-3">
+                <View style={styles.buttonsContainer}>
                     <Pressable onPress={() => intervalModalRef.current?.open()}>
-                        <Image source={icons.keyboard} className="size-5" />
+                        <Image source={icons.keyboard} style={styles.buttonImage} />
                     </Pressable>
 
                     <Pressable onPress={() => handleCount("plus")}>
-                        <Image source={icons.plus} className="size-5" />
+                        <Image source={icons.plus} style={styles.buttonImage} />
                     </Pressable>
 
                     <Pressable onPress={() => handleCount("minus")}>
-                        <Image source={icons.minus} className="size-5" />
+                        <Image source={icons.minus} style={styles.buttonImage} />
                     </Pressable>
 
-                    <AnimatedComponent ref={intervalModalRef} modalStyle="justify-center items-center">
+                    <AnimatedComponent ref={intervalModalRef} modalStyle={{ justifyContent: "center", alignItems: "center" }}>
                         <RepeatIntervalModal
                             interval={interval}
                             setInterval={setInterval}
@@ -94,8 +95,8 @@ export const IntervalSection = () => {
                 </View>
             </View>
 
-            <View className="bg-dark-200 p-3 rounded-3xl items-center">
-                <Text className="font-inter_medium text-[15px] text-light-100">
+            <View style={styles.cardContainer}>
+                <Text style={styles.cardText}>
                     Every {interval}
                     {frequency === "daily"
                         ? " day"
@@ -108,3 +109,34 @@ export const IntervalSection = () => {
         </View>
     )
 };
+
+
+const styles = StyleSheet.create({
+    container: { flex: 1 },
+    title: {
+        fontFamily: fonts.inter_medium,
+        color: colors.light_200
+    },
+    cardContainer: {
+        backgroundColor: colors.dark_200,
+        padding: moderateScale(10),
+        borderRadius: moderateScale(22),
+        alignItems: 'center'
+    },
+    cardText: {
+        fontFamily: fonts.inter_medium,
+        color: colors.light_100,
+        fontSize: moderateScale(14)
+    },
+    headerContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: moderateScale(8)
+    },
+    buttonsContainer: {
+        flexDirection: 'row',
+        gap: moderateScale(10)
+    },
+    buttonImage: { width: scale(15), height: scale(15) }
+});

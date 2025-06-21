@@ -24,7 +24,7 @@ export default function CategoryPage()  {
         <>
             <PageRouteButtons handleBack={() => router.back()} handleAdd={() => router.push('/category')} />
 
-            <PageHeader name={"Categories"} />
+            <PageHeader text={"Categories"} />
             <CategoriesList />
         </>
     );

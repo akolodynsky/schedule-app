@@ -1,8 +1,11 @@
-import React, {ReactNode, useRef, useState} from 'react';
-import {Pressable, Text, View} from 'react-native';
+import React, { ReactNode, useRef, useState } from 'react';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 import BouncyCheckbox from "react-native-bouncy-checkbox/lib";
+import { moderateScale } from "react-native-size-matters";
 
 import { AnimatedComponent, AnimatedComponentRef, CustomModal } from "./ui";
+
+import { colors, fonts } from "@/src/shared/constants";
 
 
 export const SettingModal = ({ title, options }: { title: string, options: string[] }) => {
@@ -16,15 +19,15 @@ export const SettingModal = ({ title, options }: { title: string, options: strin
 
     return (
         <>
-            <AnimatedComponent ref={modalRef} modalStyle="justify-center items-center">
+            <AnimatedComponent ref={modalRef} modalStyle={{ justifyContent: "center", alignItems: "center" }}>
                 <CustomModal title={title}>
                     {options.map((option) => (
                         <BouncyCheckbox
                             key={option}
-                            size={17}
-                            fillColor="#6f4bf7"
-                            innerIconStyle={{ borderWidth: 2 }}
-                            textStyle={{fontFamily: "Inter-Regular", fontSize: 17, lineHeight: 24, color: "#929298", textDecorationLine: "none"}}
+                            size={moderateScale(16)}
+                            fillColor={colors.primary}
+                            innerIconStyle={{ borderWidth: moderateScale(2) }}
+                            textStyle={styles.checkBox}
                             text={option}
                             isChecked={option === selectedOption}
                             useBuiltInState={false}
@@ -35,7 +38,7 @@ export const SettingModal = ({ title, options }: { title: string, options: strin
             </AnimatedComponent>
 
             <SettingInput title={title} press={() => modalRef.current?.open()}>
-                <Text className="font-inter_regular text-light-300 text-lg">
+                <Text style={[styles.title, { color: colors.light_300 }]}>
                     {selectedOption}
                 </Text>
             </SettingInput>
@@ -51,8 +54,8 @@ export const SettingCheck = ({ title }: { title: string}) => {
         <SettingInput title={title} press={() => setChecked(!checked)}>
             <BouncyCheckbox
                 size={20}
-                fillColor="#6f4bf7"
-                innerIconStyle={{ borderWidth: 2 }}
+                fillColor={colors.primary}
+                innerIconStyle={{ borderWidth: moderateScale(2) }}
                 isChecked={checked}
                 useBuiltInState={false}
                 onPress={() => setChecked(!checked)}
@@ -68,14 +71,16 @@ export const SettingDual = ({ title, options }: { title: string, options: string
 
     return (
         <SettingInput title={title} small>
-            <View className="flex-row gap-2 justify-between bg-dark-200 rounded-xl p-2">
+            <View style={styles.dualContainer}>
                 {options.map(option => (
                     <Pressable key={option} onPress={() => setSelectedOption(option)}>
-                        <View className={`rounded-lg px-2 py-1 items-center ${selectedOption === option ? "bg-primary" : "bg-dark-200"}`}>
-                            <Text className={`font-inter_regular text-lg ${selectedOption === option ? "text-light-100" : "text-light-300"}`}>
+
+                        <View style={[styles.dualButton, selectedOption !== option && { backgroundColor: colors.dark_200 }]}>
+                            <Text style={[styles.title, selectedOption !== option && { color: colors.light_300 }]}>
                                 {option}
                             </Text>
                         </View>
+
                     </Pressable>
                 ))}
             </View>
@@ -84,16 +89,56 @@ export const SettingDual = ({ title, options }: { title: string, options: string
 };
 
 
-export const SettingInput = ({ title, children, press, small }: { title: string, children?: ReactNode, press?: () => void, small?: boolean }) => {
-    const size = small ? "py-3" : "py-6";
+export const SettingInput =
+    ({ title, children, press, small }: { title: string, children?: ReactNode, press?: () => void, small?: boolean }) => {
 
     return (
-        <Pressable onPress={press} className={`bg-dark-100 px-4 rounded-lg gap-2 justify-between flex-row items-center ${size}`}>
-            <Text className="font-inter_regular text-light-100 text-lg">
-                {title}
-            </Text>
+        <Pressable onPress={press} style={[styles.inputContainer, small && { paddingVertical: moderateScale(10) }]}>
+            <Text style={styles.title}>{title}</Text>
 
             {children}
         </Pressable>
     );
 };
+
+
+
+const styles = StyleSheet.create({
+    checkBox: {
+        fontFamily: fonts.inter_regular,
+        fontSize: moderateScale(16),
+        lineHeight: moderateScale(22),
+        color: colors.light_200,
+        textDecorationLine: "none"
+    },
+    title: {
+        fontFamily: fonts.inter_regular,
+        fontSize: moderateScale(15),
+        color: colors.light_100
+    },
+    dualContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: moderateScale(6),
+        padding: moderateScale(5),
+        borderRadius: moderateScale(8),
+        backgroundColor: colors.dark_200
+    },
+    dualButton: {
+        borderRadius: moderateScale(5),
+        alignItems: 'center',
+        paddingHorizontal: moderateScale(8),
+        paddingVertical: moderateScale(6),
+        backgroundColor: colors.primary
+    },
+    inputContainer: {
+        backgroundColor: colors.dark_100,
+        paddingHorizontal: moderateScale(14),
+        paddingVertical: moderateScale(22),
+        borderRadius: moderateScale(6),
+        gap: moderateScale(6),
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        alignItems: 'center'
+    }
+});

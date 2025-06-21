@@ -1,11 +1,13 @@
 import React, { memo } from 'react';
-import { TouchableOpacity, Text } from 'react-native';
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 import { useShallow } from "zustand/react/shallow";
 
 import EventShortCard from "./EventShortCard";
 import { CustomModal } from "./ui";
 
 import { useEventStore } from "../stores";
+import {colors, fonts} from "@/src/shared/constants";
+import {moderateScale} from "react-native-size-matters";
 
 
 const EventsModal = memo(({ onClose }: { onClose: () => void }) => {
@@ -31,10 +33,21 @@ const EventsModal = memo(({ onClose }: { onClose: () => void }) => {
                         <EventShortCard event={event} />
                     </TouchableOpacity>
                 ))
-                : <Text className="font-inter_medium text-light-300 self-center text-sm">No events available...</Text>
+                : <Text style={styles.text}>No events available...</Text>
             }
         </CustomModal>
     );
 });
 
 export default memo(EventsModal);
+
+
+
+const styles = StyleSheet.create({
+    text: {
+        color: colors.light_300,
+        fontFamily: fonts.inter_medium,
+        fontSize: moderateScale(13),
+        alignSelf: 'center'
+    }
+});

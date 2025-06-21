@@ -1,12 +1,14 @@
 import React, { useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import { useShallow } from "zustand/react/shallow";
+import { moderateScale } from "react-native-size-matters";
 
 import { IntervalSection, LimitDateSection } from "./RepeatSections";
 import { DayButton, FrequencyButton } from "./RepeatButtons";
 
 import { useDateStore, useRecurringOptionsStore } from "../stores";
 import { getDayIndex} from "@/src/shared/utils";
+import { colors, fonts } from "@/src/shared/constants";
 
 
 export type Frequency = 'once' | 'daily' | 'weekly' | 'monthly';
@@ -40,18 +42,18 @@ const RepeatEventInput = () => {
 
     return (
         !disabled &&
-            <View className="mb-6">
-                <Text className="text-light-200 font-inter_medium mb-3">Repeat</Text>
+            <View>
+                <Text style={styles.title}>Repeat</Text>
 
-                <View className="bg-dark-100 rounded-lg py-4 px-3 gap-5">
-                    <View className="flex-row gap-2 justify-between">
+                <View style={styles.contentContainer}>
+                    <View style={styles.buttonsContainer}>
                         {options.map(option => (
                             <FrequencyButton key={option} option={option}/>
                         ))}
                     </View>
 
                     {frequency === "weekly" && (
-                        <View className="flex-row justify-center gap-2">
+                        <View style={styles.daysContainer}>
                             {days.map((day, index) => (
                                 <DayButton key={day} day={day} index={index}/>
                             ))}
@@ -59,7 +61,7 @@ const RepeatEventInput = () => {
                     )}
 
                     {frequency !== "once" && (
-                        <View className="flex-row justify-between gap-3">
+                        <View style={styles.bottomContainer}>
                             <LimitDateSection />
                             <IntervalSection />
                         </View>
@@ -73,5 +75,34 @@ export default RepeatEventInput;
 
 
 
+const styles = StyleSheet.create({
+    title: {
+        fontFamily: fonts.inter_medium,
+        color: colors.light_200,
+        marginBottom: moderateScale(10)
+    },
+    contentContainer: {
+        backgroundColor: colors.dark_100,
+        borderRadius: moderateScale(6),
+        paddingHorizontal: moderateScale(12),
+        paddingVertical: moderateScale(14),
+        gap: moderateScale(18)
+    },
+    buttonsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: moderateScale(6)
+    },
+    daysContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        gap: moderateScale(5)
+    },
+    bottomContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        gap: moderateScale(10)
+    }
+});
 
 
